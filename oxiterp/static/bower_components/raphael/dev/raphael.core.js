@@ -67,7 +67,6 @@ define(["eve"], function (eve) {
             }
         }
     }
-
     R.version = "2.2.0";
     R.eve = eve;
     var loaded,
@@ -805,13 +804,11 @@ define(["eve"], function (eve) {
     R._path2string = function () {
         return this.join(",").replace(p2s, "$1");
     };
-
     function repush(array, item) {
         for (var i = 0, ii = array.length; i < ii; i++) if (array[i] === item) {
             return array.push(array.splice(i, 1)[0]);
         }
     }
-
     function cacher(f, scope, postprocessor) {
         function newf() {
             var arg = Array.prototype.slice.call(arguments, 0),
@@ -827,7 +824,6 @@ define(["eve"], function (eve) {
             cache[args] = f[apply](scope, arg);
             return postprocessor ? postprocessor(cache[args]) : cache[args];
         }
-
         return newf;
     }
 
@@ -991,7 +987,6 @@ define(["eve"], function (eve) {
         function round(x) {
             return (x + 0.5) | 0;
         }
-
         return "#" + (16777216 | round(b) | (round(g) << 8) | (round(r) << 16)).toString(16).slice(1);
     });
     /*\
@@ -1062,7 +1057,6 @@ define(["eve"], function (eve) {
 
         return d;
     }
-
     /*\
      * Raphael.parsePathString
      [ method ]
@@ -1318,13 +1312,11 @@ define(["eve"], function (eve) {
             || (bbox1.x < bbox2.x2 && bbox1.x > bbox2.x || bbox2.x < bbox1.x2 && bbox2.x > bbox1.x)
             && (bbox1.y < bbox2.y2 && bbox1.y > bbox2.y || bbox2.y < bbox1.y2 && bbox2.y > bbox1.y);
     };
-
     function base3(t, p1, p2, p3, p4) {
         var t1 = -3 * p1 + 9 * p2 - 9 * p3 + 3 * p4,
             t2 = t * t1 + 6 * p1 - 12 * p2 + 6 * p3;
         return t * t2 - 3 * p1 + 3 * p2;
     }
-
     function bezlen(x1, y1, x2, y2, x3, y3, x4, y4, z) {
         if (z == null) {
             z = 1;
@@ -1344,7 +1336,6 @@ define(["eve"], function (eve) {
         }
         return z2 * sum;
     }
-
     function getTatLen(x1, y1, x2, y2, x3, y3, x4, y4, ll) {
         if (ll < 0 || bezlen(x1, y1, x2, y2, x3, y3, x4, y4) < ll) {
             return;
@@ -1362,7 +1353,6 @@ define(["eve"], function (eve) {
         }
         return t2;
     }
-
     function intersect(x1, y1, x2, y2, x3, y3, x4, y4) {
         if (
             mmax(x1, x2) < mmin(x3, x4) ||
@@ -1397,15 +1387,12 @@ define(["eve"], function (eve) {
         }
         return {x: px, y: py};
     }
-
     function inter(bez1, bez2) {
         return interHelper(bez1, bez2);
     }
-
     function interCount(bez1, bez2) {
         return interHelper(bez1, bez2, 1);
     }
-
     function interHelper(bez1, bez2, justCount) {
         var bbox1 = R.bezierBBox(bez1),
             bbox2 = R.bezierBBox(bez2);
@@ -1461,7 +1448,6 @@ define(["eve"], function (eve) {
         }
         return res;
     }
-
     /*\
      * Raphael.pathIntersection
      [ method ]
@@ -1492,7 +1478,6 @@ define(["eve"], function (eve) {
     R.pathIntersectionNumber = function (path1, path2) {
         return interPathHelper(path1, path2, 1);
     };
-
     function interPathHelper(path1, path2, justCount) {
         path1 = R._path2curve(path1);
         path2 = R._path2curve(path2);
@@ -1546,7 +1531,6 @@ define(["eve"], function (eve) {
         }
         return res;
     }
-
     /*\
      * Raphael.isPointInsidePath
      [ method ]
@@ -2455,7 +2439,6 @@ define(["eve"], function (eve) {
     R.matrix = function (a, b, c, d, e, f) {
         return new Matrix(a, b, c, d, e, f);
     };
-
     function Matrix(a, b, c, d, e, f) {
         if (a != null) {
             this.a = +a;
@@ -2473,7 +2456,6 @@ define(["eve"], function (eve) {
             this.f = 0;
         }
     }
-
     (function (matrixproto) {
         /*\
          * Matrix.add
@@ -2628,17 +2610,14 @@ define(["eve"], function (eve) {
         matrixproto.offset = function () {
             return [this.e.toFixed(4), this.f.toFixed(4)];
         };
-
         function norm(a) {
             return a[0] * a[0] + a[1] * a[1];
         }
-
         function normalize(a) {
             var mag = math.sqrt(norm(a));
             a[0] && (a[0] /= mag);
             a[1] && (a[1] /= mag);
         }
-
         /*\
          * Matrix.split
          [ method ]
@@ -3253,7 +3232,6 @@ define(["eve"], function (eve) {
             onend && eve.on("raphael.drag.end." + this.id, onend);
             eve("raphael.drag.start." + this.id, start_scope || move_scope || this, e.clientX + scrollX, e.clientY + scrollY, e);
         }
-
         this._drag = {};
         draggable.push({el: this, start: start});
         this.mousedown(start);
@@ -3704,15 +3682,12 @@ define(["eve"], function (eve) {
         });
         return set;
     };
-
     function x_y() {
         return this.x + S + this.y;
     }
-
     function x_y_w_h() {
         return this.x + S + this.y + S + this.width + " \xd7 " + this.height;
     }
-
     /*\
      * Element.isPointInside
      [ method ]
@@ -4295,7 +4270,6 @@ define(["eve"], function (eve) {
         //     status = element.status(anim);
         // return this.animate(a).status(a, status * anim.ms / a.ms);
     };
-
     function CubicBezierAtTime(t, p1x, p1y, p2x, p2y, duration) {
         var cx = 3 * p1x,
             bx = 3 * (p2x - p1x) - cx,
@@ -4303,16 +4277,13 @@ define(["eve"], function (eve) {
             cy = 3 * p1y,
             by = 3 * (p2y - p1y) - cy,
             ay = 1 - cy - by;
-
         function sampleCurveX(t) {
             return ((ax * t + bx) * t + cx) * t;
         }
-
         function solve(x, epsilon) {
             var t = solveCurveX(x, epsilon);
             return ((ay * t + by) * t + cy) * t;
         }
-
         function solveCurveX(x, epsilon) {
             var t0, t1, t2, x2, d2, i;
             for (t2 = x, i = 0; i < 8; i++) {
@@ -4349,15 +4320,12 @@ define(["eve"], function (eve) {
             }
             return t2;
         }
-
         return solve(t, 1 / (200 * duration));
     }
-
     elproto.onAnimation = function (f) {
         f ? eve.on("raphael.anim.frame." + this.id, f) : eve.unbind("raphael.anim.frame." + this.id);
         return this;
     };
-
     function Animation(anim, ms) {
         var percents = [],
             newAnim = {};
@@ -4374,7 +4342,6 @@ define(["eve"], function (eve) {
         this.top = percents[percents.length - 1];
         this.percents = percents;
     }
-
     /*\
      * Animation.delay
      [ method ]
@@ -4414,7 +4381,6 @@ define(["eve"], function (eve) {
         a.times = math.floor(mmax(times, 0)) || 1;
         return a;
     };
-
     function runAnimation(anim, element, percent, status, totalOrigin, times) {
         percent = toFloat(percent);
         var params,
@@ -4621,7 +4587,6 @@ define(["eve"], function (eve) {
         }
         eve("raphael.anim.start." + element.id, element, anim);
     }
-
     /*\
      * Raphael.animation
      [ method ]
@@ -4837,13 +4802,11 @@ define(["eve"], function (eve) {
         }
         return this;
     };
-
     function stopAnimation(paper) {
         for (var i = 0; i < animationElements.length; i++) if (animationElements[i].el.paper == paper) {
             animationElements.splice(i--, 1);
         }
     }
-
     eve.on("raphael.remove", stopAnimation);
     eve.on("raphael.clear", stopAnimation);
     elproto.toString = function () {
@@ -5444,11 +5407,9 @@ define(["eve"], function (eve) {
             }, false);
             doc.readyState = "loading";
         }
-
         function isLoaded() {
             (/in/).test(doc.readyState) ? setTimeout(isLoaded, 9) : R.eve("raphael.DOMload");
         }
-
         isLoaded();
     })(document, "DOMContentLoaded");
 

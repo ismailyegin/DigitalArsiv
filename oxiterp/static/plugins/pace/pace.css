@@ -73,7 +73,6 @@
         transform: rotate(360deg);
     }
 }
-
 @-moz-keyframes pace-spinner {
     0% {
         -moz-transform: rotate(0deg);
@@ -84,7 +83,6 @@
         transform: rotate(360deg);
     }
 }
-
 @-o-keyframes pace-spinner {
     0% {
         -o-transform: rotate(0deg);
@@ -95,7 +93,6 @@
         transform: rotate(360deg);
     }
 }
-
 @-ms-keyframes pace-spinner {
     0% {
         -ms-transform: rotate(0deg);
@@ -106,7 +103,6 @@
         transform: rotate(360deg);
     }
 }
-
 @keyframes pace-spinner {
     0% {
         transform: rotate(0deg);

@@ -43,7 +43,7 @@ class PreRegistrationForm(ModelForm):
 
             'kademe_startDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker4', 'autocomplete': 'off',
-                       }),
+                        }),
 
             'isCoach': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                            'style': 'width: 100%; ', 'required': 'required'}),
@@ -127,12 +127,13 @@ class PreRegistrationForm(ModelForm):
 
             'birthDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker', 'autocomplete': 'off',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
             'bloodType': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                              'style': 'width: 100%; '}),
 
             'gender': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                           'style': 'width: 100%; '}),
+
 
         }

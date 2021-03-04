@@ -348,7 +348,6 @@ class DataSource:
         converter = Converter(params)
         converter.convert(self, output['file_name'])
 
-
 class PolygonSimplifier:
     def __init__(self, geometries):
         self.format = '%.8f %.8f'

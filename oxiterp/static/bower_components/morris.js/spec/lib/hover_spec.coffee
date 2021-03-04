@@ -1,4 +1,5 @@
 describe "Morris.Hover", ->
+
   describe "with dummy content", ->
     beforeEach ->
       parent = $('<div style="width:200px;height:180px"></div>')

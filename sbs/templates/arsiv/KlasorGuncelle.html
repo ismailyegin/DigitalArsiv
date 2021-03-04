@@ -2,139 +2,140 @@
 {% block content %}
 
 
-<!-- success modal -->
-<div class="modal modal-success modal-success-food fade in" id="modal-success" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">İşlem Başarılı</h4>
-            </div>
-            <div class="modal-body successModal">
-                ...
-            </div>
-            <div class="modal-footer">
+    <!-- success modal -->
+    <div class="modal modal-success modal-success-food fade in" id="modal-success" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">İşlem Başarılı</h4>
+                </div>
+                <div class="modal-body successModal">
+                    ...
+                </div>
+                <div class="modal-footer">
 
-                <button type="button" class="btn btn-outline btn-ok">Tamam</button>
+                    <button type="button" class="btn btn-outline btn-ok">Tamam</button>
+                </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
 
-<div class="modal modal-danger fade in deneme22" tabindex="-1" role="dialog" id="modal-danger"
-     aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Uyarı</h4>
+    <div class="modal modal-danger fade in deneme22" tabindex="-1" role="dialog" id="modal-danger"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Uyarı</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Silmek istediğinizden emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-conf"
+                            data-dismiss="modal">Evet
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-close">Hayır</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Silmek istediğinizden emin misiniz?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left btn-ok" id="btn-conf"
-                        data-dismiss="modal">Evet
-                </button>
-                <button type="button" class="btn btn-outline" id="btn-close">Hayır</button>
-            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
 
 
-{% if messages %}
-{% for message in messages %}
 
-
-{% if message.tags == 'warning' %}
-
-<div class="alert alert-danger alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4><i class="icon fa fa-ban"></i> Hata!</h4>
-
-
-    <ul class="messages">
+    {% if messages %}
         {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
+
+
+            {% if message.tags == 'warning' %}
+
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Hata!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+
+
+            {% if message.tags == 'success' %}
+
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Başarılı!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
         {% endfor %}
-    </ul>
 
 
-</div>
+    {% endif %}
 
-{% endif %}
+    <section class="content">
+        <form method="post" role="form">
+            {% csrf_token %}
 
-
-{% if message.tags == 'success' %}
-
-<div class="alert alert-success alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4><i class="icon fa fa-check"></i> Başarılı!</h4>
-
-
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"> Klasör Güncelle </h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-lg-12">
 
 
-</div>
-
-{% endif %}
-{% endfor %}
+                                {{ form }}
 
 
-{% endif %}
-
-<section class="content">
-    <form method="post" role="form">
-        {% csrf_token %}
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"> Klasör Güncelle </h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="col-lg-12">
-
-
-                            {{ form }}
-
-
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
-        <div class="row">
+            </div>
+            <div class="row">
             <section class="col-lg-12 ">
                 <div class="box-body">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">Dosyalar</h3>
                         </div>
-                        <div class="box-header with-border">
+                    <div class="box-header with-border">
                             <div class="btn-group">
-                                {# {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
-                                <a href="{% url " sbs:dosya-ekle" klasor.pk %}"
-                                type="button" class="btn btn-success"><i
-                                    class="fa fa-edit"></i> Yeni Dosya Ekle
-                                </a>
-                                {# {% endif %}#}
+{#                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
+                                    <a href="{% url "sbs:dosya-ekle" klasor.pk %}"
+                                       type="button" class="btn btn-success"><i
+                                            class="fa fa-edit"></i> Yeni Dosya Ekle
+                                    </a>
+{#                                {% endif %}#}
                             </div>
 
                         </div>
@@ -149,40 +150,34 @@
                                 </thead>
                                 <tbody>
                                 {% if dosya %}
-                                {% for item in dosya %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>{{ item.sirano}}</td>
+                                    {% for item in dosya %}
+                                        <tr>
+                                            <td>{{ forloop.counter }} </td>
+                                            <td>{{ item.sirano}} </td>
 
-                                    <td>
-                                        <a href="{% url " sbs:dosya-guncelle" item.pk%}"
-                                        type="button" class="btn btn-warning"><i
+                                        <td>
+                                             <a href="{% url "sbs:dosya-guncelle"  item.pk%}"
+                                       type="button" class="btn btn-warning"><i
                                             class="fa fa-edit"></i> İncele
-                                        </a>
-                                    </td>
+                                    </a>
+                                        </td>
 
-                                    {#
-                                    <td>#}
-                                        {#
-                                        <div class="btn-group">#}
+                                            {#                                            <td>#}
+                                            {#                                                <div class="btn-group">#}
                                             {##}
-                                            {# <a class="btn btn-success" #}
-                                                  {# data-toggle="modal" onclick=sendInform({{ user.pk }})><i#}
-                                                {# class="fa fa-arrow-circle-right"></i>Şifre Gönder</a>#}
+                                            {#                                                    <a class="btn btn-success"#}
+                                            {#                                                       data-toggle="modal" onclick=sendInform({{ user.pk }})><i#}
+                                            {#                                                            class="fa  fa-arrow-circle-right"></i>Şifre Gönder</a>#}
                                             {##}
-                                            {# <a class="btn btn-danger" #}
-                                                  {# data-toggle="modal" onclick=activeUser({{ user.pk }})><i#}
-                                                {# class="fa fa-lock"></i>Aktif/Pasifleştir</a>#}
-                                            {#
-                                        </div>
-                                        #}
-                                        {#
-                                    </td>
-                                    #}
+                                            {#                                                    <a class="btn btn-danger"#}
+                                            {#                                                       data-toggle="modal" onclick=activeUser({{ user.pk }})><i#}
+                                            {#                                                            class="fa fa-lock"></i>Aktif/Pasifleştir</a>#}
+                                            {#                                                </div>#}
+                                            {#                                            </td>#}
 
-                                </tr>
+                                        </tr>
 
-                                {% endfor %}
+                                    {% endfor %}
                                 {% endif %}
 
 
@@ -200,8 +195,11 @@
 
         </div>
 
-    </form>
-</section>
+        </form>
+    </section>
+
+
+
 
 
 {% endblock %}

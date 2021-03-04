@@ -49,11 +49,10 @@ from sbs.models.Logs import Logs
 
 from sbs.Forms.VisaSeminarSearchForm import VisaSeminarSearchForm
 
+
 from sbs.models.JudgeApplication import JudgeApplication
 
 from unicode_tr import unicode_tr
-
-
 @login_required
 def return_add_referee(request):
     perm = general_methods.control_access(request)
@@ -67,6 +66,7 @@ def return_add_referee(request):
     # country = Country.objects.filter(name="TÜRKİYE")[0]
     # communication_form = CommunicationForm(initial={'country': country})
     communication_form = CommunicationForm()
+
 
     iban_form = IbanFormJudge()
 
@@ -125,8 +125,10 @@ def return_add_referee(request):
             log = str(user.get_full_name()) + " Hakemi  ekledi"
             log = general_methods.logwrite(request, request.user, log)
 
+
             user.groups.add(group)
             user.save()
+
 
             person = person_form.save(commit=False)
             communication = communication_form.save(commit=False)
@@ -136,6 +138,8 @@ def return_add_referee(request):
             judge = Judge(user=user, person=person, communication=communication)
             judge.iban = iban_form.cleaned_data['iban']
             judge.save()
+
+
 
             fdk = Forgot(user=user, status=False)
             fdk.save()
@@ -482,7 +486,6 @@ def referenceUpdateReferee(request, pk):
     return render(request, 'hakem/HakemBasvuruUpdate.html',
                   {'preRegistrationform': refere_form})
 
-
 @login_required
 def updateReferee(request, pk):
     perm = general_methods.control_access(request)
@@ -497,6 +500,8 @@ def updateReferee(request, pk):
         judge.user.groups.add(Group.objects.get(name="Hakem"))
         judge.save()
     groups = Group.objects.all()
+
+
 
     user = User.objects.get(pk=judge.user.pk)
     person = Person.objects.get(pk=judge.person.pk)
@@ -519,6 +524,7 @@ def updateReferee(request, pk):
 
     metarial_form = MaterialForm(request.POST or None, instance=metarial)
     competitions = Competition.objects.filter(judges=judge).distinct()
+
 
     iban_form = IbanFormJudge(request.POST or None, instance=judge)
 
@@ -585,6 +591,7 @@ def updateReferee(request, pk):
 
             communication_form.save()
             metarial_form.save()
+
 
             messages.success(request, 'Hakem Başarıyla Güncellendi')
             # return redirect('sbs:hakemler')
@@ -1130,7 +1137,6 @@ def referenceStatus_reddet(request, pk):
 
     return redirect('sbs:basvuru-referee')
 
-
 @login_required
 def referenceStatus(request, pk):
     reference = ReferenceReferee.objects.get(pk=pk)
@@ -1561,10 +1567,16 @@ def judge_penal_delete(request, athlete_pk, document_pk):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
+
+
+
+
+
 @login_required
 def return_visaSeminar_application(request):
     perm = general_methods.control_access_klup(request)
     aktif = general_methods.controlGroup(request)
+
 
     if not perm:
         logout(request)
@@ -1572,9 +1584,7 @@ def return_visaSeminar_application(request):
     user = request.user
     if aktif == "Hakem":
         seminar = VisaSeminar.objects.exclude(coachApplication__coach__user=user).filter(forWhichClazz='REFEREE')
-        seminar |= VisaSeminar.objects.filter(forWhichClazz='REFEREE').filter(
-            judgeApplication__judge__user=user).exclude(judgeApplication__status=VisaSeminar.WAITED).exclude(
-            judgeApplication__status=VisaSeminar.APPROVED)
+        seminar |= VisaSeminar.objects.filter(forWhichClazz='REFEREE').filter(judgeApplication__judge__user=user).exclude(judgeApplication__status=VisaSeminar.WAITED).exclude(judgeApplication__status=VisaSeminar.APPROVED)
         seminar |= VisaSeminar.objects.exclude(judgeApplication__judge__user=user).filter(forWhichClazz='REFEREE_CLAIM')
         seminar = seminar.distinct()
 
@@ -1606,6 +1616,7 @@ def return_visaSeminar_application(request):
     return render(request, 'antrenor/VisaSeminarAplication.html', {'competitions': seminar})
 
 
+
 @login_required
 def return_visaSeminar_Basvuru(request):
     perm = general_methods.control_access_klup(request)
@@ -1615,14 +1626,13 @@ def return_visaSeminar_Basvuru(request):
         return redirect('accounts:login')
     user = request.user
     basvurularim = JudgeApplication.objects.none()
-    if aktif == 'Hakem':
-        seminar = VisaSeminar.objects.filter(judgeApplication__judge__user=user).filter(
-            forWhichClazz='REFEREE').distinct()
+    if aktif =='Hakem':
+        seminar = VisaSeminar.objects.filter(judgeApplication__judge__user=user).filter(forWhichClazz='REFEREE').distinct()
         basvurularim = JudgeApplication.objects.filter(judge__user=user)
 
     else:
         seminar = VisaSeminar.objects.filter(forWhichClazz='REFEREE')
 
     return render(request, 'hakem/SeminerBasvuru.html', {'seminer': seminar,
-                                                         'basvuru': basvurularim,
-                                                         'user': user})
+                                                                'basvuru': basvurularim,
+                                                                'user': user})

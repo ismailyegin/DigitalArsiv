@@ -8,8 +8,11 @@ class AbirimForm(ModelForm):
     class Meta:
         model = Abirim
         fields = '__all__'
-
     def __init__(self, *args, **kwargs):
-        super(AbirimForm, self).__init__(*args, **kwargs)
+        super(AbirimForm,self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
+
+
+
+

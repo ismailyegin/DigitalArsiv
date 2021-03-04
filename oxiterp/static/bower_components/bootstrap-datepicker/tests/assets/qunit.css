@@ -106,7 +106,6 @@
   color: #c2ccd1;
   text-decoration: none;
 }
-
 #qunit-tests li a:hover,
 #qunit-tests li a:focus {
   color: #000;
@@ -228,7 +227,6 @@
   color: #000000;
   background-color: #EE5757;
 }
-
 #qunit-tests .fail .test-name,
 #qunit-tests .fail .module-name {
   color: #000000;
@@ -257,7 +255,6 @@
 
   border-bottom: 1px solid white;
 }
-
 #qunit-testresult .module-name {
   font-weight: bold;
 }

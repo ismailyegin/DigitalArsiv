@@ -13,20 +13,16 @@
         for (var i = 0, len = list.length; i < len; i++) if (list[i] === elem) return i;
         return -1;
     }
-
     function type(obj) {
         return null == obj ? obj + "" : "object" == typeof obj || "function" == typeof obj ? class2type[class2type.toString.call(obj)] || "object" : typeof obj;
     }
-
     function isWindow(obj) {
         return null != obj && obj === obj.window;
     }
-
     function isArraylike(obj) {
         var length = "length" in obj && obj.length, ltype = type(obj);
         return "function" !== ltype && !isWindow(obj) && (!(1 !== obj.nodeType || !length) || ("array" === ltype || 0 === length || "number" == typeof length && length > 0 && length - 1 in obj));
     }
-
     for (var class2type = {}, classTypes = "Boolean Number String Function Array Date RegExp Object Error".split(" "), nameNdx = 0; nameNdx < classTypes.length; nameNdx++) class2type["[object " + classTypes[nameNdx] + "]"] = classTypes[nameNdx].toLowerCase();
     return $.inArray = function (elem, arr, i) {
         return null == arr ? -1 : indexOf(arr, elem);

@@ -21,6 +21,7 @@ from datetime import date, datetime
 from sbs.models.Products import Products
 
 
+
 @login_required
 def kulup_aktar(request):
     perm = general_methods.control_access(request)
@@ -29,16 +30,15 @@ def kulup_aktar(request):
         logout(request)
         return redirect('accounts:login')
 
-    eskikulupler = FedsportalModels.Kulupler.objects.all()
-    for e in eskikulupler:
+    eskikulupler=FedsportalModels.Kulupler.objects.all()
+    for e in eskikulupler :
         citya = City.objects.get(pk=e.ilid.pk)
-        country = Country.objects.get(pk=1)
-        c = Communication(address=e.adres1, phoneNumber=e.telefon, city=citya, country=country)
+        country=Country.objects.get(pk=1)
+        c = Communication(address=e.adres1,phoneNumber=e.telefon,city=citya,country=country)
         c.save()
-        s = SportsClub(pk=e.kulupid, name=e.kulupadi, foundingDate=e.tesciltarihi, clubMail=e.eposta, communication=c)
+        s = SportsClub(pk=e.kulupid,name=e.kulupadi,foundingDate=e.tesciltarihi,clubMail=e.eposta,communication=c)
 
         s.save()
-
 
 @login_required
 def hakem_aktar(request):
@@ -50,7 +50,7 @@ def hakem_aktar(request):
 
     eskihakemler = Sporcular.objects.filter(hakem=1)
     # print(eskihakemler.count())
-    for e in eskihakemler:
+    for e in eskihakemler :
         # print(e.adi + " " + e.soyadi)
         user = User(
             first_name=e.adi,
@@ -58,7 +58,7 @@ def hakem_aktar(request):
             email=e.eposta if e.eposta else 'badminton@hotmail.com',
             username=e.tcno
 
-        )
+                    )
         user.save()
 
         # print(user)
@@ -491,6 +491,12 @@ def control(request):
             athlete.licenses.add(lisans);
             athlete.save()
 
+
+
+
+
+
+
     return redirect('sbs:admin')
 
 
@@ -531,6 +537,9 @@ def kademe_aktar(request):
             visa.save()
             coach.visa.add(visa)
             coach.save()
+
+
+
 
     return redirect('sbs:admin')
 

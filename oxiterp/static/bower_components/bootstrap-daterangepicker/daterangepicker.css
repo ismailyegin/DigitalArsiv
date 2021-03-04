@@ -300,27 +300,21 @@
     .daterangepicker {
         width: auto;
     }
-
     .daterangepicker .ranges ul {
         width: 160px;
     }
-
     .daterangepicker.single .ranges ul {
         width: 100%;
     }
-
     .daterangepicker.single .calendar.left {
         clear: none;
     }
-
     .daterangepicker.single.ltr .ranges, .daterangepicker.single.ltr .calendar {
         float: left;
     }
-
     .daterangepicker.single.rtl .ranges, .daterangepicker.single.rtl .calendar {
         float: right;
     }
-
     .daterangepicker.ltr {
         direction: ltr;
         text-align: left;
@@ -358,7 +352,6 @@
     .daterangepicker.ltr .ranges, .daterangepicker.ltr .calendar {
         float: left;
     }
-
     .daterangepicker.rtl {
         direction: rtl;
         text-align: right;
@@ -398,7 +391,6 @@
         float: right;
     }
 }
-
 @media (min-width: 730px) {
     .daterangepicker .ranges {
         width: auto;

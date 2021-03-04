@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from sbs.Views import DashboardViews, AthleteViews, RefereeViews, ClubViews, CoachViews, DirectoryViews, UserViews, \
     CompetitionViews, AdminViews, HelpViews, PageViews, PreRegistration, ActivityView, ReferenceView, QuestionViews, \
-    LogViews, ProductView, Aktarma, ClaimView, PenalView, ArsivView
+    LogViews, ProductView, Aktarma, ClaimView, PenalView,ArsivView
 
 app_name = 'sbs'
 
@@ -325,8 +325,7 @@ urlpatterns = [
 
     # Hakem
     url(r'hakem/visa-Seminar/Basvuru$', RefereeViews.return_visaSeminar_application, name='hakem-seminar-basvuru'),
-    url(r'hakem/visa-Seminar/basvuruListesi$', RefereeViews.return_visaSeminar_Basvuru,
-        name='hakem-visa-seminar-basvuru'),
+    url(r'hakem/visa-Seminar/basvuruListesi$', RefereeViews.return_visaSeminar_Basvuru, name='hakem-visa-seminar-basvuru'),
 
     url(r'hakem/Kademe-listesi/', RefereeViews.kademe_list, name='hakem-kademe-listesi'),
     url(r'hakem/kademe-Liste-Onayla/(?P<referee_pk>\d+)$', RefereeViews.kademe_onayla,
@@ -398,9 +397,8 @@ urlpatterns = [
     url(r'musabaka/musabaka-sporcu-sec/(?P<pk>\d+)$', CompetitionViews.musabaka_sporcu_sec, name='musabaka-sporcu-sec'),
     url(r'musabaka/sporcu-sec/(?P<pk>\d+)/(?P<competition>\d+)$', CompetitionViews.choose_athlete,
         name='catagori-sporcu-sec-ajax'),
-    url(r'musabaka/antrenorler-sec/$', CompetitionViews.antrenor_ajax, name='catagori-antrenor-sec-ajax'),
-    url(r'musabaka/antrenorler-sporcu-sec/$', CompetitionViews.antrenor_sporcu_ajax,
-        name='catagori-antrenor-sporcu-sec-ajax'),
+    url(r'musabaka/antrenorler-sec/$', CompetitionViews.antrenor_ajax,name='catagori-antrenor-sec-ajax'),
+    url(r'musabaka/antrenorler-sporcu-sec/$', CompetitionViews.antrenor_sporcu_ajax, name='catagori-antrenor-sporcu-sec-ajax'),
 
     url(r'musabaka/sporcu-sec/update(?P<pk>\d+)/(?P<competition>\d+)$', CompetitionViews.choose_athlete_update,
         name='catagori-sporcu-update-ajax'),
@@ -501,20 +499,19 @@ urlpatterns = [
 
     url(r'ceza/ceza-listesi/', PenalView.return_penal_athlete, name='ceza-listesi'),
 
-    #     arsiv modulü
-    url(r'arsiv/arsiv-gorsel/', ArsivView.return_arsiv, name='arsiv-listesi'),
+#     arsiv modulü
+    url(r'arsiv/arsiv-gorsel/',ArsivView.return_arsiv, name='arsiv-listesi'),
 
-    url(r'arsiv/arsiv-konumEkle/', ArsivView.arsiv_location_add, name='arsiv-konumEkle'),
-    url(r'arsiv/arsiv-konumGuncelle/(?P<pk>\d+)$', ArsivView.arsiv_location_update, name='arsiv-konumUpdate'),
+    url(r'arsiv/arsiv-konumEkle/',ArsivView.arsiv_location_add, name='arsiv-konumEkle'),
+    url(r'arsiv/arsiv-konumGuncelle/(?P<pk>\d+)$',ArsivView.arsiv_location_update,name='arsiv-konumUpdate'),
 
     url(r'arsiv/arsiv-BirimEkle/', ArsivView.arsiv_birim_add, name='arsiv-birimEkle'),
-    url(r'arsiv/arsiv-BirimGuncelle/(?P<pk>\d+)$', ArsivView.arsiv_birim_update, name='arsiv-birimUpdate'),
-    url(r'arsiv/arsiv-Birim/(?P<pk>\d+)$', ArsivView.categoryItemDelete, name='Birim-delete'),
+    url(r'arsiv/arsiv-BirimGuncelle/(?P<pk>\d+)$',ArsivView.arsiv_birim_update,name='arsiv-birimUpdate'),
+    url(r'arsiv/arsiv-Birim/(?P<pk>\d+)$', ArsivView.categoryItemDelete,name='Birim-delete'),
     url(r'arsiv/arsiv-Birim/ParametreEkle/(?P<pk>\d+)$', ArsivView.arsiv_birimParametre, name='Birim-parametreAdd'),
-    url(r'arsiv/arsiv-Birim/ParametreGuncelle/(?P<pk>\d+)$', ArsivView.arsiv_birimParametreUpdate,
-        name='Birim-parametreGuncelle'),
+    url(r'arsiv/arsiv-Birim/ParametreGuncelle/(?P<pk>\d+)$', ArsivView.arsiv_birimParametreUpdate, name='Birim-parametreGuncelle'),
     url(r'arsiv/arsiv-Birim/ParametreSil/(?P<pk>\d+)$', ArsivView.parametredelete, name='Birim-parametre-delete'),
-    url(r'arsiv/arsiv-Birim/BirimListesi/$', ArsivView.arsiv_birimListesi, name='Birim-listesi'),
+    url(r'arsiv/arsiv-Birim/BirimListesi/$', ArsivView.arsiv_birimListesi,name='Birim-listesi'),
 
     url(r'arsiv/arsiv-Klasor/klasorler/$', ArsivView.arsiv_klasorler, name='klasor-listesi'),
     url(r'arsiv/arsiv-Klasor/klasorEkle/$', ArsivView.arsiv_klasorEkle, name='klasor-ekle'),

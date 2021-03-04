@@ -675,7 +675,7 @@ def updatecoach(request, tc, pk):
                                    'person_form': person_form, 'grades_form': grade_form, 'coach': coach.pk,
                                    'personCoach': person, 'visa_form': visa_form, 'iban_form': iban_form,
                                    'groups': groups,
-                                   'metarial_form': metarial_form, })
+                                   'metarial_form': metarial_form,})
 
             tc = request.POST.get('tc')
             if tc != coach.person.tc:

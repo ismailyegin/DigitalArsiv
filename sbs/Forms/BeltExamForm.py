@@ -14,6 +14,8 @@ class BeltExamForm(ModelForm):
                                            attrs={'class': 'form-control select2 select2-hidden-accessible',
                                                   'style': 'width: 100%; '}))
 
+
+
     class Meta:
         model = BeltExam
 
@@ -28,7 +30,7 @@ class BeltExamForm(ModelForm):
                                           'style': 'width: 100%; '}),
             'examDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker4', 'autocomplete': 'off',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
             'paymentType': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                                'style': 'width: 100%; ', 'required': 'required'}),

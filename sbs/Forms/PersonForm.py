@@ -16,6 +16,7 @@ class PersonForm(ModelForm):
                                          attrs={'class': 'form-control select2 select2-hidden-accessible',
                                                 'style': 'width: 100%; '}))
 
+
     class Meta:
         model = Person
 
@@ -35,6 +36,7 @@ class PersonForm(ModelForm):
         labels = {'tc': 'T.C*.',
                   'gender': 'Cinsiyet*',
                   'profileImage': 'Profil Resmi',
+
 
                   'nufus_ailesirano': 'Nufus Aile Sıra No',
                   'nufus_sirano': 'Nufus Sıra No',
@@ -85,7 +87,7 @@ class PersonForm(ModelForm):
 
             'birthDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker', 'autocomplete': 'off',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
             'bloodType': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                              'style': 'width: 100%;'}),

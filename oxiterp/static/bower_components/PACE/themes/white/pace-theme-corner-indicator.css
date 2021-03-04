@@ -71,7 +71,6 @@
         -webkit-transform: rotate(359deg);
     }
 }
-
 @keyframes pace-theme-corner-indicator-spin {
     0% {
         transform: rotate(0deg);

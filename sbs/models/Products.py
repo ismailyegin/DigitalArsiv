@@ -14,6 +14,7 @@ class Products(models.Model):
     TISORT = 'TISORT'
     KITAP = 'KITAP'
 
+
     Category = (
         (RAKET, 'RAKET'),
         (TOPLAR, 'TOPLAR'),
@@ -31,6 +32,7 @@ class Products(models.Model):
 
     creationDate = models.DateTimeField(auto_now_add=True)
     operationDate = models.DateTimeField(auto_now=True)
+
 
     name = models.CharField(max_length=120, null=False, blank=False)
     category = models.CharField(max_length=128, verbose_name='category', choices=Category, null=True, blank=True)

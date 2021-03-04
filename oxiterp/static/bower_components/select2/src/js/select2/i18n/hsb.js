@@ -22,7 +22,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      return 'Prošu zhašej ' + overChars + ' ' +
+      return 'Prošu zhašej ' + overChars + ' ' + 
         pluralWord(overChars, charsWords);
     },
     inputTooShort: function (args) {

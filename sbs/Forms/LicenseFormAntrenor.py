@@ -29,7 +29,7 @@ class LicenseFormAntrenor(ModelForm):
 
             'startDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker2', 'autocomplete': 'on',
-                       }),
+                        }),
 
             'expireDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker4', 'autocomplete': 'on',

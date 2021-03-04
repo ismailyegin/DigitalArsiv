@@ -22,10 +22,10 @@ from sbs.models.Activity import Activity
 from sbs.models.Logs import Logs
 from sbs.Forms.AbirimForm import AbirimForm
 
-
 @login_required
 def return_message(request):
     return render(request, 'Chat/chat.html')
+
 
 
 @login_required
@@ -69,6 +69,7 @@ def return_referee_dashboard(request):
         }
         datacount.append(beka)
 
+
     return render(request, 'anasayfa/hakem.html',
                   {
 
@@ -93,6 +94,7 @@ def return_referee_dashboard(request):
                       'lastcompetition': lastcompetition,
                       'data': datacount,
                   })
+
 
 
 @login_required
@@ -142,6 +144,8 @@ def return_coach_dashboard(request):
         total_club_user = SportClubUser.objects.all().count()
         total_coachs = Coach.objects.all().count()
         total_judge = Judge.objects.all().count()
+
+
 
     return render(request, 'anasayfa/antrenor.html',
                   {
@@ -288,11 +292,13 @@ def return_directory_dashboard(request):
                   })
 
 
+
 @login_required
 def return_club_user_dashboard(request):
     active = general_methods.controlGroup(request)
     perm = general_methods.control_access_klup(request)
     # x = general_methods.import_csv()
+
 
     if not perm:
         logout(request)
@@ -452,6 +458,7 @@ def return_admin_dashboard(request):
     # for item in form.fields:
     #     print(item)
 
+
     return render(request, 'anasayfa/admin.html',
                   {
                       'active': active,
@@ -490,7 +497,7 @@ def return_admin_dashboard(request):
                       'total_notifications_clup': total_notifications_clup,
                       'notifications_tatal': notifications_tatal
 
-                  })
+                   })
 
 
 def City_athlete_cout(request):
@@ -514,8 +521,6 @@ def City_athlete_cout(request):
 
     else:
         return JsonResponse({'status': 'Fail'})
-
-
 #
 #
 

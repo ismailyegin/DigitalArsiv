@@ -31,7 +31,6 @@
                                     max: 1
                                 }, this.repeaterPart = void 0;
                         }
-
                         function validateRegexToken(token, fromGroup) {
                             var isvalid = !1;
                             fromGroup && (regexPart += "(", openGroupCount++);

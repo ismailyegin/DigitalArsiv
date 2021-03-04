@@ -10,7 +10,6 @@
     -ms-touch-action: none;
     touch-action: none;
 }
-
 .ui-selectable-helper {
     position: absolute;
     z-index: 100;

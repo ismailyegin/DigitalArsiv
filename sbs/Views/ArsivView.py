@@ -281,10 +281,10 @@ def arsiv_dosyaEkle(request, pk):
     form = AdosyaForm(pk)
     if request.method == 'POST':
 
-        form = AdosyaForm(pk, request.POST)
+        form = AdosyaForm(pk,request.POST)
         if form.is_valid():
             form.save(pk)
-            return redirect('sbs:klasor-guncelle', pk)
+            return redirect('sbs:klasor-guncelle',pk)
 
     return render(request, 'arsiv/DosyaEkle.html', {'form': form})
 
@@ -296,7 +296,7 @@ def arsiv_dosyaUpdate(request, pk):
         logout(request)
         return redirect('accounts:login')
     dosya = Adosya.objects.get(pk=pk)
-    form = AdosyaForm(dosya.klasor.pk, request.POST or None, instance=dosya)
+    form = AdosyaForm(dosya.klasor.pk,request.POST or None, instance=dosya)
     files = Aevrak.objects.filter(adosya=dosya)
     for item in files:
         print(item.file.name)

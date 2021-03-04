@@ -468,13 +468,11 @@ var wysihtml5 = {
 
     function RangePrototype() {
     }
-
     api.RangePrototype = RangePrototype;
     api.rangePrototype = new RangePrototype();
 
     function SelectionPrototype() {
     }
-
     api.selectionPrototype = new SelectionPrototype();
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -8290,6 +8288,7 @@ wysihtml5.dom.isLoadedImage = function (node) {
             return c.canMerge(cell2);
         }
     };
+
 
 
 })(wysihtml5);

@@ -14,7 +14,6 @@ import json
 import codecs
 import copy
 
-
 class Map:
     def __init__(self, name, language):
         self.paths = {}

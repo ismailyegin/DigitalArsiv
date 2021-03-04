@@ -2,9 +2,8 @@ import enum
 
 from django.db import models
 from sbs.models.EnumFields import EnumFields
-
-
 class Activity(models.Model):
+
     DOMESTİC = 0
     OVERSEAS = 1
     EDUCATİON = 2

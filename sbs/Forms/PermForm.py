@@ -12,3 +12,4 @@ class PermForm(forms.Form):
         super(PermForm, self).__init__(*args, **kwargs)
         self.fields['left'].queryset = qs
         self.fields['right'].queryset = qs1
+

@@ -5,6 +5,7 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
         ('sbs', '0011_remove_adosyaparametre_type'),
     ]
@@ -13,13 +14,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='adosyaparametre',
             name='dosya',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
-                                    to='sbs.Adosya'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sbs.Adosya'),
         ),
         migrations.AlterField(
             model_name='adosyaparametre',
             name='parametre',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
-                                    to='sbs.AbirimParametre'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sbs.AbirimParametre'),
         ),
     ]

@@ -3,7 +3,6 @@ from sbs.models.Aevrak import Aevrak
 
 from enum import IntEnum
 
-
 class EnumFields(enum.Enum):
     class LEVELTYPE2(enum.Enum):
         VISA = 1
@@ -53,3 +52,6 @@ class EnumFields(enum.Enum):
         (BELT, 'BELT'),
 
     )
+
+
+

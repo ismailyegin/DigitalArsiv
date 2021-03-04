@@ -28,22 +28,14 @@
     <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
 
 
-    {#
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    #}
+    {#    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">#}
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 
 
-    {# buton tasarimi icin#}
-    {#
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
-    #}
-    {#
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">
-    #}
-    {#
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.foundation.min.css">
-    #}
+    {#    buton tasarimi icin#}
+    {#     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">#}
+    {#     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">#}
+    {#     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.foundation.min.css">#}
 
     <link rel="stylesheet"
           href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
@@ -80,9 +72,9 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -92,407 +84,408 @@
 <!-- /.login-logo -->
 {% block content %}
 
-{% if messages %}
-{% for message in messages %}
-
-
-{% if message.tags == 'warning' %}
-
-<div class="alert alert-danger alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4><i class="icon fa fa-ban"></i> Hata!</h4>
-
-
-    <ul class="messages">
+    {% if messages %}
         {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
+
+
+            {% if message.tags == 'warning' %}
+
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Hata!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+
+
+
+            {% if message.tags == 'success' %}
+
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Başarılı!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
         {% endfor %}
-    </ul>
 
 
-</div>
+    {% endif %}
+    <div class="login-box-body ">
 
-{% endif %}
+        <section class="content-header">
+            <h1>
+                KAYIT OL
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>KAYIT OL </a></li>
+
+            </ol>
+        </section>
+        <section class="content">
+
+            <form method="post" enctype="multipart/form-data" role="form">
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Kulup Üye Bilgileri </h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
 
 
-{% if message.tags == 'success' %}
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.profileImage.label }}</label>
 
-<div class="alert alert-success alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <h4><i class="icon fa fa-check"></i> Başarılı!</h4>
+                                            <center>
+                                                <img
+                                                        src="/media/{{ preRegistrationform.instance.profileImage }}"
+                                                        class="img-responsive img-bordered " alt="Resim Yok"
+                                                        style=" max-width: 60%; height: auto;"
+                                                ><br>
+                                            </center>
 
-
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-
-
-</div>
-
-{% endif %}
-{% endfor %}
+                                            {{ preRegistrationform.profileImage }}
+                                        </div>
 
 
-{% endif %}
-<div class="login-box-body ">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.first_name.label }}</label>
+                                            {{ preRegistrationform.first_name }}
+                                        </div>
 
-    <section class="content-header">
-        <h1>
-            KAYIT OL
 
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>KAYIT OL </a></li>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.motherName.label }}</label>
+                                            {{ preRegistrationform.motherName }}
+                                        </div>
 
-        </ol>
+
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.birthplace.label }}</label>
+                                            {{ preRegistrationform.birthplace }}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label style="padding-top: 16px"> {{ preRegistrationform.bloodType.label }}</label>
+                                            {{ preRegistrationform.bloodType }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.tc.label }}</label>
+                                            {{ preRegistrationform.tc }}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.last_name.label }}</label>
+                                            {{ preRegistrationform.last_name }}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.fatherName.label }}</label>
+                                            {{ preRegistrationform.fatherName }}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.birthDate.label }}</label>
+                                            {{ preRegistrationform.birthDate }}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.gender.label }}</label>
+                                            {{ preRegistrationform.gender }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.role.label }}</label>
+                                            {{ preRegistrationform.role }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> Kulup Üye İletişim Bilgileri</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.email.label }}</label>
+                                            {{ preRegistrationform.email }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.phoneNumber.label }}</label>
+                                            {{ preRegistrationform.phoneNumber }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.phoneNumber2.label }}</label>
+                                            {{ preRegistrationform.phoneNumber2 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.country.label }}</label>
+                                            {{ preRegistrationform.country }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.city.label }}</label>
+                                            {{ preRegistrationform.city }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.postalCode.label }}</label>
+                                            {{ preRegistrationform.postalCode }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.address.label }}</label>
+                                            {{ preRegistrationform.address }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Kulup Bilgileri</h3>
+                            </div>
+                            <div class="box-body">
+
+                                <div class="form-group">
+                                    <label> {{ preRegistrationform.name.label }}</label>
+                                    {{ preRegistrationform.name }}
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ preRegistrationform.shortName.label }}</label>
+                                    {{ preRegistrationform.shortName }}
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ preRegistrationform.foundingDate.label }}</label>
+                                    {{ preRegistrationform.foundingDate }}
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ preRegistrationform.isFormal.label }}</label>
+                                    {{ preRegistrationform.isFormal }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ preRegistrationform.logo.label }}</label>
+
+                                    {{ preRegistrationform.logo }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="box box-info collapsed-box">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Aynı zaman da kulup Antrenörü müsünüz?</h3>
+
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                    class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <div class="row">
+
+
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label> {{ preRegistrationform.isCoach.label }}</label>
+                                                    {{ preRegistrationform.isCoach }}
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label> {{ preRegistrationform.kademe_startDate.label }}</label>
+                                                    {{ preRegistrationform.kademe_startDate }}
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label> {{ preRegistrationform.kademe_definition.label }}</label>
+                                                    {{ preRegistrationform.kademe_definition }}
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label> {{ preRegistrationform.iban.label }}</label>
+                                                    {{ preRegistrationform.iban }}
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label> {{ preRegistrationform.kademe_belge.label }}</label>
+                                                    {{ preRegistrationform.kademe_belge }}
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> Kulup İletişim Bilgileri</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.clubMail.label }}</label>
+                                            {{ preRegistrationform.clubMail }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.clubphoneNumber.label }}</label>
+                                            {{ preRegistrationform.clubphoneNumber }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.clubphoneNumber2.label }}</label>
+                                            {{ preRegistrationform.clubphoneNumber2 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.clubcountry.label }}</label>
+                                            {{ preRegistrationform.clubcountry }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.clubcity.label }}</label>
+                                            {{ preRegistrationform.clubcity }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.postalCode.label }}</label>
+                                            {{ preRegistrationform.clubpostalCode }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label> {{ preRegistrationform.clubaddress.label }}</label>
+                                            {{ preRegistrationform.clubaddress }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> {{ preRegistrationform.dekont.label }}</label>
+                                                {{ preRegistrationform.dekont }}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> {{ preRegistrationform.petition.label }}</label>
+                                                {{ preRegistrationform.petition }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <button class="btn btn-primary btn-lg" type="submit">Onaya gönder</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+            </form>
+
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+
+    </div>
+
+
+
+    </div>
+
+    </div>
+
+
+    </div>
+
+
+    </form>
+
+
     </section>
-    <section class="content">
 
-        <form method="post" enctype="multipart/form-data" role="form">
-            {% csrf_token %}
-
-            <div class="row">
-
-                <div class="col-lg-6">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Kulup Üye Bilgileri </h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.profileImage.label }}</label>
-
-                                        <center>
-                                            <img
-                                                    src="/media/{{ preRegistrationform.instance.profileImage }}"
-                                                    class="img-responsive img-bordered " alt="Resim Yok"
-                                                    style=" max-width: 60%; height: auto;"
-                                            ><br>
-                                        </center>
-
-                                        {{ preRegistrationform.profileImage }}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.first_name.label }}</label>
-                                        {{ preRegistrationform.first_name }}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.motherName.label }}</label>
-                                        {{ preRegistrationform.motherName }}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.birthplace.label }}</label>
-                                        {{ preRegistrationform.birthplace }}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label style="padding-top: 16px"> {{ preRegistrationform.bloodType.label
-                                            }}</label>
-                                        {{ preRegistrationform.bloodType }}
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.tc.label }}</label>
-                                        {{ preRegistrationform.tc }}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.last_name.label }}</label>
-                                        {{ preRegistrationform.last_name }}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.fatherName.label }}</label>
-                                        {{ preRegistrationform.fatherName }}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.birthDate.label }}</label>
-                                        {{ preRegistrationform.birthDate }}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.gender.label }}</label>
-                                        {{ preRegistrationform.gender }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.role.label }}</label>
-                                        {{ preRegistrationform.role }}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                </div>
-                <div class="col-lg-6">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"> Kulup Üye İletişim Bilgileri</h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.email.label }}</label>
-                                        {{ preRegistrationform.email }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.phoneNumber.label }}</label>
-                                        {{ preRegistrationform.phoneNumber }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.phoneNumber2.label }}</label>
-                                        {{ preRegistrationform.phoneNumber2 }}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.country.label }}</label>
-                                        {{ preRegistrationform.country }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.city.label }}</label>
-                                        {{ preRegistrationform.city }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.postalCode.label }}</label>
-                                        {{ preRegistrationform.postalCode }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.address.label }}</label>
-                                        {{ preRegistrationform.address }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="row">
-
-                <div class="col-lg-6">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Kulup Bilgileri</h3>
-                        </div>
-                        <div class="box-body">
-
-                            <div class="form-group">
-                                <label> {{ preRegistrationform.name.label }}</label>
-                                {{ preRegistrationform.name }}
-                            </div>
-                            <div class="form-group">
-                                <label> {{ preRegistrationform.shortName.label }}</label>
-                                {{ preRegistrationform.shortName }}
-                            </div>
-                            <div class="form-group">
-                                <label> {{ preRegistrationform.foundingDate.label }}</label>
-                                {{ preRegistrationform.foundingDate }}
-                            </div>
-                            <div class="form-group">
-                                <label> {{ preRegistrationform.isFormal.label }}</label>
-                                {{ preRegistrationform.isFormal }}
-                            </div>
-
-                            <div class="form-group">
-                                <label>{{ preRegistrationform.logo.label }}</label>
-
-                                {{ preRegistrationform.logo }}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="box box-info collapsed-box">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">Aynı zaman da kulup Antrenörü müsünüz?</h3>
-
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                                class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <!-- /.box-tools -->
-                                </div>
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <div class="row">
-
-
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <label> {{ preRegistrationform.isCoach.label }}</label>
-                                                {{ preRegistrationform.isCoach }}
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <label> {{ preRegistrationform.kademe_startDate.label }}</label>
-                                                {{ preRegistrationform.kademe_startDate }}
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <label> {{ preRegistrationform.kademe_definition.label }}</label>
-                                                {{ preRegistrationform.kademe_definition }}
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <label> {{ preRegistrationform.iban.label }}</label>
-                                                {{ preRegistrationform.iban }}
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <label> {{ preRegistrationform.kademe_belge.label }}</label>
-                                                {{ preRegistrationform.kademe_belge }}
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-6">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"> Kulup İletişim Bilgileri</h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.clubMail.label }}</label>
-                                        {{ preRegistrationform.clubMail }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.clubphoneNumber.label }}</label>
-                                        {{ preRegistrationform.clubphoneNumber }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.clubphoneNumber2.label }}</label>
-                                        {{ preRegistrationform.clubphoneNumber2 }}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.clubcountry.label }}</label>
-                                        {{ preRegistrationform.clubcountry }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.clubcity.label }}</label>
-                                        {{ preRegistrationform.clubcity }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.postalCode.label }}</label>
-                                        {{ preRegistrationform.clubpostalCode }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label> {{ preRegistrationform.clubaddress.label }}</label>
-                                        {{ preRegistrationform.clubaddress }}
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label> {{ preRegistrationform.dekont.label }}</label>
-                                            {{ preRegistrationform.dekont }}
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label> {{ preRegistrationform.petition.label }}</label>
-                                            {{ preRegistrationform.petition }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="box-footer">
-                                    <button class="btn btn-primary btn-lg" type="submit">Onaya gönder</button>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-        </form>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-</div>
-
-
-</form>
-
-
-</section>
-
-</div>
+    </div>
 
 {% endblock %}
 
@@ -525,12 +518,8 @@
 <script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
 {#datatables pdf fatih #}
-{#
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-#}
-{#
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-#}
+{#<script src="https://code.jquery.com/jquery-3.3.1.js"></script>#}
+{#<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>#}
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -540,12 +529,8 @@
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
 {#buton tasarimi icin eklendi #}
-{#
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.foundation.min.js"></script>
-#}
-{#
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.foundation.min.js"></script>
-#}
+{#<script src="https://cdn.datatables.net/1.10.20/js/dataTables.foundation.min.js"></script>#}
+{#<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.foundation.min.js"></script>#}
 
 
 <script src="{% static 'bower_components/jquery-sparkline/dist/jquery.sparkline.min.js' %}"></script>

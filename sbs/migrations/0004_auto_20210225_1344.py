@@ -5,6 +5,7 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
         ('sbs', '0003_auto_20210223_1325'),
     ]
@@ -13,8 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='abirimparametre',
             name='birim',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
-                                       to='sbs.Abirim', verbose_name='Birim'),
+            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sbs.Abirim', verbose_name='Birim'),
         ),
         migrations.AlterField(
             model_name='abirimparametre',

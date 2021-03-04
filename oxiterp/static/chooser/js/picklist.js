@@ -14,7 +14,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     'use strict';
     /**
      * 获取select 中选择的数据
-     * @param {Select DOM} ele
+     * @param {Select DOM} ele 
      */
 
     var getSelect = function getSelect(ele) {
@@ -37,7 +37,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     *
+     * 
      */
     PickList.DEFAULTS = {
         data: {
@@ -180,7 +180,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
     /**
      * 触发事件
-     * @param {string} name
+     * @param {string} name 
      */
     PickList.prototype.trigger = function (name) {
         var args = Array.prototype.slice.call(arguments, 1);

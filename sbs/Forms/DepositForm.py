@@ -33,7 +33,7 @@ class DepositForm(ModelForm):
                                            'style': 'width: 100%; ', 'required': 'required'}),
             'date': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker', 'autocomplete': 'off',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
             'description': forms.TextInput(attrs={'class': 'form-control', "style": "text-transform:uppercase"}),
 

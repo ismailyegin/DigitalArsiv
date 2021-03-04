@@ -121,7 +121,6 @@
         -webkit-transform: rotate(359deg)
     }
 }
-
 @-moz-keyframes pace-theme-center-atom-spin {
     0% {
         -moz-transform: rotate(0deg)
@@ -130,7 +129,6 @@
         -moz-transform: rotate(359deg)
     }
 }
-
 @-o-keyframes pace-theme-center-atom-spin {
     0% {
         -o-transform: rotate(0deg)
@@ -139,7 +137,6 @@
         -o-transform: rotate(359deg)
     }
 }
-
 @keyframes pace-theme-center-atom-spin {
     0% {
         transform: rotate(0deg)

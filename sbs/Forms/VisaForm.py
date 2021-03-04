@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from sbs.models.Level import Level
 
 
+
 class VisaForm(ModelForm):
     class Meta:
         model = Level

@@ -5,6 +5,7 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
         ('sbs', '0009_remove_adosya_name'),
     ]
@@ -13,7 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='adosya',
             name='klasor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
-                                    to='sbs.Aklasor'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sbs.Aklasor'),
         ),
     ]

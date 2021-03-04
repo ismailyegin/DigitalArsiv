@@ -10,11 +10,9 @@
 .irs {
     height: 55px;
 }
-
 .irs-with-grid {
     height: 75px;
 }
-
 .irs-line {
     height: 10px;
     top: 33px;
@@ -66,7 +64,6 @@
     border-radius: 5px;
     -moz-border-radius: 5px;
 }
-
 .lt-ie9 .irs-shadow {
     filter: alpha(opacity=30);
 }
@@ -114,7 +111,6 @@
     border-radius: 3px;
     -moz-border-radius: 3px;
 }
-
 .lt-ie9 .irs-from, .lt-ie9 .irs-to, .lt-ie9 .irs-single {
     background: #999;
 }
@@ -122,12 +118,10 @@
 .irs-grid {
     height: 27px;
 }
-
 .irs-grid-pol {
     opacity: 0.5;
     background: #428bca;
 }
-
 .irs-grid-pol.small {
     background: #999;
 }

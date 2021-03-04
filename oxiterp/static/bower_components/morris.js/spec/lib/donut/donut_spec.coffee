@@ -1,4 +1,5 @@
 describe 'Morris.Donut', ->
+
   describe 'svg structure', ->
     defaults =
       element: 'graph'

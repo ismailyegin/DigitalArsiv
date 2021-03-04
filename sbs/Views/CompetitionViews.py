@@ -65,6 +65,7 @@ def aplication(request, pk):
         logout(request)
         return redirect('accounts:login')
 
+
     musabaka = Competition.objects.get(pk=pk)
 
     login_user = request.user
@@ -80,7 +81,7 @@ def aplication(request, pk):
                     clubsPk.append(club.pk)
 
                 comAthlete = CompetitionsAthlete.objects.filter(competition=pk,
-                                                                athlete__licenses__sportsClub__in=clubsPk).distinct()
+                                                        athlete__licenses__sportsClub__in=clubsPk).distinct()
         else:
             messages.warning(request, 'Lütfen Eksik olan Sporcu Bilgilerini tamamlayiniz.')
             return redirect('sbs:musabakalar')
@@ -96,6 +97,7 @@ def aplication(request, pk):
 
 @login_required
 def return_competition(request):
+
     perm = general_methods.control_access(request)
 
     if not perm:
@@ -118,6 +120,7 @@ def return_competitions(request):
     competition = Competition.objects.filter(registerStartDate__lte=timezone.now(),
                                              registerFinishDate__gte=timezone.now())
     competitions = Competition.objects.none()
+
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -177,6 +180,7 @@ def musabaka_duzenle(request, pk):
     musabaka = Competition.objects.get(pk=pk)
     athletes = CompetitionsAthlete.objects.filter(competition=musabaka)
 
+
     weights = Weight.objects.all()
     competition_form = CompetitionForm(request.POST or None, instance=musabaka)
     category = Category.objects.all()
@@ -192,6 +196,8 @@ def musabaka_duzenle(request, pk):
                     musabaka.categoryies.add(Category.objects.get(pk=item))
                     musabaka.save()
 
+
+
             competition_form.save()
             messages.success(request, 'Müsabaka Başarıyla Güncellenmiştir.')
 
@@ -205,7 +211,7 @@ def musabaka_duzenle(request, pk):
 
     return render(request, 'musabaka/musabaka-duzenle.html',
                   {'competition_form': competition_form, 'competition': musabaka, 'athletes': athletes,
-                   'category': category})
+                    'category': category})
 
 
 @login_required
@@ -260,6 +266,7 @@ def musabaka_sporcu_sec(request, pk):
     competition = Competition.objects.filter(registerStartDate__lte=timezone.now(),
                                              registerFinishDate__gte=timezone.now())
 
+
     return render(request, 'musabaka/musabaka-sporcu-sec.html',
                   {'pk': pk, 'weights': category, 'application': competition})
 
@@ -281,6 +288,7 @@ def return_sporcu_ajax(request):
 
     elif request.method == 'POST':
         datatables = request.POST
+
 
     # /Sayfanın baska bir yerden istenmesi durumunda degerlerin None dönmemesi icin degerler try boklari icerisine alindi
 
@@ -360,6 +368,7 @@ def return_sporcu_ajax(request):
             'anne': item.person.motherName,
             'baba': item.person.fatherName,
 
+
             'name': item.user.first_name + ' ' + item.user.last_name,
 
             'birthDate': date,
@@ -432,6 +441,7 @@ def return_sporcu(request):
             for club in clubs:
                 clubsPk.append(club.pk)
 
+
             modeldata = Athlete.objects.exclude(pk__in=athletes).filter(licenses__sportsClub__in=clubsPk).distinct()
             total = modeldata.count()
 
@@ -454,6 +464,7 @@ def return_sporcu(request):
             modeldata = Athlete.objects.filter(
                 Q(user__last_name__icontains=search) | Q(user__first_name__icontains=search) | Q(
                     user__email__icontains=search))
+
 
             for comp in compAthlete:
                 if comp.athlete:
@@ -538,6 +549,7 @@ def return_sporcu(request):
         beka.append(data)
         say += 1
 
+
     response = {
 
         'data': beka,
@@ -589,6 +601,7 @@ def choose_athlete_update(request, pk, competition):
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
 
+
         try:
 
             # bu alanda sporcu güncelleme alani olacak kategorisini güncelleme yapabilecegiz
@@ -619,8 +632,8 @@ def choose_athlete(request, pk, competition):
                 compAthlete = CompetitionsAthlete()
                 if CompetitionsAthlete.objects.filter(competition=competition).filter(athlete=athlete).count() <= 1:
                     if CompetitionsAthlete.objects.filter(competition=competition).filter(athlete=athlete):
-                        competitionAthlete = CompetitionsAthlete.objects.get(athlete=athlete, competition=competition)
-                        katagori = competitionAthlete.category.pk
+                        competitionAthlete=CompetitionsAthlete.objects.get(athlete=athlete , competition=competition)
+                        katagori=competitionAthlete.category.pk
                         if str(katagori) != request.POST.get('weight'):
                             if request.POST.get('sporcu'):
                                 compAthlete.athleteTwo = Athlete.objects.get(pk=request.POST.get('sporcu'))
@@ -803,6 +816,7 @@ def return_competition_ajax(request):
                 modeldata = Competition.objects.filter(year=pk)
                 total = modeldata.count()
 
+
     say = start + 1
     start = start + length
     page = start / length
@@ -858,6 +872,7 @@ def upload(request, pk):
     return render(request, 'musabaka/SonucAktar.html', {'competition': competition})
 
 
+
 @login_required
 def antrenor_ajax(request):
     perm = general_methods.control_access_klup(request)
@@ -881,6 +896,8 @@ def antrenor_ajax(request):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
+
+
 @login_required
 def antrenor_sporcu_ajax(request):
     perm = general_methods.control_access_klup(request)
@@ -889,6 +906,7 @@ def antrenor_sporcu_ajax(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+
 
     if request.method == 'POST' and request.is_ajax():
         if request.POST.get('coach'):
@@ -903,6 +921,8 @@ def antrenor_sporcu_ajax(request):
                 }
                 beka.append(data)
             return JsonResponse({'data': beka})
+
+
 
         # return HttpResponse(serializers.serialize("json", Coach.objects.all()))
     else:

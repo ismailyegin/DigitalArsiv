@@ -10,7 +10,7 @@ class CompetitionForm(ModelForm):
 
         fields = (
             'name', 'startDate', 'finishDate', 'compType', 'eventPlace',
-            'registerStartDate', 'registerFinishDate', 'compGeneralType')
+            'registerStartDate', 'registerFinishDate','compGeneralType')
 
         labels = {'name': 'İsim', 'startDate': 'Başlangıç Tarihi', 'finishDate': 'Bitiş Tarihi',
                   'eventPlace': 'Etkinlik Yeri',
@@ -33,7 +33,7 @@ class CompetitionForm(ModelForm):
 
             'startDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker2', 'autocomplete': 'on',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
             'finishDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker4', 'autocomplete': 'on',

@@ -9,6 +9,7 @@ import shapely.ops
 import codecs
 import time
 
+
 format = '%.8f %.8f'
 tolerance = 0.01
 infile = '/Users/kirilllebedev/Maps/50m-admin-0-countries/ne_50m_admin_0_countries.shp'
@@ -18,6 +19,7 @@ outfile = 'map.shp'
 in_ds = ogr.Open(infile, update=0)
 in_layer = in_ds.GetLayer(0)
 in_defn = in_layer.GetLayerDefn()
+
 
 # Create output file with similar information.
 shp_driver = ogr.GetDriverByName('ESRI Shapefile')
@@ -35,6 +37,7 @@ for fld_index in range(in_field_count):
     fd.SetWidth(src_fd.GetWidth())
     fd.SetPrecision(src_fd.GetPrecision())
     shp_layer.CreateField(fd)
+
 
 # Load geometries
 geometries = []
@@ -92,8 +95,6 @@ int(round(time.time() * 1000)) - start
 
 simplifiedLines = {}
 pivotPoints = {}
-
-
 def simplifyRing(ring):
     coords = list(ring.coords)[0:-1]
     simpleCoords = []
@@ -172,6 +173,7 @@ for geom in geometries:
         results.append(shapely.geometry.MultiPolygon(simplePolygons))
     else:
         results.append(None)
+
 
 # Process all features in input layer.
 in_feat = in_layer.GetNextFeature()

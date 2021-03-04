@@ -30,28 +30,20 @@
     <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
 
 
-    {#
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    #}
+    {#    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">#}
     <link rel="stylesheet" href="{% static 'datatable/css/table.css' %}">
     <link rel="stylesheet" href="{% static 'datatable/css/button.css' %}">
 
-    {# seçim test#}
+    {#    seçim test#}
     <link rel="stylesheet" href="{% static 'datatable/css/select.css' %}">
     <link rel="stylesheet" href="{% static 'datatable/css/editor.css' %}">
     <link rel="stylesheet" href="{% static 'datatable/css/rowGroup.css' %}">
 
 
-    {# buton tasarimi icin#}
-    {#
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
-    #}
-    {#
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">
-    #}
-    {#
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.foundation.min.css">
-    #}
+    {#    buton tasarimi icin#}
+    {#     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">#}
+    {#     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">#}
+    {#     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.foundation.min.css">#}
 
     <link rel="stylesheet"
           href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
@@ -67,9 +59,7 @@
 
     <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
 
-    {#
-    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-    #}
+    {#    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">#}
 
     <link rel="stylesheet" href="{% static 'fieldChooser/css/jquery.lwMultiSelect.css' %}">
     <link rel="stylesheet" href="{% static 'bower_components/bootstrap-daterangepicker/daterangepicker.css' %}">
@@ -85,6 +75,7 @@
     <script src="{% static 'loader/loader.js' %}"></script>
 
     <script src="{% static 'fieldChooser/js/jquery.lwMultiSelect.js' %}"></script>
+
 
 
     <style>
@@ -108,13 +99,15 @@
         <p class="login-box-msg">Lütfen Bilgilerinizi Giriniz</p>
 
         {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message.message }}</li>
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message.message }}</li>
 
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
         {% endif %}
+
+
 
 
         <form action="" method="post">
@@ -142,12 +135,12 @@
             <div class="form-group has-feedback">
 
 
-                <input type="text" name="tarih" placeholder="Dogum Tarihi:" class="form-control datemask"
-                       id="datepicker"
-                       required="required">
+                <input type="text" name="tarih" placeholder="Dogum Tarihi:" class="form-control datemask" id="datepicker"
+                        required="required">
 
 
             </div>
+
 
 
             <div class="row">
@@ -202,9 +195,7 @@
 <script src="{% static 'plugins/jvectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
 <script src="{% static 'plugins/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
 <script src="{% static 'bower_components/chart.js/Chart.js' %}"></script>
-{#
-<script src="{% static 'dist/js/pages/dashboard2.js' %}"></script>
-#}
+{#<script src="{% static 'dist/js/pages/dashboard2.js' %}"></script>#}
 <!-- SlimScroll -->
 <script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
 <!-- FastClick -->
@@ -251,12 +242,10 @@
     $(function () {
 
 
+
         $('.datemask').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'})
         //Money Euro
-        {
-            #$('[data-mask]').inputmask()
-            #
-        }
+        {#$('[data-mask]').inputmask()#}
 
 
         //Date picker

@@ -11,7 +11,6 @@ define(function () {
     }
     return '';
   }
-
   return {
     errorLoading: function () {
       return 'Výsledky nemohly být načteny.';

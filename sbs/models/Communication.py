@@ -2,7 +2,6 @@ from django.db import models
 from sbs.models.City import City
 from sbs.models.Country import Country
 
-
 class Communication(models.Model):
     postalCode = models.CharField(max_length=120, null=True, blank=True)
     phoneNumber = models.CharField(max_length=120, null=True, blank=True)

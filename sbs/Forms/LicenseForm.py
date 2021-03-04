@@ -2,7 +2,6 @@ from django import forms
 from django.forms import ModelForm
 from sbs.models import License, SportsClub
 
-
 class LicenseForm(ModelForm):
     sportsClub = forms.ModelChoiceField(queryset=SportsClub.objects.all(),
                                         to_field_name='name',
@@ -17,12 +16,11 @@ class LicenseForm(ModelForm):
         model = License
 
         fields = (
-            'startDate', 'sportsClub', 'branch', 'licenseNo', 'cityHeadShip', 'expireDate', 'lisansPhoto', 'coach',
-            'coach2')
+            'startDate', 'sportsClub', 'branch', 'licenseNo', 'cityHeadShip', 'expireDate', 'lisansPhoto','coach','coach2')
 
         labels = {'startDate': 'Başlangıç Tarihi*', 'branch': 'Branş*',
                   'licenseNo': 'Lisans No*', 'cityHeadShip': 'Verildiği İl*', 'expireDate': 'Bitiş Tarihi*',
-                  'lisansPhoto': 'Lisans Foto', 'coach': 'Antrenör 1', 'coach2': 'Antrenör 2'}
+                  'lisansPhoto': 'Lisans Foto','coach':'Antrenör 1','coach2':'Antrenör 2'}
 
         widgets = {
 
@@ -36,8 +34,7 @@ class LicenseForm(ModelForm):
 
             'branch': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                           'style': 'width: 100%; '}),
-            'coach': forms.Select(
-                attrs={'class': 'form-control select2 select2-hidden-accessible', 'style': 'width: 100%; '}),
+            'coach':forms.Select(attrs={'class':'form-control select2 select2-hidden-accessible', 'style': 'width: 100%; '}),
 
             'coach2': forms.Select(
                 attrs={'class': 'form-control select2 select2-hidden-accessible', 'style': 'width: 100%; '}),
@@ -47,5 +44,9 @@ class LicenseForm(ModelForm):
 
             'cityHeadShip': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',
                                                 'style': 'width: 100%;', 'required': 'required'}),
+
+
+
+
 
         }

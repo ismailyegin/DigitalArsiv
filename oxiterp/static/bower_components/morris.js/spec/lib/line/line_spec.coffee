@@ -1,4 +1,5 @@
 describe 'Morris.Line', ->
+
   it 'should raise an error when the placeholder element is not found', ->
     my_data = [{x: 1, y: 1}, {x: 2, y: 2}]
     fn = ->
@@ -32,6 +33,7 @@ describe 'Morris.Line', ->
     chart.colorFor(chart.data[1], 1, 'point').should.equal red
 
   describe 'generating column labels', ->
+
     it 'should use user-supplied x value strings by default', ->
       chart = Morris.Line
         element: 'graph'

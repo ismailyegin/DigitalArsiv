@@ -6,7 +6,6 @@ from sbs.models.Nationnality import Nationnality
 
 from unicode_tr import unicode_tr
 
-
 class Person(models.Model):
     ILKOKUL = 10
     lISE = 15
@@ -88,6 +87,7 @@ class Person(models.Model):
     bloodType = models.CharField(max_length=128, verbose_name='Kan Grubu', choices=BLOODTYPE, null=True, blank=True)
     gender = models.IntegerField(choices=GENDER_CHOICES, blank=True, null=True)
 
+
     document = models.ManyToManyField(Document)
     penal = models.ManyToManyField(Penal)
 
@@ -106,6 +106,8 @@ class Person(models.Model):
     mezunokul = models.CharField(max_length=200, blank=True, null=True)
 
     material = models.ForeignKey(Material, models.CASCADE, blank=True, null=True)
+
+
 
     # class Meta:
     #     default_permissions = ()

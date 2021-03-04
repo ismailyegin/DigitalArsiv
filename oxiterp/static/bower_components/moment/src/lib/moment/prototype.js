@@ -71,7 +71,6 @@ proto.isoWeekYear = getSetISOWeekYear;
 
 // Quarter
 import {getSetQuarter} from '../units/quarter';
-
 proto.quarter = proto.quarters = getSetQuarter;
 
 // Month
@@ -101,22 +100,18 @@ proto.dayOfYear = getSetDayOfYear;
 
 // Hour
 import {getSetHour} from '../units/hour';
-
 proto.hour = proto.hours = getSetHour;
 
 // Minute
 import {getSetMinute} from '../units/minute';
-
 proto.minute = proto.minutes = getSetMinute;
 
 // Second
 import {getSetSecond} from '../units/second';
-
 proto.second = proto.seconds = getSetSecond;
 
 // Millisecond
 import {getSetMillisecond} from '../units/millisecond';
-
 proto.millisecond = proto.milliseconds = getSetMillisecond;
 
 // Offset
@@ -147,7 +142,6 @@ proto.isUTC = isUtc;
 
 // Timezone
 import {getZoneAbbr, getZoneName} from '../units/timezone';
-
 proto.zoneAbbr = getZoneAbbr;
 proto.zoneName = getZoneName;
 

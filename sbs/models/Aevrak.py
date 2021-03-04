@@ -1,6 +1,4 @@
 from django.db import models
-
-
 class Aevrak(models.Model):
     file = models.FileField(null=False, blank=False)
     creationDate = models.DateTimeField(auto_now_add=True)

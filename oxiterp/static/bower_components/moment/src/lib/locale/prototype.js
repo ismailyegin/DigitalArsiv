@@ -37,7 +37,6 @@ proto.monthsShortRegex = monthsShortRegex;
 
 // Week
 import {localeWeek, localeFirstDayOfYear, localeFirstDayOfWeek} from '../units/week';
-
 proto.week = localeWeek;
 proto.firstDayOfYear = localeFirstDayOfYear;
 proto.firstDayOfWeek = localeFirstDayOfWeek;

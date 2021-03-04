@@ -202,7 +202,6 @@ body {
 #mocha-report.pending .test.fail {
     display: none;
 }
-
 #mocha-report.pending .test.pass.pending {
     display: block;
 }

@@ -133,7 +133,7 @@ The plugin allso adds the following methods to the plot object:
             mouseUpHandler = function (e) {
                 onMouseUp(e);
             };
-
+            
             $(document).one("mouseup", mouseUpHandler);
         }
 

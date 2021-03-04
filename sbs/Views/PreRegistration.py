@@ -101,7 +101,6 @@ def rejected_preRegistration(request, pk):
     return render(request, 'kulup/kulupBasvuru.html',
                   {'prepegidtration': prepegidtration})
 
-
 @login_required
 def approve_preRegistration(request, pk):
     perm = general_methods.control_access(request)
@@ -251,9 +250,12 @@ def approve_preRegistration(request, pk):
                   {'prepegidtration': prepegidtration})
 
 
+
+
 @login_required
 def return_preRegistration(request):
     perm = general_methods.control_access(request)
+
 
     if not perm:
         logout(request)

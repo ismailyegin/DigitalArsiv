@@ -1581,7 +1581,7 @@
             // Other browsers and versions of IE are untested and the behaviour is unknown.
             if (e.keyCode === 13) {
                 // Prevent the calendar from being updated twice on Chrome/Firefox/Edge
-                e.preventDefault();
+                e.preventDefault(); 
                 this.formInputsChanged(e);
             }
         },

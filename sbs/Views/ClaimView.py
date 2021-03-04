@@ -42,6 +42,7 @@ def claim_add(request):
         if claim_form.is_valid():
             claim_form.save()
 
+
             messages.success(request, 'Destek Talep  Eklendi.')
             return redirect('sbs:destek-talep-listesi')
         else:

@@ -18,7 +18,6 @@ class SportClubUser(models.Model):
     dataAccessControl = models.BooleanField(blank=True, null=True, default=False)
 
     oldpk = models.IntegerField(null=True, blank=True)
-
     def __str__(self):
         return '%s %s' % (self.user.first_name, self.user.last_name)
 

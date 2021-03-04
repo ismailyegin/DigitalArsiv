@@ -17,6 +17,7 @@ class CategoryItem(models.Model):
 
     def __str__(self):
 
+
         # öz yenilemeli bir fonksiyon yazılacak
 
         if self.parent == None:

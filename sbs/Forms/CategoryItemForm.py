@@ -24,6 +24,5 @@ class CategoryItemForm(ModelForm):
             self.fields['parent'].empty_label = 'Seçiniz'
             self.fields['parent'].choices = CategoryItem.objects.filter(forWhichClazz='BELT').values_list("name",
                                                                                                           "name").distinct()
-
         def branch(self):
             return self.branch()

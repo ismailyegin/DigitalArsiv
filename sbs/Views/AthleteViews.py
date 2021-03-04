@@ -59,7 +59,6 @@ from sbs.models.CompetitionsAthlete import CompetitionsAthlete
 
 from unicode_tr import unicode_tr
 
-
 @login_required
 def return_add_athlete_antrenor(request):
     perm = general_methods.control_access_klup(request)
@@ -193,6 +192,7 @@ def return_add_athlete_antrenor(request):
             license.sportsClub = SportsClub.objects.get(name=request.POST.get('sportsClub'))
             license.save()
 
+
             athlete.licenses.add(license)
 
             # subject, from_email, to = 'WUSHU - Sporcu Bilgi Sistemi Kullanıcı Giriş Bilgileri', 'ik@oxityazilim.com', user.email
@@ -217,7 +217,6 @@ def return_add_athlete_antrenor(request):
                    'communication_form': communication_form
 
                    })
-
 
 @login_required
 def sporcu_birlestir(request):
@@ -298,7 +297,9 @@ def sporcu_sec(request, pk):
 
     if request.method == 'POST':
 
+
         athletes1 = request.POST.getlist('selected_options')
+
 
         for item in athletes1:
             item = Athlete.objects.get(pk=item)
@@ -338,7 +339,7 @@ def return_add_athlete(request):
             clubsPk.append(club.pk)
         license_form.fields['sportsClub'].queryset = SportsClub.objects.filter(id__in=clubsPk)
 
-    elif active == 'Yonetim' or active == 'Admin' or active == 'Antrenor':
+    elif active == 'Yonetim' or active == 'Admin' or active=='Antrenor':
         license_form.fields['sportsClub'].queryset = SportsClub.objects.all()
 
     # lisan ekleme son alani bu alanlar sadece form bileselerinin sisteme gidebilmesi icin post ile gelen veride gene ayni şekilde  karşılama ve kaydetme islemi yapilacak
@@ -458,6 +459,7 @@ def return_athletes_antrenor(request):
     user = User.objects.get(pk=login_user.pk)
 
     user_form = UserSearchForm()
+
 
     athletes = Athlete.objects.none()
     if request.method == 'POST':
@@ -665,6 +667,7 @@ def updateathletes(request, pk):
                                'metarial_form': metarial_form, 'competitions': competitions
                                })
 
+
         name = request.POST.get('first_name')
         surname = request.POST.get('last_name')
         year = request.POST.get('birthDate')
@@ -687,6 +690,7 @@ def updateathletes(request, pk):
             kisi.username = user_form.cleaned_data['email']
             kisi.first_name = unicode_tr(user_form.cleaned_data['first_name']).upper()
             kisi.last_name = unicode_tr(user_form.cleaned_data['last_name']).upper()
+
 
             kisi.email = kisi.username
             kisi.save()
@@ -865,7 +869,6 @@ def athlete_penal_delete(request, athlete_pk, document_pk):
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
-
 @login_required
 def athlete_document_delete(request, athlete_pk, document_pk):
     perm = general_methods.control_access(request)
@@ -887,6 +890,8 @@ def athlete_document_delete(request, athlete_pk, document_pk):
 
     else:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
 
 
 @login_required
@@ -1109,6 +1114,8 @@ def sporcu_belge_ekle(request, pk):
                   {'belge': document_form})
 
 
+
+
 @login_required
 def sporcu_lisans_ekle(request, pk):
     perm = general_methods.control_access(request)
@@ -1200,6 +1207,7 @@ def sporcu_lisans_reddet(request, license_pk, athlete_pk):
         log = str(athlete.user.get_full_name()) + " Lisans reddedildi"
         log = general_methods.logwrite(request, request.user, log)
         messages.success(request, 'Lisans Reddedilmiştir')
+
 
     return redirect('sbs:update-athletes', pk=athlete_pk)
 
@@ -1607,6 +1615,8 @@ def sporcu_kusak_listesi(request):
     perm = general_methods.control_access(request)
     active = general_methods.controlGroup(request)
 
+
+
     if not perm:
         logout(request)
         return redirect('accounts:login')
@@ -1739,9 +1749,9 @@ def sporcu_lisans_listesi(request):
                 licenses = License.objects.filter(sportsClub_id__in=clubsPk).filter(query).distinct()
             elif active == 'Yonetim' or active == 'Admin':
                 licenses = License.objects.filter(query).distinct()
-            elif active == 'Antrenor':
+            elif active=='Antrenor':
                 sc_user = Coach.objects.get(user=user)
-                licenses = License.objects.filter(coach=sc_user).filter(query).distinct()
+                licenses=License.objects.filter(coach=sc_user).filter(query).distinct()
 
         else:
             if active == 'KlupUye':
@@ -1756,7 +1766,8 @@ def sporcu_lisans_listesi(request):
                 licenses = License.objects.all().distinct()
             elif active == 'Antrenor':
                 sc_user = Coach.objects.get(user=user)
-                licenses = License.objects.filter(coach=sc_user).distinct()
+                licenses=License.objects.filter(coach=sc_user).distinct()
+
 
     sportclup = SearchClupForm(request.POST, request.FILES or None)
     if active == 'KlupUye':

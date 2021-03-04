@@ -17,7 +17,6 @@ from datetime import timedelta, datetime
 
 from sbs.Forms.ProductSearchForm import ProductSearchForm
 
-
 @login_required
 def add_product(request):
     perm = general_methods.control_access(request)
@@ -77,6 +76,7 @@ def product_delete(request, pk):
         logout(request)
         return redirect('accounts:login')
     if request.method == 'POST' and request.is_ajax():
+
 
         try:
             obj = Products.objects.get(pk=pk)

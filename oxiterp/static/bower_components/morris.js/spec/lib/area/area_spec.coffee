@@ -1,4 +1,5 @@
 describe 'Morris.Area', ->
+
   describe 'svg structure', ->
     defaults =
       element: 'graph'

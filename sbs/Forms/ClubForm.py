@@ -32,6 +32,6 @@ class ClubForm(ModelForm):
 
             'foundingDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker2', 'autocomplete': 'off',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
         }

@@ -4,6 +4,7 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
         ('sbs', '0013_auto_20210226_0751'),
     ]
@@ -82,8 +83,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='abirimparametre',
             name='type',
-            field=models.CharField(
-                choices=[('date', 'Date'), ('string', 'String'), ('number', 'Number'), ('file', 'file')],
-                default='string', max_length=128, verbose_name='Türü '),
+            field=models.CharField(choices=[('date', 'Date'), ('string', 'String'), ('number', 'Number'), ('file', 'file')], default='string', max_length=128, verbose_name='Türü '),
         ),
     ]

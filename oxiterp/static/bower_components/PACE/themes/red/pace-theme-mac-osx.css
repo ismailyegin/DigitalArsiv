@@ -75,7 +75,6 @@
         transform: translate(-28px, 0);
     }
 }
-
 @-moz-keyframes pace-theme-mac-osx-motion {
     0% {
         -moz-transform: none;
@@ -86,7 +85,6 @@
         transform: translate(-28px, 0);
     }
 }
-
 @-o-keyframes pace-theme-mac-osx-motion {
     0% {
         -o-transform: none;
@@ -97,7 +95,6 @@
         transform: translate(-28px, 0);
     }
 }
-
 @-ms-keyframes pace-theme-mac-osx-motion {
     0% {
         -ms-transform: none;
@@ -108,7 +105,6 @@
         transform: translate(-28px, 0);
     }
 }
-
 @keyframes pace-theme-mac-osx-motion {
     0% {
         transform: none;

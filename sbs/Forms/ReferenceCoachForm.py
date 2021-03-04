@@ -23,6 +23,8 @@ class RefereeCoachForm(ModelForm):
             'country', 'iban', 'tc', 'profileImage', 'birthDate', 'bloodType', 'gender', 'birthplace', 'motherName',
             'fatherName', 'kademe_belge', 'kademe_startDate')
 
+
+
         labels = {'iban': 'İban Adresi', 'first_name': 'Ad', 'last_name': 'Soyad', 'email': 'Email',
                   'phoneNumber': 'Cep Telefonu', 'phoneNumber2': 'Sabit Telefon', 'postalCode': 'Posta Kodu',
                   'city': 'İl', 'country': 'Ülke', 'tc': 'T.C.', 'gender': 'Cinsiyet',
@@ -86,7 +88,7 @@ class RefereeCoachForm(ModelForm):
                                            'style': 'width: 100%;', 'required': 'required'}),
             'kademe_startDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker2', 'autocomplete': 'off',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
         }
 

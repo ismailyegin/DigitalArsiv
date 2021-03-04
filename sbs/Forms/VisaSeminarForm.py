@@ -1,19 +1,17 @@
 from django import forms
 from django.forms import ModelForm
 from sbs.models.VisaSeminar import VisaSeminar
-
-
 class VisaSeminarForm(ModelForm):
     class Meta:
         model = VisaSeminar
         fields = (
             'name', 'startDate', 'finishDate', 'location', 'branch',
-            'application', 'appStartDate', 'appFinishDate', 'year'
+            'application', 'appStartDate', 'appFinishDate','year'
         )
         labels = {'name': 'İsim', 'startDate': 'Başlangıç Tarihi', 'finishDate': 'Bitiş Tarihi',
                   'location': 'Yer', 'branch': 'Branş',
                   'application': 'Online Basvuru açık mı?', 'appStartDate': 'Online Basvuru Başlangıc Tarihi',
-                  'appFinishDate': 'Online Basvuru Bitiş tarihi', 'year': 'Geçerlilik Yılı'
+                  'appFinishDate': 'Online Basvuru Bitiş tarihi','year':'Geçerlilik Yılı'
                   }
         widgets = {
             'application': forms.Select(attrs={'class': 'form-control select2 select2-hidden-accessible',

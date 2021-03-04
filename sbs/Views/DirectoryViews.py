@@ -205,6 +205,8 @@ def update_directory_member(request, pk):
         member.save()
     groups = Group.objects.all()
 
+
+
     user = User.objects.get(pk=member.user.pk)
     person = Person.objects.get(pk=member.person.pk)
 
@@ -223,6 +225,7 @@ def update_directory_member(request, pk):
 
     communication_form = CommunicationForm(request.POST or None, instance=communication)
     metarial_form = MaterialForm(request.POST or None, instance=metarial)
+
 
     if request.method == 'POST':
 
@@ -435,6 +438,7 @@ def update_commission(request, pk):
 
     return render(request, 'yonetim/kurul-duzenle.html',
                   {'commission_form': commission_form})
+
 
 
 @login_required

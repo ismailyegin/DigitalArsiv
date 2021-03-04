@@ -198,6 +198,8 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
 })(jQuery);
 
 
+
+
 (function ($) {
     var options = {
         xaxis: {
@@ -312,7 +314,7 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
 
             if (!c)
                 c = {left: w / 2, top: h / 2};
-
+                
             var xf = c.left / w,
                 yf = c.top / h,
                 minmax = {

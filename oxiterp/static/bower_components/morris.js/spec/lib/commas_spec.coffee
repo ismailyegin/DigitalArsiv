@@ -1,4 +1,5 @@
 describe '#commas', ->
+
   it 'should insert commas into long numbers', ->
 # zero
     Morris.commas(0).should.equal("0")

@@ -54,7 +54,7 @@ class RefereeForm(ModelForm):
 
             'kademe_startDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker4', 'autocomplete': 'off',
-                       'required': 'required'}),
+                        'required': 'required'}),
 
             'birthDate': forms.DateInput(
                 attrs={'class': 'form-control  pull-right datemask', 'id': 'datepicker', 'autocomplete': 'off',
@@ -93,3 +93,4 @@ class RefereeForm(ModelForm):
                                            'style': 'width: 100%;', 'required': 'required'}),
 
         }
+

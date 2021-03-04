@@ -7,8 +7,6 @@ from sbs.models.Category import Category
 from sbs.models.Judge import Judge
 
 from sbs.models.EnumFields import EnumFields
-
-
 class Competition(models.Model):
     TURKEY = 0
     WORLD = 1
@@ -28,9 +26,11 @@ class Competition(models.Model):
 
     # GRANDPRİX = 3
 
+
     COMPTYPE = (
         (INTERUNIVERSITY, 'Üniversiteler Arası'),
         (INTERSCHOOL, 'Okullar Arası'),
+
 
         (PERSONAL, 'Ferdi'),
 
@@ -60,6 +60,7 @@ class Competition(models.Model):
 
     categoryies = models.ManyToManyField(Category)
     judges = models.ManyToManyField(Judge)
+
 
     def __str__(self):
         return '%s ' % self.name

@@ -1,4 +1,5 @@
 describe 'Morris.Bar#colorFor', ->
+
   defaults =
     element: 'graph'
     data: [{x: 'foo', y: 2, z: 3}, {x: 'bar', y: 4, z: 6}]

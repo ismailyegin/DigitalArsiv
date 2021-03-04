@@ -2983,6 +2983,7 @@
   var rnotwhite = (/\S+/g);
 
 
+
 // String to Object options format cache
   var optionsCache = {};
 
@@ -3412,6 +3413,8 @@
 
 // Kick off the DOM ready check even if the user does not
   jQuery.ready.promise();
+
+
 
 
 // Multifunctional method to get and set values of a collection
@@ -7375,6 +7378,8 @@
   });
 
 
+
+
 // Return jQuery for attributes-only inclusion
 
 
@@ -7415,6 +7420,7 @@
   var nonce = jQuery.now();
 
   var rquery = (/\?/);
+
 
 
 // Support: Android 2.3
@@ -8560,6 +8566,8 @@
   });
 
 
+
+
 // Install script dataType
   jQuery.ajaxSetup({
     accepts: {
@@ -8699,6 +8707,8 @@
       return "script";
     }
   });
+
+
 
 
 // data: string of html
@@ -9041,6 +9051,8 @@
   };
 
   jQuery.fn.andSelf = jQuery.fn.addBack;
+
+
 
 
 // Register as a named AMD module, since jQuery can be concatenated with other

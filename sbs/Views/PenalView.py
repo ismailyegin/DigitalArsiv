@@ -93,6 +93,7 @@ def return_penal_athlete(request):
 
             query = Q()
 
+
             if firstName:
                 query &= Q(user__first_name__icontains=firstName)
 

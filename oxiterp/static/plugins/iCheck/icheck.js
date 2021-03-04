@@ -341,7 +341,6 @@
             }
         }
     }
-
     // Add checked, disabled or indeterminate state
     function on(input, state, keep) {
         var node = input[0],
@@ -407,7 +406,6 @@
         // Remove regular state class
         parent[_remove](regular || option(input, callback) || '');
     }
-
     // Remove checked, disabled or indeterminate state
     function off(input, state, keep) {
         var node = input[0],
@@ -442,7 +440,6 @@
         // Add regular state class
         parent[_add](regular || option(input, callback) || '');
     }
-
     // Remove all traces
     function tidy(input, callback) {
         if (input.data(_iCheck)) {
@@ -459,19 +456,16 @@
             $(_label + '[for="' + input[0].id + '"]').add(input.closest(_label)).off('.i');
         }
     }
-
     // Get some option
     function option(input, state, regular) {
         if (input.data(_iCheck)) {
             return input.data(_iCheck).o[state + (regular ? '' : 'Class')];
         }
     }
-
     // Capitalize some string
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-
     // Executable handlers
     function callbacks(input, checked, callback, keep) {
         if (!keep) {

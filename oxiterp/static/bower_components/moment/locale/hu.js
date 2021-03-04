@@ -10,7 +10,6 @@
 
 
     var weekEndings = 'vasárnap hétfőn kedden szerdán csütörtökön pénteken szombaton'.split(' ');
-
     function translate(number, withoutSuffix, key, isFuture) {
         var num = number;
         switch (key) {
@@ -41,7 +40,6 @@
         }
         return '';
     }
-
     function week(isFuture) {
         return (isFuture ? '' : '[múlt] ') + '[' + weekEndings[this.day()] + '] LT[-kor]';
     }

@@ -128,7 +128,7 @@
                     release: null, // function (value) {}
 
                     // Output formatting, allows to add unit: %, ms ...
-                    format: function (v) {
+                format: function (v) {
                         return v;
                     },
                     parse: function (v) {

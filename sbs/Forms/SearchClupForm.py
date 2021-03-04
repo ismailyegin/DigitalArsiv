@@ -6,7 +6,6 @@ from sbs.models.Coach import Coach
 from sbs.models.CategoryItem import CategoryItem
 from sbs.models.SportsClub import SportsClub
 
-
 class SearchClupForm(ModelForm):
     sportsClub = forms.ModelChoiceField(queryset=SportsClub.objects.all(),
                                         to_field_name='name',

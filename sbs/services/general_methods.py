@@ -106,8 +106,6 @@ def show_urls_deneme(urllist, depth=0):
             show_urls(entry.url_patterns, depth + 1)
 
     return urls
-
-
 def control_access_judge(request):
     groups = request.user.groups.all()
     is_exist = False
@@ -124,7 +122,6 @@ def control_access_judge(request):
             is_exist = True
 
     return is_exist
-
 
 def control_access(request):
     groups = request.user.groups.all()
@@ -161,7 +158,6 @@ def control_access_klup(request):
 
     return is_exist
 
-
 def aktif(request):
     if User.objects.filter(pk=request.user.pk):
         if not (ActiveGroup.objects.filter(user=request.user)):
@@ -191,6 +187,8 @@ def controlGroup(request):
 
     else:
         return {}
+
+
 
 
 def getProfileImage(request):
@@ -271,6 +269,7 @@ def import_csv():
             club.comminication = comClub
 
             club.save()
+
 
             user = User()
             user.first_name = row[1]

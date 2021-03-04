@@ -686,6 +686,7 @@ Pace.go = ->
 #
 # Their progress numbers can only increment.  We try to interpolate
 # between the numbers.
+
     remaining = 100 - bar.progress
 
     count = sum = 0

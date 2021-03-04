@@ -187,9 +187,9 @@ class Kulupler(models.Model):
     tesciltarihi = models.DateField(blank=True, null=True)
     aciklama = models.CharField(max_length=800, blank=True, null=True)
     rec_version = models.IntegerField(blank=True, null=True)
-    insuser = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True, related_name='+')
+    insuser = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True,related_name='+')
     instime = models.DateTimeField(blank=True, null=True)
-    upduser = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True, related_name='+')
+    upduser = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True,related_name='+')
     updtime = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -288,15 +288,13 @@ class Registration(models.Model):
 
 class SporcuPuanlari(models.Model):
     sporcupuanid = models.AutoField(primary_key=True)
-    sporcuid = models.ForeignKey('Sporcular', models.DO_NOTHING, db_column='sporcuid', related_name='+')
+    sporcuid = models.ForeignKey('Sporcular', models.DO_NOTHING, db_column='sporcuid',related_name='+')
     turnuvaid = models.ForeignKey('Turnuvalar', models.DO_NOTHING, db_column='turnuvaid')
     kategoriid = models.ForeignKey(Kategoriler, models.DO_NOTHING, db_column='kategoriid')
     sira = models.IntegerField(blank=True, null=True)
     puan = models.IntegerField(blank=True, null=True)
-    antrenorid2 = models.ForeignKey('Sporcular', models.DO_NOTHING, db_column='antrenorid2', blank=True, null=True,
-                                    related_name='+')
-    antrenorid1 = models.ForeignKey('Sporcular', models.DO_NOTHING, db_column='antrenorid1', blank=True, null=True,
-                                    related_name='+')
+    antrenorid2 = models.ForeignKey('Sporcular', models.DO_NOTHING, db_column='antrenorid2', blank=True, null=True,related_name='+')
+    antrenorid1 = models.ForeignKey('Sporcular', models.DO_NOTHING, db_column='antrenorid1', blank=True, null=True,related_name='+')
     kulupid = models.ForeignKey(Kulupler, models.DO_NOTHING, db_column='kulupid', blank=True, null=True)
     siragrup = models.IntegerField()
 
@@ -339,8 +337,7 @@ class Sporcular(models.Model):
 
     # lisans
     lisansno = models.CharField(max_length=80, blank=True, null=True)
-    antrenorid = models.ForeignKey('self', models.DO_NOTHING, db_column='antrenorid', blank=True, null=True,
-                                   related_name='+')
+    antrenorid = models.ForeignKey('self', models.DO_NOTHING, db_column='antrenorid', blank=True, null=True,related_name='+')
     antrenorid2 = models.ForeignKey('self', models.DO_NOTHING, db_column='antrenorid2', blank=True, null=True,
                                     related_name='+')
     lisanstarihi = models.DateField(blank=True, null=True)
@@ -366,6 +363,7 @@ class Sporcular(models.Model):
 
     antrenorkademeid = models.PositiveIntegerField(blank=True, null=True)
     antrenorvize = models.DateField(blank=True, null=True)
+
 
     yerlesimyeri = models.CharField(max_length=200, blank=True, null=True)
     rec_version = models.IntegerField()

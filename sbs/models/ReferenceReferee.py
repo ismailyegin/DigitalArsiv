@@ -50,6 +50,7 @@ class ReferenceReferee(models.Model):
         (WAITED, 'Beklemede'),
     )
 
+
     status = models.CharField(max_length=128, verbose_name='Onay Durumu', choices=STATUS_CHOICES, default=WAITED)
     iban = models.CharField(max_length=120, null=False, blank=False, verbose_name='İban Adresi')
 
@@ -74,6 +75,11 @@ class ReferenceReferee(models.Model):
 
     kademe_definition = models.ForeignKey(CategoryItem, on_delete=models.CASCADE)
     kademe_startDate = models.DateField(verbose_name="Kademe başlangıç Tarihi")
+
+
+
+
+
 
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=150, blank=True)

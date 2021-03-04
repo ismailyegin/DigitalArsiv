@@ -1,3 +1,4 @@
+
 from django.db import models
 
 from sbs.models.Athlete import Athlete

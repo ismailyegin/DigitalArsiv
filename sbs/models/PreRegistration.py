@@ -7,6 +7,7 @@ from sbs.models.ClubRole import ClubRole
 from sbs.models.CategoryItem import CategoryItem
 
 
+
 class PreRegistration(models.Model):
     MALE = 'Erkek'
     FEMALE = 'Kadın'
@@ -33,6 +34,7 @@ class PreRegistration(models.Model):
         (True, 'Evet '),
         (False, 'Hayır'),
     )
+
 
     BLOODTYPE = (
         (AB1, 'AB Rh+'),

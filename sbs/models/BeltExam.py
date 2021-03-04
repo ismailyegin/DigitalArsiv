@@ -29,6 +29,7 @@ class BeltExam(models.Model):
 
     coachs = models.ManyToManyField(Coach)
 
+
     paymentType = models.CharField(max_length=128, verbose_name='Ödeme Şekli', choices=PAYMENT_CHOICES, default=BANK)
     dekont = models.FileField(upload_to='dekont/', null=False, blank=False, verbose_name='Dekont ')
     dekontDate = models.DateField(null=True, blank=True)

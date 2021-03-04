@@ -23,8 +23,10 @@ from datetime import date, datetime
 from django.utils import timezone
 
 
+
 @login_required
 def return_activity(request):
+
     perm = general_methods.control_access(request)
 
     if not perm:

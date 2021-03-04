@@ -71,7 +71,6 @@
         transform: translate(-32px, 0);
     }
 }
-
 @-moz-keyframes pace-theme-barber-shop-motion {
     0% {
         -moz-transform: none;
@@ -82,7 +81,6 @@
         transform: translate(-32px, 0);
     }
 }
-
 @-o-keyframes pace-theme-barber-shop-motion {
     0% {
         -o-transform: none;
@@ -93,7 +91,6 @@
         transform: translate(-32px, 0);
     }
 }
-
 @-ms-keyframes pace-theme-barber-shop-motion {
     0% {
         -ms-transform: none;
@@ -104,7 +101,6 @@
         transform: translate(-32px, 0);
     }
 }
-
 @keyframes pace-theme-barber-shop-motion {
     0% {
         transform: none;
