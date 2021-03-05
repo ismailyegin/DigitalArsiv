@@ -14,6 +14,11 @@ class AdosyaForm(ModelForm):
     class Meta:
         model = Adosya
         fields = ('sirano',)
+        labels = {'sirano': 'Sıra No',}
+        widgets = {
+            'sirano': forms.TextInput(
+                attrs={'class': 'form-control ', 'required': 'required'}),
+        }
     def __init__(self,pk, *args, **kwargs):
         super(AdosyaForm, self).__init__(*args, **kwargs)
         # print(birim)
@@ -51,6 +56,6 @@ class AdosyaForm(ModelForm):
                 value= str(self.data[item.title]),
                 dosya=dosya,
             )
-            parametre=item
+            dosyaParametre.parametre=item
             dosyaParametre.save()
         return dosya.pk

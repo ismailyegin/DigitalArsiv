@@ -1,3 +1,5 @@
+from builtins import print
+
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -16,6 +18,8 @@ from sbs.models.Aevrak import Aevrak
 from sbs.models.Aklasor import Aklasor
 from sbs.models.CategoryItem import CategoryItem
 from sbs.services import general_methods
+
+from sbs.models.AdosyaParametre import AdosyaParametre
 
 
 @login_required
@@ -267,7 +271,6 @@ def arsiv_klasorUpdate(request, pk):
         if klasor_form.is_valid():
             test = klasor_form.save()
             test.save()
-
     return render(request, 'arsiv/KlasorGuncelle.html', {'form': klasor_form, 'dosya': dosya, 'klasor': klasor})
 
 
@@ -297,13 +300,20 @@ def arsiv_dosyaUpdate(request, pk):
         return redirect('accounts:login')
     dosya = Adosya.objects.get(pk=pk)
     form = AdosyaForm(dosya.klasor.pk,request.POST or None, instance=dosya)
+    dosyaparametre=AdosyaParametre.objects.filter(dosya=dosya)
+
+
+    for item in dosyaparametre:
+        form.fields[item.parametre.title].initial = item.value
+
     files = Aevrak.objects.filter(adosya=dosya)
     for item in files:
         print(item.file.name)
     if request.method == 'POST':
-        if form.is_valid():
-            test = form.save(commit=False)
-            test.save(pk)
+        dosya.sirano = request.POST.get('sirano')
+        for item in dosyaparametre:
+            item.value = request.POST.get(item.parametre.title)
+            item.save()
     return render(request, 'arsiv/DosyaGuncelle.html', {'form': form, 'dosya': dosya, 'files': files})
 
 
