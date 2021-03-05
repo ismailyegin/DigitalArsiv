@@ -302,6 +302,9 @@ def arsiv_dosyaUpdate(request, pk):
     form = AdosyaForm(dosya.klasor.pk,request.POST or None, instance=dosya)
     dosyaparametre=AdosyaParametre.objects.filter(dosya=dosya)
 
+    evrak_form = AevrakForm()
+    evrak_form.fields['file_field'].required=False
+
 
     for item in dosyaparametre:
         form.fields[item.parametre.title].initial = item.value
@@ -310,11 +313,20 @@ def arsiv_dosyaUpdate(request, pk):
     for item in files:
         print(item.file.name)
     if request.method == 'POST':
+        evrak_form = AevrakForm(request.POST, request.FILES)
+        files = request.FILES.getlist('file_field')
+        if evrak_form.is_valid():
+            for file in files:
+                evrak = Aevrak(file=file)
+                evrak.save()
+                dosya = Adosya.objects.get(pk=pk)
+                dosya.evrak.add(evrak)
+                dosya.save()
         dosya.sirano = request.POST.get('sirano')
         for item in dosyaparametre:
             item.value = request.POST.get(item.parametre.title)
             item.save()
-    return render(request, 'arsiv/DosyaGuncelle.html', {'form': form, 'dosya': dosya, 'files': files})
+    return render(request, 'arsiv/DosyaGuncelle.html', {'form': form, 'dosya': dosya, 'files': files,'evrak_form':evrak_form})
 
 
 @login_required
