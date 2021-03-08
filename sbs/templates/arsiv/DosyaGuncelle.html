@@ -116,7 +116,8 @@
                 <div class="box-body">
 
                     <div id="dropzone">
-                        <form action="{% url 'sbs:dosya-guncelle' dosya.pk %}" class="dropzone needsclick dz-clickable" id="demo-upload">
+                        <form action="{% url 'sbs:dosya-guncelle' dosya.pk %}" class="dropzone needsclick dz-clickable"
+                              id="pdf">
 
 
                              {% csrf_token %}
@@ -167,26 +168,35 @@
                             </div>
 
 
-{#                            <div class="box-header with-border">#}
-{#                                <div class="btn-group">#}
-{##}
-{##}
-{#                                    <input type="file" name="file_field" multiple="" accept="application/pdf"#}
-{#                                           id="id_file_field">#}
-{##}
-{##}
-{#                                </div>#}
+                            <div class="box-header with-border">
+                                <div class="btn-group">
 
-{#                            </div>#}
+
+                                    <button type="button" class="btn btn-adn" id="btnleft">
+                                        <span class="fa fa-angle-left"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-adn" id="btnright">
+                                        <span class="fa fa-angle-right"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-adn" id="btndownload">
+                                        <span class="fa fa-download"></span>
+                                    </button>
+
+
+                                </div>
+
+                            </div>
                             <div class="box-body">
 
-
+                                {% if evraklist %}
                                 <div class="embed-responsive embed-responsive-4by3">
-                                    <iframe class="embed-responsive-item" id="pdf" src="/media/lesson.pdf"
+                                    <iframe class="embed-responsive-item" id="idpdf" src="/media/{{ evraklist |first }}"
                                             allowfullscreen></iframe>
                                 </div>
+                                {% endif %}
                                 <!-- /.box -->
                             </div>
+
 
                         </div>
                         <!-- /.box -->
@@ -205,8 +215,38 @@
 
 
     <script>
-      draz=new Dropzone()
-    </script>
+        var dizi = new Array();
+        say = 0;
+        $(function () {
+            {% for item in evraklist %}
+                dizi.push("{{item}}");
+            {% endfor %}
+        });
+        $("#btnright").click(function () {
+            degeral(1);
+        });
+        $("#btnleft").click(function () {
+            degeral(-1);
+        });
 
+        function degeral(a) {
+            if (say + a >= 0 && say + a < dizi.length) {
+                say += a;
+                $("#idpdf").attr("src", "/media/" + dizi[say]);
+            }
+
+        }
+
+        $("#btndownload").click(function (e) {
+
+
+            e.preventDefault();
+            window.location.href = '/media/' + dizi[say];
+
+        });
+
+
+
+    </script>
 
 {% endblock %}

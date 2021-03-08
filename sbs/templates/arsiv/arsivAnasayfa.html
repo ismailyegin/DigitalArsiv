@@ -1,0 +1,134 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+
+    {% if messages %}
+        {% for message in messages %}
+
+
+            {% if message.tags == 'warning' %}
+
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Hata!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+
+
+            {% if message.tags == 'success' %}
+
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Başarılı!</h4>
+
+
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            {% endif %}
+        {% endfor %}
+
+
+    {% endif %}
+
+
+    <section class="content-header">
+        <h1>
+            Dijital Arşiv
+
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Dijital Arşiv</a></li>
+
+        </ol>
+    </section>
+    <section class="content">
+
+        <form method="post" enctype="multipart/form-data" role="form">
+            {% csrf_token %}
+            <div class="row">
+
+
+                <div class="col-lg-12 ">
+                    <div class="box-body">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Agaç Yapısı</h3>
+                            </div>
+
+
+                            <div class="box-body">
+
+                                <ul class="control-sidebar-menu " data-widget="tree">
+                                    {% for item in units %}
+
+                                        <li class="treeview ">
+                                            <a href="#"><b>
+                                                <i class=" fa fa-folder-o"></i>
+                                                <span>{{ item.name }}</span> </b>
+
+                                              </span>
+                                            </a>
+
+
+                                            <ul class="treeview-menu" id="unit-{{ item.pk }}">
+                                            </ul>
+                                        </li>
+
+                                    {% endfor %}
+                                </ul>
+
+
+                            </div>
+
+
+                        </div>
+                        <!-- /.box -->
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+
+
+    </section>
+
+
+    <script>
+
+
+        $(function () {
+            {% for item in klasor %}
+            $("#unit-{{ item.birim_id }}").prepend("<ul  class='treeview'><a href='#'><b><i class=' fa fa-folder-o'></i>" +
+                "<span> {{ item.name }}</span></b></a><ul class='treeview-menu' id='klasor-{{ item.pk }}'></ul></ul>");
+            {% endfor %}
+                    {% for item in files %}
+            $("#klasor-{{ item.klasor_id }}").prepend("<li ' id='file-{{ item.pk }}'><a href='{% url 'sbs:dosya-guncelle' item.pk %}'>{{ item.sirano }}</a></li>");
+            {% endfor %}
+        });
+    </script>
+
+
+{% endblock %}
+
+
+

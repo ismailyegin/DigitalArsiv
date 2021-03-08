@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from twisted.conch.insults.insults import privateModes
 
 from sbs.Forms.AbirimForm import AbirimForm
 from sbs.Forms.AbirimparametreFrom import AbirimparametreForm
@@ -286,8 +287,8 @@ def arsiv_dosyaEkle(request, pk):
 
         form = AdosyaForm(pk,request.POST)
         if form.is_valid():
-            form.save(pk)
-            return redirect('sbs:klasor-guncelle',pk)
+            pk=form.save(pk)
+            return redirect('sbs:dosya-guncelle',pk)
 
     return render(request, 'arsiv/DosyaEkle.html', {'form': form})
 
@@ -301,32 +302,30 @@ def arsiv_dosyaUpdate(request, pk):
     dosya = Adosya.objects.get(pk=pk)
     form = AdosyaForm(dosya.klasor.pk,request.POST or None, instance=dosya)
     dosyaparametre=AdosyaParametre.objects.filter(dosya=dosya)
-
-    evrak_form = AevrakForm()
-    evrak_form.fields['file_field'].required=False
-
-
     for item in dosyaparametre:
         form.fields[item.parametre.title].initial = item.value
 
     files = Aevrak.objects.filter(adosya=dosya)
+    evraklist=[]
     for item in files:
-        print(item.file.name)
+        # print(item.file.name)
+        if item.file.name.split(".")[len(item.file.name.split("."))-1]== "pdf":
+            evraklist.append(item)
+            print(item.file.name)
     if request.method == 'POST':
-        evrak_form = AevrakForm(request.POST, request.FILES)
-        files = request.FILES.getlist('file_field')
-        if evrak_form.is_valid():
-            for file in files:
-                evrak = Aevrak(file=file)
-                evrak.save()
-                dosya = Adosya.objects.get(pk=pk)
-                dosya.evrak.add(evrak)
-                dosya.save()
+        if request.FILES.get('file'):
+            evrak = Aevrak(file=request.FILES.get('file'))
+            evrak.save()
+            dosya = Adosya.objects.get(pk=pk)
+            dosya.evrak.add(evrak)
+            dosya.save()
+
         dosya.sirano = request.POST.get('sirano')
         for item in dosyaparametre:
-            item.value = request.POST.get(item.parametre.title)
-            item.save()
-    return render(request, 'arsiv/DosyaGuncelle.html', {'form': form, 'dosya': dosya, 'files': files,'evrak_form':evrak_form})
+            if request.POST.get(item.parametre.title):
+                item.value = request.POST.get(item.parametre.title)
+                item.save()
+    return render(request, 'arsiv/DosyaGuncelle.html', {'form': form, 'dosya': dosya, 'files': files ,'evraklist':evraklist})
 
 
 @login_required
@@ -365,3 +364,24 @@ def arsiv_evrakDelete(request, pk):
     dosya = Adosya.objects.filter(evrak=evrak)[0]
     evrak.delete()
     return redirect('sbs:dosya-guncelle', dosya.pk)
+
+
+
+
+
+@login_required
+def arsiv_anasayfa(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    units=Abirim.objects.all()
+    klasor=Aklasor.objects.all()
+    dosyalar=Adosya.objects.all()
+    return render(request, "arsiv/arsivAnasayfa.html",
+                  {'units': units,
+                   'klasor':klasor,
+                   'files':dosyalar
+                   }
+                  )
+

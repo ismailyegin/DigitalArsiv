@@ -28,16 +28,13 @@ class AdosyaForm(ModelForm):
             if item.type == 'string':
                 self.fields[item.title] = forms.CharField(max_length=200)
                 self.fields[item.title].widget.attrs['class'] = 'form-control'
-                self.fields[item.title].widget.attrs['test'] = 'Berktug'+str(item.pk)
             elif item.type == 'date':
-                self.fields[item.title] = forms.CharField()
+                self.fields[item.title] = forms.CharField(max_length=200)
                 self.fields[item.title].widget.attrs['class'] = 'form-control  pull-right datepicker6'
-                self.fields[item.title].widget.attrs['test'] = 'Berktug'+str(item.pk)
             elif item.type == 'number':
-                self.fields[item.title] =  forms.CharField(max_length=200)
-                self.fields[item.title].widget.attrs['onkeypress'] = 'validate(event)'
                 self.fields[item.title].widget.attrs['class'] = 'form-control'
-                self.fields[item.title].widget.attrs['test'] = 'Berktug-'+str(item.pk)
+                self.fields[item.title] =forms.CharField(max_length=200)
+                self.fields[item.title].widget.attrs['onkeypress'] = 'validate(event)'
 
         # for visible in self.visible_fields():
         #     visible.field.widget.attrs['class'] = 'form-control'
