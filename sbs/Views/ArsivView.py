@@ -1,3 +1,4 @@
+from bisect import bisect_right
 from builtins import print
 
 from django.contrib.auth import logout
@@ -154,8 +155,14 @@ def arsiv_birimParametreUpdate(request, pk):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    parametre = AbirimParametre.objects.get(pk=pk)
-    category_item_form = AbirimparametreForm(request.POST or None, instance=parametre)
+    if AbirimParametre.objects.filter(pk=pk):
+        parametre = AbirimParametre.objects.get(pk=pk)
+        category_item_form = AbirimparametreForm(request.POST or None, instance=parametre)
+    else:
+        parametre = AbirimParametre.objects.none()
+        category_item_form = AbirimparametreForm(request.POST or None)
+
+
     if request.method == 'POST':
         if category_item_form.is_valid():
             test = category_item_form.save()
@@ -184,8 +191,32 @@ def arsiv_birimListesi(request):
         }
         birimler.append(beka)
 
-    # arama alani yazılacak
-    # if request.method == 'POST':
+    test=[]
+
+    dosya=Adosya.objects.none()
+    if request.method == 'POST':
+        if request.POST.get('birim_id'):
+            birimparametre=AbirimParametre.objects.filter(birim__id=int(request.POST.get('birim_id')))
+            for item in birimparametre:
+
+                value=request.POST.get(item.title)
+                dosyaParametre =AdosyaParametre.objects.filter(value__icontains=value)
+                for item in dosyaParametre:
+                    test.append(item.dosya.pk)
+                    dosya |=Adosya.objects.filter(pk=int(item.dosya.pk))
+
+    for item in dosya:
+        print(item.pk)
+
+
+
+
+
+
+
+
+
+
     #     if category_item_form.is_valid():
     #         category_item_form.save()
     #         return redirect('sbs:arsiv-birimEkle')
@@ -291,8 +322,6 @@ def arsiv_dosyaEkle(request, pk):
             return redirect('sbs:dosya-guncelle',pk)
 
     return render(request, 'arsiv/DosyaEkle.html', {'form': form})
-
-
 @login_required
 def arsiv_dosyaUpdate(request, pk):
     perm = general_methods.control_access(request)
@@ -311,7 +340,6 @@ def arsiv_dosyaUpdate(request, pk):
         # print(item.file.name)
         if item.file.name.split(".")[len(item.file.name.split("."))-1]== "pdf":
             evraklist.append(item)
-            print(item.file.name)
     if request.method == 'POST':
         if request.FILES.get('file'):
             evrak = Aevrak(file=request.FILES.get('file'))
@@ -321,6 +349,10 @@ def arsiv_dosyaUpdate(request, pk):
             dosya.save()
 
         dosya.sirano = request.POST.get('sirano')
+
+        # Sonradan parametre eklendiginde kontrol yazılmasi lazım
+
+
         for item in dosyaparametre:
             if request.POST.get(item.parametre.title):
                 item.value = request.POST.get(item.parametre.title)
@@ -364,11 +396,6 @@ def arsiv_evrakDelete(request, pk):
     dosya = Adosya.objects.filter(evrak=evrak)[0]
     evrak.delete()
     return redirect('sbs:dosya-guncelle', dosya.pk)
-
-
-
-
-
 @login_required
 def arsiv_anasayfa(request):
     perm = general_methods.control_access(request)
@@ -385,3 +412,43 @@ def arsiv_anasayfa(request):
                    }
                   )
 
+
+
+
+
+@login_required
+def parametre(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    if request.method == 'POST':
+        if request.POST.get('cmd'):
+            birim = Abirim.objects.get(pk=int(request.POST.get('cmd')))
+            parametre = AbirimParametre.objects.filter(birim=birim)
+
+            beka = []
+            for item in parametre:
+                data = {
+                    'pk': item.pk,
+                    'title': item.title,
+                    'type': item.type,
+                }
+                beka.append(data)
+            return JsonResponse(
+                {
+                    'data': beka,
+                    'msg': 'Valid is  request'
+                })
+        else:
+            return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+    try:
+
+        print()
+
+
+    except:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})

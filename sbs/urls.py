@@ -512,6 +512,7 @@ urlpatterns = [
     url(r'arsiv/arsiv-Birim/ParametreGuncelle/(?P<pk>\d+)$', ArsivView.arsiv_birimParametreUpdate, name='Birim-parametreGuncelle'),
     url(r'arsiv/arsiv-Birim/ParametreSil/(?P<pk>\d+)$', ArsivView.parametredelete, name='Birim-parametre-delete'),
     url(r'arsiv/arsiv-Birim/BirimListesi/$', ArsivView.arsiv_birimListesi,name='Birim-listesi'),
+    url(r'arsiv/arsiv-Birim/BirimListesi/parametre/$', ArsivView.parametre, name='parametre-bilgi'),
 
     url(r'arsiv/arsiv-Klasor/klasorler/$', ArsivView.arsiv_klasorler, name='klasor-listesi'),
     url(r'arsiv/arsiv-Klasor/klasorEkle/$', ArsivView.arsiv_klasorEkle, name='klasor-ekle'),
@@ -526,4 +527,6 @@ urlpatterns = [
     url(r'arsiv/arsiv-evrak/evrakSil/(?P<pk>\d+)$', ArsivView.arsiv_evrakDelete, name='evrak-sil'),
 
     url(r'arsiv/arsiv-anasayfa/$', ArsivView.arsiv_anasayfa, name='evrak-anasayfa'),
+
+
 ]

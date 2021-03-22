@@ -26,15 +26,19 @@ class AdosyaForm(ModelForm):
         parametre=AbirimParametre.objects.filter(birim=klasor.birim)
         for item in parametre:
             if item.type == 'string':
-                self.fields[item.title] = forms.CharField(max_length=200)
+                self.fields[item.title] = forms.CharField(max_length=250)
                 self.fields[item.title].widget.attrs['class'] = 'form-control'
+
             elif item.type == 'date':
-                self.fields[item.title] = forms.CharField(max_length=200)
-                self.fields[item.title].widget.attrs['class'] = 'form-control  pull-right datepicker6'
+                self.fields[item.title] = forms.CharField(max_length=50)
+                self.fields[item.title].widget.attrs['class'] = 'form-control  datepicker6'
+
             elif item.type == 'number':
+
+                self.fields[item.title] =forms.CharField(max_length=50)
                 self.fields[item.title].widget.attrs['class'] = 'form-control'
-                self.fields[item.title] =forms.CharField(max_length=200)
                 self.fields[item.title].widget.attrs['onkeypress'] = 'validate(event)'
+
 
         # for visible in self.visible_fields():
         #     visible.field.widget.attrs['class'] = 'form-control'

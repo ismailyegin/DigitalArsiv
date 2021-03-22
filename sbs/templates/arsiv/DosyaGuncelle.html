@@ -71,8 +71,6 @@
                 </div>
 
             {% endif %}
-
-
             {% if message.tags == 'success' %}
 
                 <div class="alert alert-success alert-dismissible">
@@ -212,8 +210,6 @@
 
         </form>
     </section>
-
-
     <script>
         var dizi = new Array();
         say = 0;
@@ -238,15 +234,10 @@
         }
 
         $("#btndownload").click(function (e) {
-
-
             e.preventDefault();
             window.location.href = '/media/' + dizi[say];
 
         });
-
-
-
     </script>
 
 {% endblock %}
