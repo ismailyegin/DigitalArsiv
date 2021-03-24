@@ -178,48 +178,7 @@ def arsiv_birimListesi(request):
         logout(request)
         return redirect('accounts:login')
 
-    birimler = []
-    categori = Abirim.objects.all()
-
-    for item in categori:
-        parametre = AbirimParametre.objects.filter(birim=item)
-        # print(parametre.values_list("title","title"))
-        beka = {
-            'pk': item.pk,
-            'name': item.name,
-            'parametre': parametre
-        }
-        birimler.append(beka)
-
-    test=[]
-
-    dosya=Adosya.objects.none()
-    if request.method == 'POST':
-        if request.POST.get('birim_id'):
-            birimparametre=AbirimParametre.objects.filter(birim__id=int(request.POST.get('birim_id')))
-            for item in birimparametre:
-
-                value=request.POST.get(item.title)
-                dosyaParametre =AdosyaParametre.objects.filter(value__icontains=value)
-                for item in dosyaParametre:
-                    test.append(item.dosya.pk)
-                    dosya |=Adosya.objects.filter(pk=int(item.dosya.pk))
-
-    for item in dosya:
-        print(item.pk)
-
-
-
-
-
-
-
-
-
-
-    #     if category_item_form.is_valid():
-    #         category_item_form.save()
-    #         return redirect('sbs:arsiv-birimEkle')
+    birimler=Abirim.objects.all()
 
     return render(request, 'arsiv/BirimList.html', {'birimler': birimler})
 
@@ -452,3 +411,49 @@ def parametre(request):
 
     except:
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+
+def birimsearch(request):
+    birimler = []
+    categori = Abirim.objects.all()
+
+    for item in categori:
+        parametre = AbirimParametre.objects.filter(birim=item)
+        # print(parametre.values_list("title","title"))
+        beka = {
+            'pk': item.pk,
+            'name': item.name,
+            'parametre': parametre
+        }
+        birimler.append(beka)
+    test=[]
+    dosya=Adosya.objects.none()
+    birimdizi=[]
+
+    units=Abirim.objects.none()
+    klasor=Aklasor.objects.none()
+
+    if request.method == 'POST':
+        if request.POST.get('birim_id'):
+            birimparametre=AbirimParametre.objects.filter(birim__id=int(request.POST.get('birim_id')))
+            for item in birimparametre:
+                if request.POST.get(item.title):
+                    print(request.POST.get(item.title))
+                    dosyaParametre = AdosyaParametre.objects.filter(value__icontains=request.POST.get(item.title))
+                    for item in dosyaParametre:
+                        dosya |= Adosya.objects.filter(pk=int(item.dosya.pk))
+                        klasor |=Aklasor.objects.filter(pk=item.dosya.klasor.pk)
+                        units |= Abirim.objects.filter(pk=item.dosya.klasor.birim.pk)
+
+    return render(request, "arsiv/BirimSearch.html",
+                  {
+                      'birimler':birimler,
+                      'units': units.distinct(),
+                      'klasor': klasor.distinct(),
+                      'files': dosya.distinct()
+                   })
+
+
+

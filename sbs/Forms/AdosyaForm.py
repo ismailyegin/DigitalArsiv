@@ -39,7 +39,6 @@ class AdosyaForm(ModelForm):
                 self.fields[item.title].widget.attrs['class'] = 'form-control'
                 self.fields[item.title].widget.attrs['onkeypress'] = 'validate(event)'
 
-
         # for visible in self.visible_fields():
         #     visible.field.widget.attrs['class'] = 'form-control'
 

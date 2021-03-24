@@ -1,5 +1,10 @@
 {% extends 'base_layout.html' %}
+
 {% block content %}
+
+
+
+
     <!-- success modal -->
     <div class="modal modal-success modal-success-food fade in" id="modal-success" style="display: none;">
         <div class="modal-dialog">
@@ -21,6 +26,8 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+
     <div class="modal modal-danger modal-danger-food fade in" id="modal-success-danger" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -193,89 +200,98 @@
 
     <section class="content">
 
-
-
         <div class="row">
-            <section class="col-lg-12 ">
+            <div class="col-lg-12 ">
                 <div class="box-body">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Birimler</h3>
+                            <h3 class="box-title">Birim Filtrele</h3>
                         </div>
-                    <div class="box-header with-border">
-                            <div class="btn-group">
-{#                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
-                                    <a href="{% url "sbs:arsiv-birimEkle" %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Yeni Birim Ekle
-                                    </a>
-{#                                {% endif %}#}
+                        <form method="post" role="form">
+                            <div class="box-body secim">
+                                {% csrf_token %}
+
+                                <div class="col-lg-3">
+                                    <div class="form-group ">
+                                        <label> Birimler</label>
+                                        <select name="birim_id" class="form-control select2 select2-hidden-accessible"
+                                                style="width: 100%; " id="birim_id" tabindex="-1"
+                                                aria-hidden="true">
+                                            <option value="" selected="">Seçiniz</option>
+
+                                            {% for item in birimler %}
+
+                                                <option value="{{ item.pk }}">{{ item.name }}</option>
+
+                                            {% endfor %}
+
+                                        </select>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Ara</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+        {% if units %}
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="box-body">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Agaç Yapısı</h3>
                             </div>
 
-                        </div>
-                        <div class="box-body">
-                            <table id="kullanicilar" class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tanımı</th>
-                                    <th>parametreler</th>
-                                    <th>İşlemler</th>
-                                </tr>
-                                </thead>
 
-                                {% if birimler %}
-                                    {% for item in birimler %}
-                                        <tr>
-                                            <td>{{ forloop.counter }} </td>
-                                            <td>{{ item.name}} </td>
-                                            <td> {% for parametre in item.parametre %}
-                                    {{ parametre.title }}<br>
-                                                {% endfor %}
+                            <div class="box-body">
+
+                                <ul class="control-sidebar-menu " data-widget="tree">
+                                    {% for item in units %}
+
+                                        <li class="treeview " id="tree-{{ item.pk }}">
+                                            <a href="#"><b>
+                                                <i class=" fa fa-folder-o"></i>
+                                                <span>{{ item.name }}</span> </b>
+
+                                                </span>
+                                            </a>
 
 
-                                                </td>
-                                        <td>
-                                             <a href="{% url "sbs:arsiv-birimUpdate"  item.pk%}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> İncele
-                                    </a>
-                                        </td>
-
-                                            {#                                            <td>#}
-                                            {#                                                <div class="btn-group">#}
-                                            {##}
-                                            {#                                                    <a class="btn btn-success"#}
-                                            {#                                                       data-toggle="modal" onclick=sendInform({{ user.pk }})><i#}
-                                            {#                                                            class="fa  fa-arrow-circle-right"></i>Şifre Gönder</a>#}
-                                            {##}
-                                            {#                                                    <a class="btn btn-danger"#}
-                                            {#                                                       data-toggle="modal" onclick=activeUser({{ user.pk }})><i#}
-                                            {#                                                            class="fa fa-lock"></i>Aktif/Pasifleştir</a>#}
-                                            {#                                                </div>#}
-                                            {#                                            </td>#}
-
-                                        </tr>
+                                            <ul class="treeview-menu" id="unit-{{ item.pk }}" style="display:block; ">
+                                            </ul>
+                                        </li>
 
                                     {% endfor %}
-                                {% endif %}
+                                </ul>
 
 
+                            </div>
 
-                            </table>
 
                         </div>
+                        <!-- /.box -->
+
+
                     </div>
-                    <!-- /.box -->
-
-
                 </div>
-            </section>
 
 
-        </div>
-        <!-- /.row (main row) -->
-
+            </div>
+            <!-- /.row (main row) -->
+        {% endif %}
     </section>
 
     <script>
@@ -370,16 +386,87 @@
                 'responsive': true,
             })
 
+
+            $("#birim_id").change(function () {
+                var birim = $(this).find('option:selected').val();
+
+
+                clear();
+                list(birim);
+            });
+
+            {% for item in klasor %}
+
+
+
+                $("#tree-{{ item.birim_id }}").addClass("open");
+
+                $("#unit-{{ item.birim_id }}").prepend("<ul  class='treeview'><a href='#'><b><i class=' fa fa-folder-o'></i>" +
+                    "<span> {{ item.name }}</span></b></a><ul class='treeview-menu' style='display:block;' id='klasor-{{ item.pk }}'></ul></ul>");
+            {% endfor %}
+            {% for item in files %}
+                $("#klasor-{{ item.klasor_id }}").prepend("<li ' id='file-{{ item.pk }}'><a href='{% url 'sbs:dosya-guncelle' item.pk %}'>{{ item.sirano }}</a></li>");
+            {% endfor %}
+
         });
 
+        function clear() {
 
 
+            $(".parametre").remove();
+
+        }
 
 
+        function list(birim) {
+            {#alert(birim);#}
+            $.ajax({
+                url: "{% url "sbs:parametre-bilgi" %}",
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                    "cmd": birim,
+                },
+                success: function (result) {
+                    console.log(result)
 
+                    {#$("#id_town").append('<option value="">-----------</option>');#}
+
+                    for (item in result.data) {
+                        {#string#}
+                        if (result.data[item].type == 'string') {
+
+                            $(".secim").append('<div class="col-lg-3 parametre"><div class="form-group"> <label> ' + result.data[item].title + '</label><input type="text" name="' + result.data[item].title + '"  maxlength="250" class="form-control"  id="id_' + result.data[item].title + '"></div></div>');
+
+                        }
+                        {#number#}
+                        if (result.data[item].type == 'number') {
+
+                            $(".secim").append('<div class="col-lg-3 parametre"><div class="form-group"> <label> ' + result.data[item].title + '</label><input type="text" onkeypress="validate(event)" name="' + result.data[item].title + '"  maxlength="250" class="form-control"  id="id_' + result.data[item].title + '"></div></div>');
+
+                        }
+                        {#date#}
+                        if (result.data[item].type == 'date') {
+
+                            $(".secim").append('<div class="col-lg-3 parametre"><div class="form-group"> <label> ' + result.data[item].title + '</label><input type="text" name="' + result.data[item].title + '"  maxlength="250" class="form-control  datepicker6 "  id="id_' + result.data[item].title + '"></div></div>');
+
+                        }
+
+                    }
+
+                }
+            });
+
+        };
 
 
     </script>
+
+
+
+
+
+
 
 
 
