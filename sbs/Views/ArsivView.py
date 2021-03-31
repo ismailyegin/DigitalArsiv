@@ -1,11 +1,9 @@
-from bisect import bisect_right
 from builtins import print
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from twisted.conch.insults.insults import privateModes
 
 from sbs.Forms.AbirimForm import AbirimForm
 from sbs.Forms.AbirimparametreFrom import AbirimparametreForm
@@ -16,12 +14,11 @@ from sbs.Forms.AklasorForm import AklasorForm
 from sbs.models.Abirim import Abirim
 from sbs.models.AbirimParametre import AbirimParametre
 from sbs.models.Adosya import Adosya
+from sbs.models.AdosyaParametre import AdosyaParametre
 from sbs.models.Aevrak import Aevrak
 from sbs.models.Aklasor import Aklasor
 from sbs.models.CategoryItem import CategoryItem
 from sbs.services import general_methods
-
-from sbs.models.AdosyaParametre import AdosyaParametre
 
 
 @login_required
@@ -279,7 +276,6 @@ def arsiv_dosyaEkle(request, pk):
         if form.is_valid():
             pk=form.save(pk)
             return redirect('sbs:dosya-guncelle',pk)
-
     return render(request, 'arsiv/DosyaEkle.html', {'form': form})
 @login_required
 def arsiv_dosyaUpdate(request, pk):
@@ -308,10 +304,7 @@ def arsiv_dosyaUpdate(request, pk):
             dosya.save()
 
         dosya.sirano = request.POST.get('sirano')
-
-        # Sonradan parametre eklendiginde kontrol yazılmasi lazım
-
-
+        # Sonradan  parametre eklendigine  kontrol yazılmasi lazım
         for item in dosyaparametre:
             if request.POST.get(item.parametre.title):
                 item.value = request.POST.get(item.parametre.title)
@@ -413,6 +406,40 @@ def parametre(request):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
+def birimGeneralSearch(request):
+
+    dosya = Adosya.objects.none()
+    units = Abirim.objects.none()
+    klasor = Aklasor.objects.none()
+
+    if request.method == 'POST':
+        if request.POST.get('search'):
+            units |= Abirim.objects.filter(name__icontains=request.POST.get('search'))
+            klasor |= Aklasor.objects.filter(name__icontains=request.POST.get('search'))
+            try:
+                dosya |= Adosya.objects.filter(sirano=request.POST.get('search'))
+            except:
+                print('Sayisal degil')
+            if klasor:
+                for item in klasor:
+                    units |= Abirim.objects.filter(pk=item.birim.pk)
+            if dosya:
+                for item in dosya:
+                    klasor |= Aklasor.objects.filter(pk=item.klasor.pk)
+                    units |= Abirim.objects.filter(pk=item.klasor.birim.pk)
+            dosyaparametre = AdosyaParametre.objects.filter(value__contains=request.POST.get('search'))
+            if dosyaparametre:
+                for item in dosyaparametre:
+                    dosya |= Adosya.objects.filter(pk=int(item.dosya.pk))
+                    klasor |= Aklasor.objects.filter(pk=item.dosya.klasor.pk)
+                    units |= Abirim.objects.filter(pk=item.dosya.klasor.birim.pk)
+    return render(request, "arsiv/GenelArama.html",
+                  {
+                      'units': units.distinct(),
+                      'klasor': klasor.distinct(),
+                      'files': dosya.distinct()
+                  })
+
 
 
 def birimsearch(request):
@@ -446,7 +473,6 @@ def birimsearch(request):
                         dosya |= Adosya.objects.filter(pk=int(item.dosya.pk))
                         klasor |=Aklasor.objects.filter(pk=item.dosya.klasor.pk)
                         units |= Abirim.objects.filter(pk=item.dosya.klasor.birim.pk)
-
     return render(request, "arsiv/BirimSearch.html",
                   {
                       'birimler':birimler,

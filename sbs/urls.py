@@ -513,6 +513,7 @@ urlpatterns = [
     url(r'arsiv/arsiv-Birim/ParametreSil/(?P<pk>\d+)$', ArsivView.parametredelete, name='Birim-parametre-delete'),
     url(r'arsiv/arsiv-Birim/BirimListesi/$', ArsivView.arsiv_birimListesi,name='Birim-listesi'),
     url(r'arsiv/arsiv-Birim/BirimArama/$', ArsivView.birimsearch, name='birim-arama'),
+    url(r'arsiv/GenelArama/$', ArsivView.birimGeneralSearch, name='genel-arama'),
 
     url(r'arsiv/arsiv-Birim/BirimListesi/parametre/$', ArsivView.parametre, name='parametre-bilgi'),
 
