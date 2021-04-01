@@ -1,9 +1,11 @@
-from builtins import print
+from builtins import print, filter
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.db.models import Q
+from setuptools import sic
 
 from sbs.Forms.AbirimForm import AbirimForm
 from sbs.Forms.AbirimparametreFrom import AbirimparametreForm
@@ -19,6 +21,9 @@ from sbs.models.Aevrak import Aevrak
 from sbs.models.Aklasor import Aklasor
 from sbs.models.CategoryItem import CategoryItem
 from sbs.services import general_methods
+
+from sbs.Forms.AbirimSearchForm import AbirimSearchForm
+from sbs.Forms.AklasorSearchForm import AklasorSearchForm
 
 
 @login_required
@@ -174,10 +179,22 @@ def arsiv_birimListesi(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+    birim_form=AbirimSearchForm()
+    birimler=Abirim.objects.none()
+    if request.method == 'POST':
+        name=request.POST.get('name')
+        if not (name):
+            birimler=Abirim.objects.filter()
 
-    birimler=Abirim.objects.all()
+        else:
+            query = Q()
+            if name:
+                query &= Q(name__icontains=name)
+            birimler=Abirim.objects.filter(query)
 
-    return render(request, 'arsiv/BirimList.html', {'birimler': birimler})
+
+    return render(request, 'arsiv/BirimList.html', {'birimler': birimler,
+                                                    'birim_form':birim_form})
 
 
 @login_required
@@ -222,19 +239,39 @@ def arsiv_klasorler(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-
-    birimler = []
     klasor = Aklasor.objects.all()
+    klasor_form=AklasorSearchForm()
+    if request.method == 'POST':
+        name=request.POST.get('name')
+        sirano = request.POST.get('sirano')
+        location = request.POST.get('location')
+        birim = request.POST.get('birim')
+        if not (name or sirano or location or birim):
+            klasor=Abirim.objects.filter(location__pk=int (location))
+        else:
+            query = Q()
+            if name:
+                query &= Q(name__icontains=name)
+            if sirano:
+                query &= Q(sirano=sirano)
+            if location:
+                query &= Q(location__pk=int (location))
+            if birim:
+                query &= Q(birim__pk=int (birim))
+            klasor=Aklasor.objects.filter(query)
 
-    for item in klasor:
-        parametre = Adosya.objects.filter(klasor=item)
-        # print(parametre.values_list("title","title"))
-        beka = {
-            'pk': item.pk,
-            'name': item.name,
-            'parametre': parametre
-        }
-        birimler.append(beka)
+
+
+    #
+    # for item in klasor:
+    #     parametre = Adosya.objects.filter(klasor=item)
+    #     # print(parametre.values_list("title","title"))
+    #     beka = {
+    #         'pk': item.pk,
+    #         'name': item.name,
+    #         'parametre': parametre
+    #     }
+    #     birimler.append(beka)
 
     # arama alani yazılacak
     # if request.method == 'POST':
@@ -242,7 +279,8 @@ def arsiv_klasorler(request):
     #         category_item_form.save()
     #         return redirect('sbs:arsiv-birimEkle')
 
-    return render(request, 'arsiv/KlasorListesi.html', {'birimler': birimler})
+    return render(request, 'arsiv/KlasorListesi.html', {'klasor': klasor,
+                                                        'klasor_form':klasor_form})
 
 
 @login_required
@@ -483,3 +521,24 @@ def birimsearch(request):
 
 
 
+def arsiv_dosyalar(request):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    dosya = Adosya.objects.none()
+    dosya_form=AbirimSearchForm()
+    if request.method == 'POST':
+        sirano = request.POST.get('name')
+        if not (sirano):
+            dosya=Adosya.objects.all()
+        else:
+            query = Q()
+            if sirano:
+                query &= Q(sirano=sirano)
+
+            dosya=Adosya.objects.filter(query)
+
+    return render(request, 'arsiv/DosyaListesi.html', {'dosya': dosya,
+                                      'dosya_form':dosya_form
+                                      })

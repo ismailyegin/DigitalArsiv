@@ -1,5 +1,10 @@
 {% extends 'base_layout.html' %}
+
 {% block content %}
+
+
+
+
     <!-- success modal -->
     <div class="modal modal-success modal-success-food fade in" id="modal-success" style="display: none;">
         <div class="modal-dialog">
@@ -21,6 +26,8 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+
     <div class="modal modal-danger modal-danger-food fade in" id="modal-success-danger" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -193,13 +200,12 @@
 
     <section class="content">
 
-
-         <div class="row">
+ <div class="row">
             <div class="col-lg-12 ">
                 <div class="box-body">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Birim Filtrele</h3>
+                            <h3 class="box-title">Dosya Filtrele</h3>
                         </div>
                         <form method="post" role="form">
                             <div class="box-body">
@@ -207,10 +213,11 @@
 
                                 <div class="col-md-9">
                                     <div class="form-group">
-                                        <label> {{ birim_form.name.label }}</label>
-                                        {{ birim_form.name }}
+                                        <label> Sirano</label>
+                                        {{ dosya_form.name }}
                                     </div>
                                 </div>
+
 
                             </div>
                             <!-- /.box-body -->
@@ -227,24 +234,22 @@
             </div>
         </div>
 
-
-
         <div class="row">
             <section class="col-lg-12 ">
                 <div class="box-body">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Birimler</h3>
+                            <h3 class="box-title">Dosyalar</h3>
                         </div>
                     <div class="box-header with-border">
-                            <div class="btn-group">
+{#                            <div class="btn-group">#}
 {#                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
-                                    <a href="{% url "sbs:arsiv-birimEkle" %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Yeni Birim Ekle
-                                    </a>
+{#                                    <a href="{% url "sbs:klasor-ekle" %}"#}
+{#                                       type="button" class="btn btn-success"><i#}
+{#                                            class="fa fa-edit"></i> Yeni Klasör Ekle#}
+{#                                    </a>#}
 {#                                {% endif %}#}
-                            </div>
+{#                            </div>#}
 
                         </div>
                         <div class="box-body">
@@ -252,20 +257,25 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Tanımı</th>
+
+                                    <th>Sıra Numarasi</th>
+                                    <th>Klasör</th>
 
                                     <th>İşlemler</th>
                                 </tr>
                                 </thead>
 
-                                {% if birimler %}
-                                    {% for item in birimler %}
+                                {% if dosya %}
+                                    {% for item in dosya %}
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
-                                            <td>{{ item.name}} </td>
+                                            <td>{{ item.sirano}} </td>
+                                            <td>{{ item.klasor }}</td>
+
+
 
                                         <td>
-                                             <a href="{% url "sbs:arsiv-birimUpdate"  item.pk%}"
+                                             <a href="{% url "sbs:klasor-guncelle"  item.pk%}"
                                        type="button" class="btn btn-success"><i
                                             class="fa fa-edit"></i> İncele
                                     </a>
@@ -399,21 +409,106 @@
                 'responsive': true,
             })
 
-        });
-
-
-
-
-
-
-
-
+        })
     </script>
 
-
-
-
-
-
+{#    <script>#}
+{#        function activeUser(id) {#}
+{##}
+{#            console.log(id);#}
+{#            var html = ''#}
+{#            $("#modal-active").on("shown.bs.modal", function (e) {#}
+{#                $("#btn-conf1").click(function () {#}
+{#                    $.ajax({#}
+{#                        url: "{% url "sbs:kullanici-aktifet" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),#}
+{#                        type: "POST",#}
+{#                        data: {#}
+{#                            'csrfmiddlewaretoken': "{{  csrf_token  }}",#}
+{#                            isActive: 'False'#}
+{#                        },#}
+{#                        success: function (result) {#}
+{##}
+{#                            html = 'Kullanıcı Durumu Değiştirildi';#}
+{#                            debugger;#}
+{#                            $(".successModal").html(html);#}
+{#                            $('#modal-success').on("shown.bs.modal", function (e) {#}
+{#                                $(".btn-ok").click(function () {#}
+{##}
+{#                                    window.location.replace("{% url "sbs:kullanicilar" %}");#}
+{##}
+{#                                });#}
+{##}
+{#                            }).modal('show');#}
+{##}
+{##}
+{#                            console.log(result.status)#}
+{#                        }#}
+{#                    });#}
+{#                });#}
+{#            }).modal('show');#}
+{#            $('#btn-close1').click(function () {#}
+{#                $('#modal-active').modal('hide');#}
+{#            });#}
+{##}
+{#        }#}
+{##}
+{#        function sendInform(id) {#}
+{#            debugger;#}
+{#            console.log(id);#}
+{#            var html = ''#}
+{#            $("#modal-mail").on("shown.bs.modal", function (e) {#}
+{#                $("#btn-conf12").click(function () {#}
+{#                        $.ajax({#}
+{#                            url: "{% url "sbs:kullanici-bilgi-gonder" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),#}
+{#                            type: "POST",#}
+{#                            data: {#}
+{#                                'csrfmiddlewaretoken': "{{  csrf_token  }}",#}
+{##}
+{#                            },#}
+{#                            success: function (result) {#}
+{##}
+{#                                if (result.status == 'Fail') {#}
+{#                                    html = result.msg;#}
+{#                                    debugger;#}
+{#                                    $(".successModalD").html(html);#}
+{#                                    $('#modal-success-danger').on("shown.bs.modal", function (e) {#}
+{#                                        $(".btn-ok").click(function () {#}
+{##}
+{#                                            window.location.replace("{% url "sbs:kullanicilar" %}");#}
+{##}
+{#                                        });#}
+{#                                    }).modal('show');#}
+{##}
+{##}
+{#                                } else {#}
+{#                                    html = result.msg;#}
+{#                                    debugger;#}
+{#                                    $(".successModal").html(html);#}
+{#                                    $('#modal-success').on("shown.bs.modal", function (e) {#}
+{#                                        $(".btn-ok").click(function () {#}
+{##}
+{#                                            window.location.replace("{% url "sbs:kullanicilar" %}");#}
+{##}
+{#                                        });#}
+{#                                    }).modal('show');#}
+{##}
+{##}
+{#                                }#}
+{##}
+{##}
+{#                                console.log(result.status)#}
+{#                            }#}
+{#                        });#}
+{#                    }#}
+{#                )#}
+{#                ;#}
+{#            }).modal('show');#}
+{#            $('#btn-close2').click(function () {#}
+{#                $('#modal-mail').modal('hide');#}
+{#            });#}
+{##}
+{#        }#}
+{##}
+{#    </script>#}
 {% endblock %}
 
