@@ -94,40 +94,54 @@
     {% endif %}
 
 
+    <section class="content-header">
+        <h1>
+            Dosya Güncelle
 
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Dosya Güncelle</a></li>
 
-
-
-
+        </ol>
+    </section>
 
 
         <section class="content">
 
-
-
-            <div class="row">
+  <div class="row">
         <div class="col-lg-12">
             <div class="box box-primary">
 {#                <div class="box-header with-border">#}
 {#                    <h3 class="box-title"> Dosya Evrak Ekle </h3>#}
 {#                </div>#}
                 <div class="box-body">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Birim</label>
+                            <a href="{% url 'sbs:arsiv-birimUpdate' dosya.klasor.birim.pk %}">
+                                <input type="text" class="form-control"
+                                       value="{{ dosya.klasor.birim }}" disabled>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Klasör</label>
+                            <a href="{% url 'sbs:klasor-guncelle' dosya.klasor.pk %}">
+                                <input type="text" class="form-control" value="{{ dosya.klasor }}"
+                                       disabled>
+                            </a>
 
-                    <div id="dropzone">
-                        <form action="{% url 'sbs:dosya-guncelle' dosya.pk %}" class="dropzone needsclick dz-clickable"
-                              id="pdf">
+                    </div>
+                </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Konum</label>
+                            <a href="{% url 'sbs:arsiv-konumUpdate' dosya.klasor.location.pk %}">
+                                <input type="text" class="form-control" value="{{ dosya.klasor.location }}"  disabled>
+                            </a>
 
-
-                             {% csrf_token %}
-
-                            <div class="dz-message needsclick">
-                                <button type="button" class="dz-button">Dosyalari buraya bırakın veya yüklemek için tıklayın.</button>
-
-
-                            </div>
-
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,6 +149,41 @@
 
         </div>
     </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title"> Döküman Alanı </h3>
+                                        </div>
+                        <div class="box-body">
+
+                            <div id="dropzone">
+                                <form action="{% url 'sbs:dosya-guncelle' dosya.pk %}"
+                                      class="dropzone needsclick dz-clickable"
+                                      id="pdf">
+
+
+                                    {% csrf_token %}
+
+                                    <div class="dz-message needsclick">
+                                        <button type="button" class="dz-button">Dosyalari buraya bırakın veya yüklemek
+                                            için tıklayın.
+                                        </button>
+
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
 
             <form method="post" role="form">
             {% csrf_token %}
@@ -144,13 +193,11 @@
                 <div class="col-lg-3">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title"> Dosya Guncelle </h3>
+                            <h3 class="box-title"> Dosya Bilgileri </h3>
                         </div>
                         <div class="box-body">
                             <div class="col-lg-12">
                                 {{ form }}
-
-
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary ">Kaydet</button>
                                 </div>
@@ -162,9 +209,8 @@
                     <div class="box-body">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Dosya Evraklari</h3>
+                                <h3 class="box-title">Evraklar</h3>
                             </div>
-
 
                             <div class="box-header with-border">
                                 <div class="btn-group">

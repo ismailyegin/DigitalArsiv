@@ -195,42 +195,132 @@
     </div>
     <section class="content">
         <div class="row">
-            <div class="col-lg-12 ">
-                <div class="box-body">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Genel Arama</h3>
-                        </div>
-                        <form method="post" role="form">
-                            <div class="box-body secim">
-                                {% csrf_token %}
+            <form method="post" role="form">
 
-                                <div class="col-lg-9">
-                                    <div class="form-group ">
-                                        <label> Genel Arama </label>
-                                        <input type="text" name="search" class="form-control"
-                                                style="width: 100%; " id="search" tabindex="-1"
-                                                aria-hidden="true">
-                                        </input>
+                {% csrf_token %}
+
+                <div class="col-md-12">
+                    <!-- Custom Tabs (Pulled to the right) -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs pull-right">
+                            <li class=""><a href="#genel" data-toggle="tab" aria-expanded="true">Genel Arama
+                            </a></li>
+                            <li class=""><a href="#detay" data-toggle="tab" aria-expanded="false">Detaylı Arama
+                            </a></li>
+
+                            <li class="pull-left header"><i class="fa fa-th"></i> Arama Alanı</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="genel">
+                                <div class="box-body">
 
 
+                                    <div class="col-lg-12">
+                                        <div class="form-group ">
+                                            <label> Genel Arama </label>
+                                            <input type="text" name="search" class="form-control"
+                                                   style="width: 100%; " id="search" tabindex="-1"
+                                                   aria-hidden="true">
+                                            </input>
+
+
+                                        </div>
                                     </div>
+
+
                                 </div>
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Ara</button>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="detay">
+
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#birim" data-toggle="tab">Birim</a></li>
+                                        <li><a href="#klasor" data-toggle="tab">Klasor</a></li>
+                                        <li><a href="#dosya" data-toggle="tab">Dosya</a></li>
+
+                                        <li class="pull-right"><a href="#genel" class="text-muted"><i
+                                                class="fa fa-gear"></i></a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active height-control " id="birim">
+                                            <div class="secim"><label> Birimler</label>
+                                                <select name="searchbirim"
+                                                        id="searchbirim"
+                                                        class="form-control select2 select2-hidden-accessible"
+                                                        style="width: 100%; " tabindex="-1"
+                                                        aria-hidden="true">
+
+                                                    {% for item in klasor_form.birim %}
+
+                                                        {{ item }}
+
+                                                    {% endfor %}
+
+
+                                                </select></div>
+
+
+                                            <div class="box-footer">
+                                                <button type="submit" class="btn btn-primary">Ara</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- /.tab-pane -->
+                                        <div class="tab-pane" id="klasor">
+                                            {{ klasor_form }}
+                                            <div class="box-footer">
+                                                <button type="submit" class="btn btn-primary">Ara</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.tab-pane -->
+                                        <div class="tab-pane" id="dosya">
+                                            <div class="box-body">
+
+
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
+                                                        <label> Sıra Numarası </label>
+                                                        <input type="text" name="searchdosya" class="form-control"
+                                                               style="width: 100%; " id="searchdosya" tabindex="-1"
+                                                               aria-hidden="true">
+                                                        </input>
+
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="box-footer">
+                                                <button type="submit" class="btn btn-primary">Ara</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.tab-pane -->
+                                    </div>
+                                    <!-- /.tab-content -->
+                                </div>
+                                <!-- nav-tabs-custom -->
 
 
                             </div>
-                            <!-- /.box-body -->
+                            <!-- /.tab-pane -->
 
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Ara</button>
-                            </div>
-                        </form>
-
-
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
                     </div>
+                    <!-- nav-tabs-custom -->
                 </div>
-                <!-- /.box -->
-            </div>
+
+
+                <!-- /.box-body -->
+
+
+            </form>
         </div>
         {% if units %}
             <div class="row">
@@ -370,11 +460,19 @@
             })
 
 
+            $("#searchbirim").change(function () {
+                var birim = $(this).find('option:selected').val();
+
+
+                clear();
+                list(birim);
+            });
+
+
+
 
 
             {% for item in klasor %}
-
-
 
                 $("#tree-{{ item.birim_id }}").addClass("open");
 
@@ -387,6 +485,7 @@
 
         });
 
+
         function clear() {
 
 
@@ -394,9 +493,48 @@
 
         }
 
+        function list(birim) {
+            {#alert(birim);#}
+            $.ajax({
+                url: "{% url "sbs:parametre-bilgi" %}",
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                    "cmd": birim,
+                },
+                success: function (result) {
+                    console.log(result)
+
+                    {#$("#id_town").append('<option value="">-----------</option>');#}
+
+                    for (item in result.data) {
+                        {#string#}
+                        if (result.data[item].type == 'string') {
+
+                            $(".secim").append('<div class="form-group parametre"> <label> ' + result.data[item].title + '</label><input type="text" name="' + result.data[item].title + '"  maxlength="250" class="form-control"  id="id_' + result.data[item].title + '"></div>');
+
+                        }
+                        {#number#}
+                        if (result.data[item].type == 'number') {
+
+                            $(".secim").append('<div class="form-group parametre"> <label> ' + result.data[item].title + '</label><input type="text" onkeypress="validate(event)" name="' + result.data[item].title + '"  maxlength="250" class="form-control"  id="id_' + result.data[item].title + '"></div>');
+
+                        }
+                        {#date#}
+                        if (result.data[item].type == 'date') {
+
+                            $(".secim").append('<div class="form-group parametre"> <label> ' + result.data[item].title + '</label><input type="text" name="' + result.data[item].title + '"  maxlength="250" class="form-control  datepicker6 "  id="id_' + result.data[item].title + '"></div>');
+
+                        }
+
+                    }
+
+                }
+            });
+
+        };
+
     </script>
-
-
 
 {% endblock %}
 

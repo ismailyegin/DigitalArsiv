@@ -9,10 +9,13 @@ class AbirimParametre(models.Model):
     aDate = 'date'
     aString = 'string'
     aNumber = 'number'
+    aYear='year'
+
     Type = (
-        (aDate, 'Date'),
-        (aString, 'String'),
-        (aNumber, 'Number'),
+        (aDate, 'Tarih'),
+        (aString, 'Metin'),
+        (aNumber, 'Sayi'),
+        ( aYear,'Yil')
 
     )
 

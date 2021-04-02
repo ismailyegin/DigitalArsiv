@@ -10,7 +10,7 @@ class AcategoriForm(ModelForm):
     parent = forms.ModelChoiceField(queryset=CategoryItem.objects.filter(forWhichClazz='location'),
                                         to_field_name='name',
                                         empty_label="Seçiniz",
-                                        label="Üst",
+                                        label="Üst Konumu",
                                         required=False,
                                         widget=forms.Select(
                                             attrs={'class': 'form-control select2 select2-hidden-accessible',

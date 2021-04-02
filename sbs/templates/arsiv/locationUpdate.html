@@ -95,21 +95,7 @@
 
     {% endif %}
 
-      <section class="content-header">
-        <h1>
-            Birim Güncelle
-
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Birim Güncelle</a></li>
-
-        </ol>
-    </section>
-
     <section class="content">
-
-
-
         <form method="post" role="form">
             {% csrf_token %}
 
@@ -117,7 +103,7 @@
                 <div class="col-lg-3">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title"> Birim Ekle </h3>
+                            <h3 class="box-title"> Konum Güncelle </h3>
                         </div>
                         <div class="box-body">
                             <div class="col-lg-12">
@@ -128,6 +114,10 @@
                                     {{ category_item_form.name }}
                                 </div>
 
+                                <div class="form-group">
+                                    <label> {{ category_item_form.parent.label }}</label>
+                                    {{ category_item_form.parent }}
+                                </div>
 
 
                                 <div class="box-footer">
@@ -140,29 +130,22 @@
                 <div class="col-lg-9">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Parametreler</h3>
-                        </div>
-                                        <div class="box-header with-border">
-                            <div class="btn-group">
-{#                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
-                                    <a href="{% url "sbs:Birim-parametreAdd" birim.pk %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Parametre Ekle
-                                    </a>
-{#                                {% endif %}#}
-                            </div>
-
+                            <h3 class="box-title">Konumlar</h3>
                         </div>
                         <div class="box-body">
                             <table id="kategori" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>No</th>
+
                                     <th>Tanımı</th>
+                                    <th>Üst</th>
+
                                     <th>Güncelleme/Silme</th>
 
                                 </tr>
                                 </thead>
+
                                 <tbody>
 
 
@@ -171,11 +154,13 @@
                                         <tr>
                                             <td>{{ forloop.counter }} </td>
 
-                                            <td>{{ category.title }}</td>
+                                            <td>{{ category.name }}</td>
+                                            <td>{{ category.parent.name }}</td>
+
 
                                             <td>
                                                 <div class="btn-group">
-                                                    <a href="{% url "sbs:Birim-parametreGuncelle" category.pk %}"
+                                                    <a href="{% url "sbs:arsiv-konumUpdate" category.pk %}"
                                                        type="button" class="btn btn-warning"><i
                                                             class="fa fa-edit"></i>Güncelle
                                                     </a>
@@ -219,11 +204,13 @@
 
     <script>
         function deleteCategoryItem(id) {
+
+            console.log(id);
             var html = ''
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function () {
                     $.ajax({
-                        url: "{% url "sbs:Birim-parametre-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
+                        url: "{% url "sbs:categoryItem-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
                         data: {
                             'csrfmiddlewaretoken': "{{  csrf_token  }}",
@@ -237,7 +224,7 @@
                             $('#modal-success').on("shown.bs.modal", function (e) {
                                 $(".btn-ok").click(function () {
 
-                                    window.location.replace("{% url "sbs:arsiv-birimEkle" %}");
+                                    window.location.replace("{% url "sbs:arsiv-konumEkle" %}");
 
                                 });
 
