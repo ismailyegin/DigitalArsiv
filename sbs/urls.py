@@ -530,8 +530,11 @@ urlpatterns = [
 
     url(r'arsiv/arsiv-evrak/evrakEkle/(?P<pk>\d+)$', ArsivView.arsiv_evrakEkle, name='evrak-ekle'),
     url(r'arsiv/arsiv-evrak/evrakSil/(?P<pk>\d+)$', ArsivView.arsiv_evrakDelete, name='evrak-sil'),
+    url(r'arsiv/arsiv-evrak/evrakSil/ajax/(?P<pk>\d+)$', ArsivView.arsiv_evrakDelete_ajax, name='evrak-sil-ajax'),
 
     url(r'arsiv/arsiv-anasayfa/$', ArsivView.arsiv_anasayfa, name='evrak-anasayfa'),
+
+    url(r'arsiv/indir/(?P<pk>\d+)$', ArsivView.zipfile, name='dosya-zip'),
 
 
 ]

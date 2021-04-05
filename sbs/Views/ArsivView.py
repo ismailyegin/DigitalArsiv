@@ -1,9 +1,13 @@
+import os
+import zipfile
+
 from builtins import print, filter
+from io import StringIO
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Q
 from setuptools import sic
 
@@ -24,7 +28,6 @@ from sbs.services import general_methods
 
 from sbs.Forms.AbirimSearchForm import AbirimSearchForm
 from sbs.Forms.AklasorSearchForm import AklasorSearchForm
-
 
 @login_required
 def return_arsiv(request):
@@ -122,9 +125,11 @@ def arsiv_birim_update(request, pk):
         if category_item_form.is_valid():
             category_item_form.save()
     categoryitem = AbirimParametre.objects.filter(birim=birim)
+    klasor=Aklasor.objects.filter(birim=birim)
     return render(request, 'arsiv/birimGuncelle.html', {'category_item_form': category_item_form,
                                                         'categoryitem': categoryitem,
-                                                        'birim': birim})
+                                                        'birim': birim,
+                                                        'klasor':klasor})
 
 
 @login_required
@@ -239,7 +244,7 @@ def arsiv_klasorler(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
-    klasor = Aklasor.objects.all()
+    klasor = Aklasor.objects.none()
     klasor_form=AklasorSearchForm()
     if request.method == 'POST':
         name=request.POST.get('name')
@@ -247,7 +252,7 @@ def arsiv_klasorler(request):
         location = request.POST.get('location')
         birim = request.POST.get('birim')
         if not (name or sirano or location or birim):
-            klasor=Abirim.objects.all()
+            klasor=Aklasor.objects.all()
         else:
             query = Q()
             if name:
@@ -613,10 +618,115 @@ def birimSearch(request):
             for item in klasor:
                 units |= Abirim.objects.filter(pk=item.birim.pk)
 
+
+    dosyadizi=[]
+
+    for item in dosya.distinct():
+        if AdosyaParametre.objects.filter(dosya=item):
+            test = AdosyaParametre.objects.filter(dosya=item)[0]
+            print(test.parametre)
+            beka = {
+                'pk': item.pk,
+                'sirano': item.sirano,
+                'parametre': test.parametre.title,
+                'klasor_id':item.klasor.pk
+            }
+            dosyadizi.append(beka)
+
+
+
     return render(request, "arsiv/Arama.html",
                   {
                       'units': units.distinct(),
                       'klasor': klasor.distinct(),
-                      'files': dosya.distinct(),
+                      'files': dosyadizi,
                       'klasor_form':klasor_form
                   })
+
+@login_required
+def zipfile(request, pk):
+    perm = general_methods.control_access(request)
+
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+    dosya=Adosya.objects.get(pk=pk)
+    files = Aevrak.objects.filter(adosya=dosya)
+    evraklist = []
+
+    for item in files:
+        # print(item.file.name)
+        if item.file.name.split(".")[len(item.file.name.split(".")) - 1] == "pdf":
+            evraklist.append(item)
+
+        # Files (local path) to put in the .zip
+        # FIXME: Change this (get paths from DB etc)
+    filenames =evraklist
+
+    # Folder name in ZIP archive which contains the above files
+    # E.g [thearchive.zip]/somefiles/file2.txt
+    # FIXME: Set this to something better
+    zip_subdir = "somefiles"
+    zip_filename = "%s.zip" % zip_subdir
+
+    # Open StringIO to grab in-memory ZIP contents
+    s = StringIO()
+
+    # The zip compressor
+    zf = zipfile.ZipFile(s, "w")
+
+    for fpath in filenames:
+        # Calculate path for file in zip
+        fdir, fname = os.path.split(fpath)
+        zip_path = os.path.join(zip_subdir, fname)
+
+        # Add file, at correct path
+        zf.write(fpath, zip_path)
+
+    # Must close zip for all contents to be written
+    zf.close()
+
+    # Grab ZIP file from in-memory, make response with correct MIME-type
+    resp = HttpResponse(s.getvalue(), mimetype="application/x-zip-compressed")
+    # ..and correct content-disposition
+    resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+
+    return resp
+
+    # if request.method == 'POST' and request.is_ajax():
+    #
+    #
+    #     try:
+    #         obj = Abirim.objects.get(pk=pk)
+    #         obj.delete()
+    #         return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+    #     except CategoryItem.DoesNotExist:
+    #         return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+    #
+    # else:
+    #     return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+
+@login_required
+def arsiv_evrakDelete_ajax(request, pk):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    if request.method == 'POST' and request.is_ajax():
+
+        try:
+            evrak = Aevrak.objects.get(pk=pk)
+            dosya = Adosya.objects.filter(evrak=evrak)[0]
+            evrak.delete()
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except CategoryItem.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+

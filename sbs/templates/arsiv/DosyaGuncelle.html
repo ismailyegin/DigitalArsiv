@@ -107,9 +107,42 @@
 
 
         <section class="content">
+{#            <div class="row">#}
+{##}
+{#                <div class="col-lg-12">#}
+{#                    <div class="box box-primary">#}
+                        {#                <div class="box-header with-border">#}
+                        {#                    <h3 class="box-title"> Dosya Evrak Ekle </h3>#}
+                        {#                </div>#}
+{#                        <div class="box-body">#}
+{#                            <div class="col-lg-4">#}
+{#                                <div class="form-group">#}
+{#                                    <a href="#" type="button" class="btn btn-block btn-primary btn-lg">Primary</a>#}
+{##}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-lg-4">#}
+{#                                <div class="form-group">#}
+{#                                    <a href="#" type="button" class="btn btn-block btn-primary btn-lg">Primary</a>#}
+{##}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-lg-4">#}
+{#                                <div class="form-group">#}
+{#                                    <a href="#" type="button" class="btn btn-block btn-primary btn-lg">Primary</a>#}
+{##}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{##}
+{#                </div>#}
+{#            </div>#}
 
-  <div class="row">
-        <div class="col-lg-12">
+            <div class="row">
+
+                <div class="col-lg-12">
             <div class="box box-primary">
 {#                <div class="box-header with-border">#}
 {#                    <h3 class="box-title"> Dosya Evrak Ekle </h3>#}
@@ -119,8 +152,17 @@
                         <div class="form-group">
                             <label>Birim</label>
                             <a href="{% url 'sbs:arsiv-birimUpdate' dosya.klasor.birim.pk %}">
-                                <input type="text" class="form-control"
+
+                                <div class="input-group margin">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-warning">Git</button>
+                                    </div>
+                                    <!-- /btn-group -->
+                                    <input type="text" class="form-control"
                                        value="{{ dosya.klasor.birim }}" disabled>
+                                </div>
+
+
                             </a>
                         </div>
                     </div>
@@ -128,8 +170,15 @@
                         <div class="form-group">
                             <label>Klasör</label>
                             <a href="{% url 'sbs:klasor-guncelle' dosya.klasor.pk %}">
-                                <input type="text" class="form-control" value="{{ dosya.klasor }}"
+                                <div class="input-group margin">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-warning">Git</button>
+                                    </div>
+                                    <!-- /btn-group -->
+                                    <input type="text" class="form-control" value="{{ dosya.klasor }}"
                                        disabled>
+                                </div>
+
                             </a>
 
                     </div>
@@ -138,22 +187,28 @@
                         <div class="form-group">
                             <label>Konum</label>
                             <a href="{% url 'sbs:arsiv-konumUpdate' dosya.klasor.location.pk %}">
-                                <input type="text" class="form-control" value="{{ dosya.klasor.location }}"  disabled>
+                                <div class="input-group margin">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-warning">Git</button>
+                                    </div>
+                                    <!-- /btn-group -->
+                                    <input type="text" class="form-control" value="{{ dosya.klasor.location }}"
+                                           disabled>
+                                </div>
+
                             </a>
 
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="box box-primary">
                                         <div class="box-header with-border">
-                                            <h3 class="box-title"> Döküman Alanı </h3>
+                                            <h3 class="box-title"> Evrak Ekle </h3>
                                         </div>
                         <div class="box-body">
 
@@ -193,13 +248,13 @@
                 <div class="col-lg-3">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title"> Dosya Bilgileri </h3>
+                            <h3 class="box-title"> Parametreler </h3>
                         </div>
                         <div class="box-body">
                             <div class="col-lg-12">
                                 {{ form }}
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary ">Kaydet</button>
+                                    <button type="submit" class="btn btn-primary ">Güncelle</button>
                                 </div>
                             </div>
                         </div>
@@ -225,11 +280,17 @@
                                     <button type="button" class="btn btn-adn" id="btndownload">
                                         <span class="fa fa-download"></span>
                                     </button>
+                                    <button type="button" class="btn btn-adn" id="btndelete">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
 
 
                                 </div>
 
+
                             </div>
+
+
                             <div class="box-body">
 
                                 {% if evraklist %}
@@ -260,9 +321,18 @@
         var dizi = new Array();
         say = 0;
         $(function () {
+
+
             {% for item in evraklist %}
-                dizi.push("{{item}}");
+                deger = {
+                    'id':{{ item.pk }},
+                    'title': "{{ item.file }}"
+                }
+                dizi.push(deger);
+                console.log({{ item.pk }});
+
             {% endfor %}
+            degeral(0);
         });
         $("#btnright").click(function () {
             degeral(1);
@@ -274,14 +344,51 @@
         function degeral(a) {
             if (say + a >= 0 && say + a < dizi.length) {
                 say += a;
-                $("#idpdf").attr("src", "/media/" + dizi[say]);
+                $("#idpdf").attr("src", "/media/" + dizi[say].title);
             }
 
         }
 
         $("#btndownload").click(function (e) {
             e.preventDefault();
-            window.location.href = '/media/' + dizi[say];
+            window.location.href = '/media/' + dizi[say].title;
+
+        });
+
+        $("#btndelete").click(function (e) {
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+
+                    $.ajax({
+                        url: "{% url "sbs:evrak-sil-ajax" pk=212121223232323232 %}".replace(/212121223232323232/, dizi[say].id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Evrak  Başarıyla Silindi';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:dosya-guncelle" dosya.pk %}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
 
         });
     </script>

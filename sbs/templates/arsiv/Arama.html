@@ -328,7 +328,7 @@
                     <div class="box-body">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Agaç Yapısı</h3>
+                                <h3 class="box-title">Arama Sonucu</h3>
                             </div>
                             <div class="box-body">
                                 <ul class="control-sidebar-menu " data-widget="tree">
@@ -480,7 +480,7 @@
                     "<span> {{ item.name }}</span></b></a><ul class='treeview-menu' style='display:block;' id='klasor-{{ item.pk }}'></ul></ul>");
             {% endfor %}
             {% for item in files %}
-                $("#klasor-{{ item.klasor_id }}").prepend("<li ' id='file-{{ item.pk }}'><a href='{% url 'sbs:dosya-guncelle' item.pk %}'>{{ item.sirano }}</a></li>");
+                $("#klasor-{{ item.klasor_id }}").prepend("<li ' id='file-{{ item.pk }}'><a href='{% url 'sbs:dosya-guncelle' item.pk %}'>{{ item.sirano }}({{ item.parametre }})</a></li>");
             {% endfor %}
 
         });
