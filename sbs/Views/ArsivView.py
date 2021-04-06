@@ -563,7 +563,6 @@ def birimSearch(request):
         # genel arama alani
         if request.POST.get('search'):
             units |= Abirim.objects.filter(name__icontains=request.POST.get('search'))
-
             klasor |= Aklasor.objects.filter(name__icontains=request.POST.get('search'))
             try:
                 dosya |= Adosya.objects.filter(sirano=request.POST.get('search'))
@@ -582,12 +581,13 @@ def birimSearch(request):
                     dosya |= Adosya.objects.filter(pk=int(item.dosya.pk))
                     klasor |= Aklasor.objects.filter(pk=item.dosya.klasor.pk)
                     units |= Abirim.objects.filter(pk=item.dosya.klasor.birim.pk)
+
         # dosya arama alani
-        if request.POST.get('searchdosya'):
-            dosya |=Adosya.objects.filter(sirano=request.POST.get('searchdosya'))
-            for item in dosya:
-                klasor |= Aklasor.objects.filter(pk=item.klasor.pk)
-                units |= Abirim.objects.filter(pk=item.klasor.birim.pk)
+        # if request.POST.get('searchdosya'):
+        #     dosya |=Adosya.objects.filter(sirano=request.POST.get('searchdosya'))
+        #     for item in dosya:
+        #         klasor |= Aklasor.objects.filter(pk=item.klasor.pk)
+        #         units |= Abirim.objects.filter(pk=item.klasor.birim.pk)
         # birim arama alani
         if request.POST.get('searchbirim'):
             units |=Abirim.objects.filter(name__icontains=request.POST.get('searchbirim'))
@@ -602,10 +602,10 @@ def birimSearch(request):
                         units |= Abirim.objects.filter(pk=item.dosya.klasor.birim.pk)
 
         # klasör arama alani
-        name = request.POST.get('name')
-        sirano = request.POST.get('sirano')
-        location = request.POST.get('location')
-        birim = request.POST.get('birim')
+        name = request.POST.get('klasorname')
+        sirano = request.POST.get('klasorsirano')
+        location = request.POST.get('klasorlocation')
+        birim = request.POST.get('klasorbirim')
         if (name or sirano or location or birim):
             query = Q()
             if name:

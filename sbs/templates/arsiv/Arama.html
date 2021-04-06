@@ -271,7 +271,45 @@
 
                                         <!-- /.tab-pane -->
                                         <div class="tab-pane" id="klasor">
-                                            {{ klasor_form }}
+                                            <tr>
+                                                <th><label for="klasorname">Tanımı:</label></th>
+                                                <td><input type="text" name="klasorname" maxlength="120"
+                                                           class="form-control"
+                                                           id="klasorname"></td>
+                                            </tr>
+                                            <tr>
+                                                <th><label for="klasorsirano">Sıra Numarası:</label></th>
+                                                <td><input type="number" name="klasorsirano" class="form-control"
+                                                           id="klasorsirano"></td>
+                                            </tr>
+                                            <tr>
+                                                <th><label for="klasorlocation">Konumu:</label></th>
+                                                <td><select name="klasorlocation" class="form-control"
+                                                            id="klasorlocation">
+                                                    {% for item in klasor_form.location %}
+
+
+                                                        {{ item }}
+
+                                                    {% endfor %}
+
+                                                </select></td>
+                                            </tr>
+                                            <tr>
+                                                <th><label for="klasorbirim">Birim:</label></th>
+                                                <td><select name="klasorbirim" class="form-control" id="klasorbirim">
+
+
+                                                    {% for item in klasor_form.birim %}
+
+
+                                                        {{ item }}
+
+                                                    {% endfor %}
+
+
+                                                </select></td>
+                                            </tr>
                                             <div class="box-footer">
                                                 <button type="submit" class="btn btn-primary">Ara</button>
                                             </div>
