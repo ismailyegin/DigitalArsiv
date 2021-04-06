@@ -227,7 +227,14 @@ def arsiv_klasorEkle(request):
         logout(request)
         return redirect('accounts:login')
 
-    form = AklasorForm()
+
+    if request.GET.get('birim'):
+        if Abirim.objects.filter(pk=request.GET.get('birim')):
+            form=AklasorForm(initial = {'birim': Abirim.objects.get(pk=request.GET.get('birim'))})
+    else:
+        form = AklasorForm()
+
+
     if request.method == 'POST':
         form = AklasorForm(request.POST)
         if form.is_valid():
@@ -286,8 +293,6 @@ def arsiv_klasorler(request):
 
     return render(request, 'arsiv/KlasorListesi.html', {'klasor': klasor,
                                                         'klasor_form':klasor_form})
-
-
 @login_required
 def arsiv_klasorUpdate(request, pk):
     perm = general_methods.control_access(request)
@@ -297,14 +302,11 @@ def arsiv_klasorUpdate(request, pk):
     klasor = Aklasor.objects.get(pk=pk)
     klasor_form = AklasorForm(request.POST or None, instance=klasor)
     dosya = Adosya.objects.filter(klasor=klasor)
-
     if request.method == 'POST':
         if klasor_form.is_valid():
             test = klasor_form.save()
             test.save()
     return render(request, 'arsiv/KlasorGuncelle.html', {'form': klasor_form, 'dosya': dosya, 'klasor': klasor})
-
-
 def arsiv_dosyaEkle(request, pk):
     perm = general_methods.control_access(request)
     if not perm:
@@ -730,3 +732,23 @@ def arsiv_evrakDelete_ajax(request, pk):
         return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
 
 
+@login_required
+def arsiv_klasor_delete(request, pk):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    if request.method == 'POST' and request.is_ajax():
+        klasor = Aklasor.objects.get(pk=pk)
+        klasor.delete()
+
+        try:
+
+
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except CategoryItem.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})

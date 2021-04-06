@@ -23,7 +23,6 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-
     <div class="modal modal-danger fade in deneme22" tabindex="-1" role="dialog" id="modal-danger"
          aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
@@ -94,7 +93,26 @@
 
 
     {% endif %}
+    <section class="content-header">
+        <h1>
+            Klasör Güncelle
+        </h1>
+        <ol class="breadcrumb">
 
+            <a href="{% url "sbs:klasor-ekle" %}?birim={{ klasor.birim.pk }}"
+               type="button" class="btn btn-success"><i
+                    class="fa fa-file"></i>Klasör Ekle
+            </a>
+            <a href="{% url "sbs:arsiv-birimEkle" %}"
+               type="button" class="btn btn-success"><i
+                    class="fa fa-edit"></i>Birim Ekle
+            </a>
+            <button id="klasordelete"
+                    type="button" class="btn btn-danger"><i
+                    class="fa fa-trash"></i> Klasör Sil
+            </button>
+        </ol>
+    </section>
     <section class="content">
         <form method="post" role="form">
             {% csrf_token %}
@@ -140,7 +158,7 @@
 
                         </div>
                         <div class="box-body">
-                            <table id="kullanicilar" class="table table-bordered table-hover">
+                            <table id="dosyaTable" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -199,7 +217,56 @@
     </section>
 
 
+    <script>
+        $(function () {
+            $('#dosyaTable').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': false,
+                'autoWidth': true
+            })
 
+        })
+
+        $("#klasordelete").click(function (e) {
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+
+                    $.ajax({
+                        url: "{% url "sbs:klasor-delete" klasor.pk %}",
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Klasör  Başarıyla Silindi';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:klasor-listesi"%}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        });
+    </script>
 
 
 {% endblock %}

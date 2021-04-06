@@ -101,7 +101,20 @@
 
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Birim Güncelle</a></li>
+
+                                  <a href="{% url "sbs:klasor-ekle" %}?birim={{ birim.pk }}"
+                                       type="button" class="btn btn-success"><i
+                                            class="fa fa-file"></i>Klasör Ekle
+                                    </a>
+                             <a href="{% url "sbs:arsiv-birimEkle" %}"
+                                       type="button" class="btn btn-success"><i
+                                            class="fa fa-edit"></i>Birim Ekle
+                                    </a>
+                           <button id="birimdelete"
+                                       type="button" class="btn btn-danger"><i
+                                            class="fa fa-trash"></i> Birim Sil
+                                             </button>
+
 
         </ol>
     </section>
@@ -116,9 +129,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"> Birim Ekle </h3>
-                        </div>
+
                         <div class="box-body">
                             <div class="col-lg-12">
 
@@ -131,7 +142,7 @@
 
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                    <button type="submit" class="btn btn-primary btn-lg">Güncelle</button>
                                 </div>
                             </div>
                         </div>
@@ -296,10 +307,7 @@
             })
 
         })
-    </script>
 
-
-    <script>
         function deleteCategoryItem(id) {
             var html = ''
             $("#modal-danger").on("shown.bs.modal", function (e) {
@@ -336,6 +344,43 @@
             });
 
         }
+
+        $("#birimdelete").click(function (e) {
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+
+                    $.ajax({
+                        url: "{% url "sbs:Birim-delete" birim.pk %}",
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Birim  Başarıyla Silindi';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:Birim-listesi"%}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        });
     </script>
 
 

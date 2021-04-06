@@ -265,10 +265,14 @@
                                             <td>{{ item.name}} </td>
 
                                         <td>
-                                             <a href="{% url "sbs:arsiv-birimUpdate"  item.pk%}"
+                                             <a href="{% url "sbs:arsiv-birimUpdate"  item.pk %}"
                                        type="button" class="btn btn-success"><i
                                             class="fa fa-edit"></i> İncele
-                                    </a>
+                                            </a>
+                                             <button onclick="birimsil({{ item.pk }})"
+                                       type="button" class="btn btn-danger"><i
+                                            class="fa fa-edit"></i> Sil
+                                             </button>
                                         </td>
 
                                             {#                                            <td>#}
@@ -401,6 +405,44 @@
 
         });
 
+
+function birimsil(id) {
+
+     $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+
+                    $.ajax({
+                        url: "{% url "sbs:Birim-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Birim  Başarıyla Silindi';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:Birim-listesi" %}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+}
 
 
 
