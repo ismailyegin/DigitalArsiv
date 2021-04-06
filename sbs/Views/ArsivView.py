@@ -590,6 +590,7 @@ def birimSearch(request):
                 units |= Abirim.objects.filter(pk=item.klasor.birim.pk)
         # birim arama alani
         if request.POST.get('searchbirim'):
+            units |=Abirim.objects.filter(name__icontains=request.POST.get('searchbirim'))
             birimparametre = AbirimParametre.objects.filter(birim__id=int(request.POST.get('searchbirim')))
             for item in birimparametre:
                 if request.POST.get(item.title):
