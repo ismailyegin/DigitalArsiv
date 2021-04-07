@@ -140,7 +140,7 @@
 
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary btn-lg">Güncelle</button>
+                                    <button type="submit" class="btn btn-primary">Kaydet</button>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
 {#                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
                                     <a href="{% url "sbs:Birim-parametreAdd" birim.pk %}"
                                        type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Parametre Ekle
+                                            class="fa fa-edit"></i> Yeni Parametre Ekle
                                     </a>
 {#                                {% endif %}#}
                             </div>
@@ -168,7 +168,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanımı</th>
-                                    <th>Güncelleme/Silme</th>
+                                    <th>İnceleme/Silme</th>
 
                                 </tr>
                                 </thead>
@@ -186,7 +186,7 @@
                                                 <div class="btn-group">
                                                     <a href="{% url "sbs:Birim-parametreGuncelle" category.pk %}"
                                                        type="button" class="btn btn-warning"><i
-                                                            class="fa fa-edit"></i>Güncelle
+                                                            class="fa fa-edit"></i>İncele
                                                     </a>
 
                                                     <a class="btn btn-danger"

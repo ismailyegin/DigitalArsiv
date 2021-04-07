@@ -175,6 +175,11 @@
                                        type="button" class="btn btn-warning"><i
                                             class="fa fa-edit"></i> İncele
                                     </a>
+
+                                            <button onclick="dosyadelete({{ item.pk }})"
+                                                    type="button" class="btn btn-danger"><i
+                                                    class="fa fa-trash"></i> Sil
+                                            </button>
                                         </td>
 
                                             {#                                            <td>#}
@@ -226,6 +231,45 @@
             })
 
         })
+
+         function dosyadelete(id) {
+
+
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+
+                    $.ajax({
+
+                        url: "{% url "sbs:dosya-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Dosya  Başarıyla Silindi';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:klasor-guncelle" klasor.pk%}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+        }
 
         $("#klasordelete").click(function (e) {
             $("#modal-danger").on("shown.bs.modal", function (e) {
