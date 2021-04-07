@@ -1,22 +1,23 @@
 import os
 import zipfile
-
-from builtins import print, filter
+from builtins import print
 from io import StringIO
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Q
-from setuptools import sic
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import redirect, render
 
 from sbs.Forms.AbirimForm import AbirimForm
+from sbs.Forms.AbirimSearchForm import AbirimSearchForm
 from sbs.Forms.AbirimparametreFrom import AbirimparametreForm
 from sbs.Forms.AcategoriForm import AcategoriForm
 from sbs.Forms.AdosyaForm import AdosyaForm
+from sbs.Forms.AdosyaFormSearch import AdosyaFormSearch
 from sbs.Forms.AevrakForm import AevrakForm
 from sbs.Forms.AklasorForm import AklasorForm
+from sbs.Forms.AklasorSearchForm import AklasorSearchForm
 from sbs.models.Abirim import Abirim
 from sbs.models.AbirimParametre import AbirimParametre
 from sbs.models.Adosya import Adosya
@@ -26,8 +27,6 @@ from sbs.models.Aklasor import Aklasor
 from sbs.models.CategoryItem import CategoryItem
 from sbs.services import general_methods
 
-from sbs.Forms.AbirimSearchForm import AbirimSearchForm
-from sbs.Forms.AklasorSearchForm import AklasorSearchForm
 
 @login_required
 def return_arsiv(request):
@@ -351,10 +350,14 @@ def arsiv_dosyaUpdate(request, pk):
 
         dosya.sirano = request.POST.get('sirano')
         # Sonradan  parametre eklendigine  kontrol yazılmasi lazım
-        for item in dosyaparametre:
-            if request.POST.get(item.parametre.title):
-                item.value = request.POST.get(item.parametre.title)
-                item.save()
+        if dosyaparametre:
+            for item in dosyaparametre:
+
+                if request.POST.get(item.parametre.title):
+                    item.value = request.POST.get(item.parametre.title)
+                    item.save()
+        else:
+            form.update(dosya.pk)
     return render(request, 'arsiv/DosyaGuncelle.html', {'form': form, 'dosya': dosya, 'files': files ,'evraklist':evraklist})
 
 
@@ -527,19 +530,33 @@ def arsiv_dosyalar(request):
     if not perm:
         logout(request)
         return redirect('accounts:login')
+
     dosya = Adosya.objects.none()
-    dosya_form=AbirimSearchForm()
+    dosya_form=AdosyaFormSearch()
+    klasor_form=AklasorSearchForm()
+
     if request.method == 'POST':
-        sirano = request.POST.get('name')
-        if not (sirano):
+        sirano = request.POST.get('sirano')
+        location = request.POST.get('location')
+        birim = request.POST.get('birim')
+        klasor = request.POST.get('klasor')
+        if not (klasor or sirano or location or birim):
             dosya=Adosya.objects.all()
         else:
             query = Q()
+            if klasor:
+                query &= Q(klasor__pk=klasor)
             if sirano:
                 query &= Q(sirano=sirano)
+            if location:
+                query &= Q(klasor__location__pk=location)
+            if birim:
+                query &= Q(klasor__birim__pk=birim)
             dosya=Adosya.objects.filter(query)
+
     return render(request, 'arsiv/DosyaListesi.html', {'dosya': dosya,
-                                      'dosya_form':dosya_form
+                                      'klasor_form':klasor_form,
+                                       'dosya_form': dosya_form
                                       })
 
 

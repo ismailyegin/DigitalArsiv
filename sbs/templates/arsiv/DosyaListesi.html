@@ -210,13 +210,35 @@
                         <form method="post" role="form">
                             <div class="box-body">
                                 {% csrf_token %}
-
-                                <div class="col-md-9">
+                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label> Sirano</label>
-                                        {{ dosya_form.name }}
+                                        <label> Birim</label>
+                                        {{ klasor_form.birim }}
                                     </div>
                                 </div>
+
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> Klasör</label>
+                                        {{ dosya_form.klasor }}
+                                    </div>
+                                </div>
+
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> Konumu</label>
+                                        {{ klasor_form.location }}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label> Sirano</label>
+                                        {{ dosya_form.sirano }}
+                                    </div>
+                                </div>
+
+
 
 
                             </div>
@@ -275,7 +297,7 @@
 
                                         <td>
                                              <a href="{% url "sbs:dosya-guncelle"  item.pk%}"
-                                       type="button" class="btn btn-success"><i
+                                       type="button" class="btn btn-warning"><i
                                             class="fa fa-edit"></i> İncele
                                     </a>
 
@@ -421,9 +443,7 @@
 
             $("#modal-danger").on("shown.bs.modal", function (e) {
                 $("#btn-conf").click(function () {
-
                     $.ajax({
-
                         url: "{% url "sbs:dosya-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
                         type: "POST",
                         data: {

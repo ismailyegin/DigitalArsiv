@@ -63,3 +63,12 @@ class AdosyaForm(ModelForm):
             dosyaParametre.parametre=item
             dosyaParametre.save()
         return dosya.pk
+    def update(self,pk):
+        dosya=Adosya.objects.get(pk=pk)
+        parametre = AbirimParametre.objects.filter(birim=dosya.klasor.birim)
+
+        for item in parametre:
+            test=AdosyaParametre.objects.filter(dosya=dosya,parametre=item)[0]
+            test.value=str(self.data[item.title])
+            test.save()
+        return dosya.pk
