@@ -513,10 +513,11 @@ urlpatterns = [
     url(r'arsiv/arsiv-Birim/ParametreSil/(?P<pk>\d+)$', ArsivView.parametredelete, name='Birim-parametre-delete'),
     url(r'arsiv/arsiv-Birim/BirimListesi/$', ArsivView.arsiv_birimListesi,name='Birim-listesi'),
     url(r'arsiv/arsiv-Birim/BirimArama/$', ArsivView.birimsearch, name='birim-arama'),
-    url(r'arsiv/GenelArama/$', ArsivView.birimGeneralSearch, name='genel-arama'),
-    url(r'arsiv/Arama/$', ArsivView.birimSearch, name='arama'),
-
     url(r'arsiv/arsiv-Birim/BirimListesi/parametre/$', ArsivView.parametre, name='parametre-bilgi'),
+
+
+    url(r'arsiv/Arama/$', ArsivView.birimSearch, name='arama'),
+    url(r'arsiv/GenelArama/$', ArsivView.birimGeneralSearch, name='genel-arama'),
 
     url(r'arsiv/arsiv-Klasor/klasorler/$', ArsivView.arsiv_klasorler, name='klasor-listesi'),
     url(r'arsiv/arsiv-Klasor/klasorEkle/$', ArsivView.arsiv_klasorEkle, name='klasor-ekle'),
@@ -528,6 +529,7 @@ urlpatterns = [
     url(r'arsiv/arsiv-Dosya/dosyaEkle/(?P<pk>\d+)$', ArsivView.arsiv_dosyaEkle, name='dosya-ekle'),
     url(r'arsiv/arsiv-Dosya/dosyaGuncelle/(?P<pk>\d+)$', ArsivView.arsiv_dosyaUpdate,
         name='dosya-guncelle'),
+    url(r'arsiv/arsiv-dosya/sil/(?P<pk>\d+)$', ArsivView.arsiv_dosya_delete, name='dosya-delete'),
 
     url(r'arsiv/arsiv-evrak/evrakEkle/(?P<pk>\d+)$', ArsivView.arsiv_evrakEkle, name='evrak-ekle'),
     url(r'arsiv/arsiv-evrak/evrakSil/(?P<pk>\d+)$', ArsivView.arsiv_evrakDelete, name='evrak-sil'),

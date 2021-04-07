@@ -94,51 +94,30 @@
     {% endif %}
 
 
-    <section class="content-header">
+ <section class="content-header">
         <h1>
-            Dosya Güncelle
-
+            Dosya  Güncelle
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Dosya Güncelle</a></li>
 
+
+
+            <button href="{% url "sbs:dosya-ekle" dosya.klasor.pk %}"
+                    type="button" class="btn btn-success"><i
+                    class="fa fa-file"></i> Yeni Dosya Ekle</button>
+
+
+            <button id="dosyadelete"
+                    type="button" class="btn btn-danger"><i
+                    class="fa fa-trash"></i> Dosyayı Sil
+            </button>
         </ol>
     </section>
 
 
+
         <section class="content">
-{#            <div class="row">#}
-{##}
-{#                <div class="col-lg-12">#}
-{#                    <div class="box box-primary">#}
-                        {#                <div class="box-header with-border">#}
-                        {#                    <h3 class="box-title"> Dosya Evrak Ekle </h3>#}
-                        {#                </div>#}
-{#                        <div class="box-body">#}
-{#                            <div class="col-lg-4">#}
-{#                                <div class="form-group">#}
-{#                                    <a href="#" type="button" class="btn btn-block btn-primary btn-lg">Primary</a>#}
-{##}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-lg-4">#}
-{#                                <div class="form-group">#}
-{#                                    <a href="#" type="button" class="btn btn-block btn-primary btn-lg">Primary</a>#}
-{##}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-lg-4">#}
-{#                                <div class="form-group">#}
-{#                                    <a href="#" type="button" class="btn btn-block btn-primary btn-lg">Primary</a>#}
-{##}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{##}
-{#                </div>#}
-{#            </div>#}
+
 
             <div class="row">
 
@@ -155,14 +134,12 @@
 
                                 <div class="input-group margin">
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-warning">Git</button>
+                                        <button type="button" class="btn btn-warning"><i class="fa fa-align-left"></i></button>
                                     </div>
                                     <!-- /btn-group -->
                                     <input type="text" class="form-control"
                                        value="{{ dosya.klasor.birim }}" disabled>
                                 </div>
-
-
                             </a>
                         </div>
                     </div>
@@ -172,7 +149,7 @@
                             <a href="{% url 'sbs:klasor-guncelle' dosya.klasor.pk %}">
                                 <div class="input-group margin">
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-warning">Git</button>
+                                        <button type="button" class="btn btn-warning"><i class="fa fa-align-left"></i></button>
                                     </div>
                                     <!-- /btn-group -->
                                     <input type="text" class="form-control" value="{{ dosya.klasor }}"
@@ -189,7 +166,7 @@
                             <a href="{% url 'sbs:arsiv-konumUpdate' dosya.klasor.location.pk %}">
                                 <div class="input-group margin">
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-warning">Git</button>
+                                        <button type="button" class="btn btn-warning"><i class="fa fa-align-left"></i></button>
                                     </div>
                                     <!-- /btn-group -->
                                     <input type="text" class="form-control" value="{{ dosya.klasor.location }}"
@@ -375,6 +352,45 @@
                                 $(".btn-ok").click(function () {
 
                                     window.location.replace("{% url "sbs:dosya-guncelle" dosya.pk %}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+
+        });
+
+
+
+        $("#dosyadelete").click(function (e) {
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+
+                    $.ajax({
+                        url: "{% url "sbs:dosya-delete" dosya.pk %}",
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Dosya  Başarıyla Silindi';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:dosya-listesi"%}");
 
                                 });
 

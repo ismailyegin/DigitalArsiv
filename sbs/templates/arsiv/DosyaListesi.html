@@ -244,22 +244,22 @@
                     <div class="box-header with-border">
 {#                            <div class="btn-group">#}
 {#                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
-{#                                    <a href="{% url "sbs:klasor-ekle" %}"#}
+                        {#                                    <a href="{% url "sbs:dosya-ekle" %}"#}
 {#                                       type="button" class="btn btn-success"><i#}
-{#                                            class="fa fa-edit"></i> Yeni Klasör Ekle#}
+                        {#                                            class="fa fa-edit"></i> Yeni Dosya Ekle#}
 {#                                    </a>#}
 {#                                {% endif %}#}
 {#                            </div>#}
-
-                        </div>
+                        {##}
+                        {#                        </div>#}
                         <div class="box-body">
                             <table id="kullanicilar" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-
                                     <th>Sıra Numarasi</th>
                                     <th>Klasör</th>
+                                    <th>Birim</th>
 
                                     <th>İşlemler</th>
                                 </tr>
@@ -271,14 +271,18 @@
                                             <td>{{ forloop.counter }} </td>
                                             <td>{{ item.sirano}} </td>
                                             <td>{{ item.klasor }}</td>
-
-
+                                            <td>{{ item.klasor.birim }}</td>
 
                                         <td>
                                              <a href="{% url "sbs:dosya-guncelle"  item.pk%}"
                                        type="button" class="btn btn-success"><i
                                             class="fa fa-edit"></i> İncele
                                     </a>
+
+                                            <button onclick="dosyadelete({{ item.pk }})"
+                                                    type="button" class="btn btn-danger"><i
+                                                    class="fa fa-trash"></i> Sil
+                                            </button>
                                         </td>
 
                                             {#                                            <td>#}
@@ -410,6 +414,46 @@
             })
 
         })
+
+
+        function dosyadelete(id) {
+
+
+            $("#modal-danger").on("shown.bs.modal", function (e) {
+                $("#btn-conf").click(function () {
+
+                    $.ajax({
+
+                        url: "{% url "sbs:dosya-delete" pk=212121223232323232 %}".replace(/212121223232323232/, id.toString()),
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': "{{  csrf_token  }}",
+                            isActive: 'False'
+                        },
+                        success: function (result) {
+
+                            html = 'Dosya  Başarıyla Silindi';
+                            debugger;
+                            $(".successModal").html(html);
+                            $('#modal-success').on("shown.bs.modal", function (e) {
+                                $(".btn-ok").click(function () {
+
+                                    window.location.replace("{% url "sbs:dosya-listesi"%}");
+
+                                });
+
+                            }).modal('show');
+
+
+                            console.log(result.status)
+                        }
+                    });
+                });
+            }).modal('show');
+            $('#btn-close').click(function () {
+                $('#modal-danger').modal('hide');
+            });
+        }
     </script>
 
 {#    <script>#}

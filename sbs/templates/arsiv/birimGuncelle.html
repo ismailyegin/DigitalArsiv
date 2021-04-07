@@ -102,17 +102,15 @@
         </h1>
         <ol class="breadcrumb">
 
-                                  <a href="{% url "sbs:klasor-ekle" %}?birim={{ birim.pk }}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-file"></i>Klasör Ekle
-                                    </a>
-                             <a href="{% url "sbs:arsiv-birimEkle" %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i>Birim Ekle
-                                    </a>
-                           <button id="birimdelete"
+
+            <button href="{% url "sbs:arsiv-birimEkle" %}"
+                    type="button" class="btn btn-success"><i
+                    class="fa fa-file"></i>    Yeni Birim Ekle</button>
+
+
+            <button id="birimdelete"
                                        type="button" class="btn btn-danger"><i
-                                            class="fa fa-trash"></i> Birim Sil
+                                            class="fa fa-trash"></i> Birimi Sil
                                              </button>
 
 
@@ -222,9 +220,9 @@
                     <div class="box-header with-border">
                             <div class="btn-group">
 {#                                {% if user.groups.all.0.name == 'Yonetim' or user.groups.all.0.name == 'Admin' %}#}
-                                    <a href="{% url "sbs:klasor-ekle" %}"
-                                       type="button" class="btn btn-success"><i
-                                            class="fa fa-edit"></i> Yeni Klasör Ekle
+                                <a href="{% url "sbs:klasor-ekle" %}?birim={{ birim.pk }}"
+                                   type="button" class="btn btn-success"><i
+                                        class="fa fa-file"></i> Yeni Klasör Ekle
                                     </a>
 {#                                {% endif %}#}
                             </div>

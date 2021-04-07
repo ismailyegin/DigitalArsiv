@@ -322,6 +322,7 @@ def arsiv_dosyaEkle(request, pk):
             pk=form.save(pk)
             return redirect('sbs:dosya-guncelle',pk)
     return render(request, 'arsiv/DosyaEkle.html', {'form': form})
+
 @login_required
 def arsiv_dosyaUpdate(request, pk):
     perm = general_methods.control_access(request)
@@ -375,13 +376,11 @@ def arsiv_evrakEkle(request, pk):
                 dosya = Adosya.objects.get(pk=pk)
                 dosya.evrak.add(evrak)
                 dosya.save()
-
             return redirect('sbs:dosya-guncelle', dosya.pk)
 
     return render(request, 'arsiv/EvrakEkle.html',
                   {'form': form, }
                   )
-
 
 @login_required
 def arsiv_evrakDelete(request, pk):
@@ -408,11 +407,6 @@ def arsiv_anasayfa(request):
                    'files':dosyalar
                    }
                   )
-
-
-
-
-
 @login_required
 def parametre(request):
     perm = general_methods.control_access(request)
@@ -543,9 +537,7 @@ def arsiv_dosyalar(request):
             query = Q()
             if sirano:
                 query &= Q(sirano=sirano)
-
             dosya=Adosya.objects.filter(query)
-
     return render(request, 'arsiv/DosyaListesi.html', {'dosya': dosya,
                                       'dosya_form':dosya_form
                                       })
@@ -560,6 +552,14 @@ def birimSearch(request):
     klasor_form=AklasorSearchForm()
 
     if request.method == 'POST':
+        name = request.POST.get('klasorname')
+        sirano = request.POST.get('klasorsirano')
+        location = request.POST.get('klasorlocation')
+        birim = request.POST.get('klasorbirim')
+
+
+
+
         # genel arama alani
         if request.POST.get('search'):
             units |= Abirim.objects.filter(name__icontains=request.POST.get('search'))
@@ -589,8 +589,8 @@ def birimSearch(request):
         #         klasor |= Aklasor.objects.filter(pk=item.klasor.pk)
         #         units |= Abirim.objects.filter(pk=item.klasor.birim.pk)
         # birim arama alani
-        if request.POST.get('searchbirim'):
-            units |=Abirim.objects.filter(name__icontains=request.POST.get('searchbirim'))
+        elif request.POST.get('searchbirim'):
+            units |=Abirim.objects.filter(pk=request.POST.get('searchbirim'))
             birimparametre = AbirimParametre.objects.filter(birim__id=int(request.POST.get('searchbirim')))
             for item in birimparametre:
                 if request.POST.get(item.title):
@@ -602,11 +602,8 @@ def birimSearch(request):
                         units |= Abirim.objects.filter(pk=item.dosya.klasor.birim.pk)
 
         # klasör arama alani
-        name = request.POST.get('klasorname')
-        sirano = request.POST.get('klasorsirano')
-        location = request.POST.get('klasorlocation')
-        birim = request.POST.get('klasorbirim')
-        if (name or sirano or location or birim):
+
+        elif (name or sirano or location or birim):
             query = Q()
             if name:
                 query &= Q(name__icontains=name)
@@ -620,6 +617,11 @@ def birimSearch(request):
 
             for item in klasor:
                 units |= Abirim.objects.filter(pk=item.birim.pk)
+        else:
+            dosya = Adosya.objects.all()
+            units = Abirim.objects.all()
+            klasor = Aklasor.objects.all()
+
 
 
     dosyadizi=[]
@@ -743,6 +745,30 @@ def arsiv_klasor_delete(request, pk):
     if request.method == 'POST' and request.is_ajax():
         klasor = Aklasor.objects.get(pk=pk)
         klasor.delete()
+
+        try:
+
+
+            return JsonResponse({'status': 'Success', 'messages': 'save successfully'})
+        except CategoryItem.DoesNotExist:
+            return JsonResponse({'status': 'Fail', 'msg': 'Object does not exist'})
+
+    else:
+        return JsonResponse({'status': 'Fail', 'msg': 'Not a valid request'})
+
+
+
+
+@login_required
+def arsiv_dosya_delete(request, pk):
+    perm = general_methods.control_access(request)
+    if not perm:
+        logout(request)
+        return redirect('accounts:login')
+
+    if request.method == 'POST' and request.is_ajax():
+        dosya = Adosya.objects.get(pk=pk)
+        dosya.delete()
 
         try:
 
