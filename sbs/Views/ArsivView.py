@@ -574,11 +574,9 @@ def birimSearch(request):
         location = request.POST.get('klasorlocation')
         birim = request.POST.get('klasorbirim')
 
-
-
-
         # genel arama alani
         if request.POST.get('search'):
+            print('genel arama ')
             units |= Abirim.objects.filter(name__icontains=request.POST.get('search'))
             klasor |= Aklasor.objects.filter(name__icontains=request.POST.get('search'))
             try:
@@ -607,6 +605,7 @@ def birimSearch(request):
         #         units |= Abirim.objects.filter(pk=item.klasor.birim.pk)
         # birim arama alani
         elif request.POST.get('searchbirim'):
+            print('birim arama ')
             units |=Abirim.objects.filter(pk=request.POST.get('searchbirim'))
             birimparametre = AbirimParametre.objects.filter(birim__id=int(request.POST.get('searchbirim')))
             if birimparametre:
@@ -625,6 +624,7 @@ def birimSearch(request):
         # klasör arama alani
 
         elif (name or sirano or location or birim):
+            print('klasor  arama ')
             query = Q()
             if name:
                 query &= Q(name__icontains=name)
