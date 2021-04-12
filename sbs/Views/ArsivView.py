@@ -606,7 +606,7 @@ def birimSearch(request):
         # birim arama alani
         elif request.POST.get('searchbirim'):
             print('birim arama ')
-            units |=Abirim.objects.filter(pk=request.POST.get('searchbirim'))
+            units =Abirim.objects.filter(pk=request.POST.get('searchbirim'))
             birimparametre = AbirimParametre.objects.filter(birim__id=int(request.POST.get('searchbirim')))
             if birimparametre:
                 for item in birimparametre:
@@ -616,7 +616,11 @@ def birimSearch(request):
                         for item in dosyaParametre:
                             dosya |= Adosya.objects.filter(pk=int(item.dosya.pk))
                             klasor |= Aklasor.objects.filter(pk=item.dosya.klasor.pk)
-                            units |= Abirim.objects.filter(pk=item.dosya.klasor.birim.pk)
+            if not (klasor):
+                klasor=Aklasor.objects.filter(birim=Abirim.objects.get(pk=request.POST.get('searchbirim')))
+                dosya=Adosya.objects.filter(klasor__birim__pk=request.POST.get('searchbirim'))
+
+
 
 
 
